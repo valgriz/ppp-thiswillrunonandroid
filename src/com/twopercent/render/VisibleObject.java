@@ -11,11 +11,35 @@ public abstract class VisibleObject {
 	private double x, y, dy, dx, dt, scale;
 	private int height, width;
 
+	public VisibleObject() {
+
+	}
+
+	public VisibleObject(Image image) {
+		this.image = image;
+		imageView = new ImageView(image);
+
+	}
+
+	public VisibleObject(Group group) {
+		this.group = group;
+
+	}
+
 	public VisibleObject(Image image, ImageView imageView, Group group) {
 		this.image = image;
 		this.imageView = imageView;
 		this.group = group;
 		scale = 1;
+	}
+
+	public void setImageViewToImage(Image image) {
+		this.image = image;
+		if (imageView == null) {
+			imageView = new ImageView(image);
+		} else if (imageView != null) {
+			imageView.setImage(image);
+		}
 	}
 
 	public void updateX() {
@@ -24,6 +48,11 @@ public abstract class VisibleObject {
 
 	public void updateY() {
 		y += dy;
+	}
+
+	public void syncCoords() {
+		imageView.setX(x);
+		imageView.setY(y);
 	}
 
 	public abstract void update();
