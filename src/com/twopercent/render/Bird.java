@@ -12,6 +12,7 @@ public class Bird extends VisibleObject {
 
 	private ArrayList<CollisionObject> collisionObjectArrayList;
 	private boolean hit;
+	private static boolean onLeft, onRight;
 
 	public Bird() {
 		super(new Group());
@@ -26,8 +27,27 @@ public class Bird extends VisibleObject {
 		collisionObjectArrayList = new ArrayList<>();
 		hit = false;
 
+		onLeft = onRight = false;
+
 		setVerticalGravity(getY(), 0, .9, 2);
 		syncCoords();
+	}
+
+	public static void offLeft() {
+		onLeft = false;
+	}
+
+	public static void offRight() {
+		onRight = false;
+	}
+
+	public static void onLeft() {
+		onLeft = true;
+	}
+
+	public static void onRight() {
+		onRight = true;
+
 	}
 
 	public void addCollisionDetection() {
@@ -37,7 +57,15 @@ public class Bird extends VisibleObject {
 	}
 
 	public void update() {
-
+		if (onLeft) {
+			setDx(-5);
+		}
+		if (onRight) {
+			setDx(5);
+		}
+		if (!onLeft && !onRight) {
+			setDx(0);
+		}
 		for (int i = 0; i < PlayGame.platformSys.platformArrayList.size(); i++) {
 			if (collisionObjectArrayList.get(i).checkCollision()) {
 				setDy(-25);
@@ -46,13 +74,13 @@ public class Bird extends VisibleObject {
 				PlayGame.platformSys.platformArrayList.get(i).bounceTranslateTransition.play();
 			}
 		}
-
 		if (!hit) {
 			useVerticalGravity();
 		} else {
 			hit = false;
 		}
 
+		updateX();
 		syncCoords();
 	}
 }
