@@ -60,7 +60,7 @@ public abstract class VisibleObject extends CollisionObject {
 
 	public void useVerticalGravity() {
 		dy += (gravity * dt);
-		y += (dy * dt) + (.5 * gravity * dt * dt);
+		y += (dy * dt);
 	}
 
 	public void verticalBounce() {

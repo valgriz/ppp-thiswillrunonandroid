@@ -39,7 +39,10 @@ public class PlatformSys extends VisibleObject {
 }
 
 class Platform extends VisibleObject {
+
 	private int i, n, f;
+	public ScaleTransition scaleTransition;
+	public TranslateTransition bounceTranslateTransition;
 
 	public Platform(int i, int n) {
 		this.i = i;
@@ -53,13 +56,13 @@ class Platform extends VisibleObject {
 		setY(300);
 		setDx(-1 * 2);
 
-		ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(1000), getImageView());
+		scaleTransition = new ScaleTransition(Duration.millis(1000), getImageView());
 		scaleTransition.setToY(.5);
 		scaleTransition.setCycleCount(10);
 		scaleTransition.setAutoReverse(true);
 
-		TranslateTransition bounceTranslateTransition = new TranslateTransition(Duration.millis(175), getImageView());
-		bounceTranslateTransition.setByY(20);
+		bounceTranslateTransition = new TranslateTransition(Duration.millis(125), getImageView());
+		bounceTranslateTransition.setByY(15);
 		bounceTranslateTransition.setCycleCount(2);
 		bounceTranslateTransition.setAutoReverse(true);
 

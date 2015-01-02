@@ -20,8 +20,6 @@ public class CollisionObject {
 			if ((a.getX() + a.getWidth() >= b.getX()) && (a.getX() < b.getX() + b.getWidth())) {
 				if ((a.getY() + a.getHeight() > b.getY()) && (a.getY() < b.getY() + b.getHeight())) {
 
-					a.setY(b.getY() - a.getHeight()-2);
-
 					return true;
 				}
 				return false;
