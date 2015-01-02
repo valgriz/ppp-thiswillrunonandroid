@@ -13,13 +13,13 @@ import javafx.util.Duration;
 
 public class PlatformSys extends VisibleObject {
 
-	public static ArrayList<Platform> platformArrayList;
+        static ArrayList<Platform> platformArrayList;
 	private int n;
 
 	public PlatformSys() {
 		super(new Group());
 
-		n = 100;
+		n = 5; //We have 5 total platforms
 
 		platformArrayList = new ArrayList<>();
 
@@ -32,7 +32,36 @@ public class PlatformSys extends VisibleObject {
 
 	public void update() {
 		for (int i = 0; i < n; i++) {
-			platformArrayList.get(i).update();
+                    
+                    //Checks if platform has scrolled of screen, if so resets some values
+                    if(platformArrayList.get(i).getX()<(0-platformArrayList.get(i).getWidth())){
+                        if(i==0){ //Set the X value for the platform at the X value of the last spawned platform
+                                  // + platform width + random value from 1-150
+                            platformArrayList.get(i).setX(
+                                    platformArrayList.get(platformArrayList.size()-1).getX()+
+                                            platformArrayList.get(platformArrayList.size()-1).getWidth()
+                                            + (int)(150*Math.random()));
+                        }
+                        else{ //Set the X value for hte platform at the X value of the platform spawned right before
+                              // + platform width + random value from 1 - 150
+                            platformArrayList.get(i).setX(
+                                    platformArrayList.get(i-1).getX()+
+                                            platformArrayList.get(i-1).getWidth()
+                                            + (int)(150*Math.random()));
+                        }
+                        
+                        //Randomize Y value
+                        platformArrayList.get(i).setY(300-(int)(150*Math.random())+(int)(150*Math.random()));
+                        
+                        //Randomize oscillationing platforms
+                        platformArrayList.get(i).oscillate=false;
+                        platformArrayList.get(i).oscillationTracker=0;
+                        if(Math.random()<0.5){
+                            platformArrayList.get(i).oscillate=true;
+                        }
+                        
+                    }
+                    platformArrayList.get(i).update();
 		}
 	}
 
@@ -43,6 +72,8 @@ class Platform extends VisibleObject {
 	private int i, n, f;
 	public ScaleTransition scaleTransition;
 	public TranslateTransition bounceTranslateTransition;
+        protected boolean oscillate = false;
+        protected double oscillationTracker=0;
 
 	public Platform(int i, int n) {
 		this.i = i;
@@ -71,8 +102,13 @@ class Platform extends VisibleObject {
 	}
 
 	public void update() {
-
+                if(oscillate){
+                    setDy(Math.sin(oscillationTracker));
+                    oscillationTracker+=.03;
+                }
+                else setDy(0);
 		updateX();
+                updateY();
 		syncCoords();
 
 	}

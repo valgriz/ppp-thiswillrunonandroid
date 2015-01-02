@@ -42,7 +42,7 @@ public class Bird extends VisibleObject {
 			if (collisionObjectArrayList.get(i).checkCollision()) {
 				setDy(-25);
 				hit = true;
-				setY(PlayGame.platformSys.platformArrayList.get(i).getY() - getHeight());
+				setY(PlayGame.platformSys.platformArrayList.get(i).getY() - getHeight() - 2);
 				PlayGame.platformSys.platformArrayList.get(i).bounceTranslateTransition.play();
 			}
 		}
