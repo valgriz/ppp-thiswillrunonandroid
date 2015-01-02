@@ -4,20 +4,14 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public abstract class VisibleObject {
+public abstract class VisibleObject extends CollisionObject {
 	private Image image;
 	private Group group;
 	private ImageView imageView;
-	private double x, y, dy, dx, dt, scale;
-	private int height, width;
+	private double x, y, dy, dx, dt, scale, gravity;
+	private int height, width, frame;
 
 	public VisibleObject() {
-
-	}
-
-	public VisibleObject(Image image) {
-		this.image = image;
-		imageView = new ImageView(image);
 
 	}
 
@@ -56,6 +50,22 @@ public abstract class VisibleObject {
 	}
 
 	public abstract void update();
+
+	public void setVerticalGravity(double y, double dy, double dt, double gravity) {
+		this.y = y;
+		this.dy = dy;
+		this.dt = dt;
+		this.gravity = gravity;
+	}
+
+	public void useVerticalGravity() {
+		dy += (gravity * dt);
+		y += (dy * dt) + (.5 * gravity * dt * dt);
+	}
+
+	public void verticalBounce() {
+		dy = -dy;
+	}
 
 	public double getX() {
 		return x;
@@ -101,8 +111,28 @@ public abstract class VisibleObject {
 		return scale;
 	}
 
+	public int getFitAspectHeight(int fitWidth) {
+		return (int) ((fitWidth * height) / (width));
+	}
+
+	public int getFitAspectWidth(int fitHeight) {
+		return (int) ((fitHeight * width) / (height));
+	}
+
+	public double getAspectRatio() {
+		return (width / height);
+	}
+
+	public void setFitScale(int fitWidth, int fitHeight) {
+		imageView.setFitWidth(fitWidth);
+		imageView.setFitHeight(fitHeight);
+	}
+
 	public void setScale(double scale) {
 		this.scale = scale;
+		imageView.setScaleX(scale);
+		imageView.setScaleY(scale);
+		// Not Recommended to Use
 	}
 
 	public int getHeight() {
@@ -113,12 +143,24 @@ public abstract class VisibleObject {
 		this.height = height;
 	}
 
+	public void setHeightToImageDefault() {
+		this.height = (int) image.getHeight();
+		System.out.println("IM_HEIGHT " + height);
+		// Possibly Not Recommended to Use
+	}
+
 	public int getWidth() {
 		return width;
 	}
 
 	public void setWidth(int width) {
 		this.width = width;
+	}
+
+	public void setWidthToImageDefault() {
+		this.width = (int) image.getWidth();
+		System.out.println("IM_WIDTH " + width);
+		// Possibly Not Recommended to Use
 	}
 
 	public Image getImage() {
@@ -143,6 +185,22 @@ public abstract class VisibleObject {
 
 	public void setImageView(ImageView imageView) {
 		this.imageView = imageView;
+	}
+
+	public int getFrame() {
+		return frame;
+	}
+
+	public void setFrame(int frame) {
+		this.frame = frame;
+	}
+
+	public double getGravity() {
+		return gravity;
+	}
+
+	public void setGravity(double gravity) {
+		this.gravity = gravity;
 	}
 
 }
