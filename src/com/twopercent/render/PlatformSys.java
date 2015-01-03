@@ -46,14 +46,14 @@ public class PlatformSys extends VisibleObject {
                             platformArrayList.get(i).setX(
                                     platformArrayList.get(platformArrayList.size()-1).getX()+
                                             platformArrayList.get(platformArrayList.size()-1).getWidth()
-                                            + (int)(150*Math.random()) + (int)(t*.1*Math.random()));
+                                            + (int)(150*Math.random()) + (int)(t*.2*Math.random()));
                         }
                         else{ //Set the X value for hte platform at the X value of the platform spawned right before
                               // + platform width + random value from 1 - 150
                             platformArrayList.get(i).setX(
                                     platformArrayList.get(i-1).getX()+
                                             platformArrayList.get(i-1).getWidth()
-                                            + (int)(150*Math.random()) + (int)(t*.1*Math.random()));
+                                            + (int)(150*Math.random()) + (int)(t*.2*Math.random()));
                         }
                         
                         //Randomize Y value
@@ -62,7 +62,7 @@ public class PlatformSys extends VisibleObject {
                         //Randomize oscillationing platforms
                         platformArrayList.get(i).oscillate=false;
                         platformArrayList.get(i).oscillationTracker=0;
-                        if(Math.random()<0.1){
+                        if(Math.random()<(double)t/3000){
                             platformArrayList.get(i).oscillate=true;
                         }
                         
@@ -79,7 +79,7 @@ class Platform extends VisibleObject {
 	public ScaleTransition scaleTransition;
 	public TranslateTransition bounceTranslateTransition;
         protected boolean oscillate = false;
-        protected double oscillationTracker=0;
+        protected double oscillationTracker=0, oscillationConstant = 0.03, oscillationBuildup = 0;
 
 	public Platform(int i, int n) {
 		this.i = i;
@@ -109,10 +109,16 @@ class Platform extends VisibleObject {
 
 	public void update() {
                 if(oscillate){
-                    setDy(Math.sin(oscillationTracker));
-                    oscillationTracker+=.03;
+                    setDy(oscillationBuildup*Math.sin(oscillationTracker));
+                    oscillationTracker+=oscillationConstant;
                 }
-                else setDy(0);
+                else {
+                    setDy(0);
+                    oscillationConstant = Math.random()*.05;
+                    if(oscillationBuildup<=2.5){
+                        oscillationBuildup+=.003;
+                    }
+                }
 		updateX();
                 updateY();
 		syncCoords();
