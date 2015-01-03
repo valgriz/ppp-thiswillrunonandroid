@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	// Objects
-	private Scene mainScene;
+	private static Scene mainScene;
 	private Group root;
 	private Screen screen;
 
@@ -36,16 +36,12 @@ public class Main extends Application {
 		screen = new Screen(root);
 		mainScene = new Scene(root);
 
-		// Initialized InputController
-		// mainScene.setOnKeyPressed(new KeyboardListener());
-		// mainScene.setOnKeyReleased(new KeyboardListener());
-
-		// Shows Stage & Scene
-
 		Global.inPlayGame = true;
 
 		KeyboardListener keyboardListener = new KeyboardListener(mainScene);
+		MouseListener mouseListener = new MouseListener(mainScene);
 
+		// Shows Stage & Scene
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 	}

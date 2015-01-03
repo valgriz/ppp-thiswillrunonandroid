@@ -4,15 +4,19 @@ import java.util.ArrayList;
 
 import com.valgriz.screen.PlayGame;
 
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 public class Bird extends VisibleObject {
 
 	private ArrayList<CollisionObject> collisionObjectArrayList;
 	private boolean hit;
 	private static boolean onLeft, onRight;
+
+	private static ScaleTransition scaleTransition;
 
 	public Bird() {
 		super(new Group());
@@ -31,6 +35,9 @@ public class Bird extends VisibleObject {
 
 		setVerticalGravity(getY(), 0, .9, 2);
 		syncCoords();
+
+		scaleTransition = new ScaleTransition(Duration.millis(200), getImageView());
+
 	}
 
 	public static void offLeft() {
@@ -43,11 +50,14 @@ public class Bird extends VisibleObject {
 
 	public static void onLeft() {
 		onLeft = true;
+		scaleTransition.setToX(-1);
+		scaleTransition.play();
 	}
 
 	public static void onRight() {
 		onRight = true;
-
+		scaleTransition.setToX(1);
+		scaleTransition.play();
 	}
 
 	public void addCollisionDetection() {
