@@ -68,9 +68,15 @@ public class Bird extends VisibleObject {
 
 	public void update() {
 		if (onLeft) {
-			setDx(-5);
+                    if(getDx()<0)
+			setDx(getDx()-1.5);
+                    else
+                        setDx(-5);
 		}
 		if (onRight) {
+                    if(getDx()>0)
+                        setDx(getDx()+1.5);
+                    else
 			setDx(5);
 		}
 		if (!onLeft && !onRight) {

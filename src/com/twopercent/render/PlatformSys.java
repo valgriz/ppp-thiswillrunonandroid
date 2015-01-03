@@ -15,10 +15,12 @@ public class PlatformSys extends VisibleObject {
 
         static ArrayList<Platform> platformArrayList;
 	private int n;
+        private double t;
 
 	public PlatformSys() {
 		super(new Group());
-
+                super.setDt(.3);
+                
 		n = 5; //We have 5 total platforms
 
 		platformArrayList = new ArrayList<>();
@@ -31,6 +33,10 @@ public class PlatformSys extends VisibleObject {
 	}
 
 	public void update() {
+                if(t<1500){
+                    t+=getDt();
+                }
+                
 		for (int i = 0; i < n; i++) {
                     
                     //Checks if platform has scrolled of screen, if so resets some values
@@ -40,14 +46,14 @@ public class PlatformSys extends VisibleObject {
                             platformArrayList.get(i).setX(
                                     platformArrayList.get(platformArrayList.size()-1).getX()+
                                             platformArrayList.get(platformArrayList.size()-1).getWidth()
-                                            + (int)(150*Math.random()));
+                                            + (int)(150*Math.random()) + (int)(t*.1*Math.random()));
                         }
                         else{ //Set the X value for hte platform at the X value of the platform spawned right before
                               // + platform width + random value from 1 - 150
                             platformArrayList.get(i).setX(
                                     platformArrayList.get(i-1).getX()+
                                             platformArrayList.get(i-1).getWidth()
-                                            + (int)(150*Math.random()));
+                                            + (int)(150*Math.random()) + (int)(t*.1*Math.random()));
                         }
                         
                         //Randomize Y value
