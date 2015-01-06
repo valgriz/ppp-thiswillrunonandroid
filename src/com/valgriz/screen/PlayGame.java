@@ -1,5 +1,6 @@
 package com.valgriz.screen;
 
+import com.twopercent.main.Global;
 import com.twopercent.render.BackgroundA;
 import com.twopercent.render.BackgroundB;
 import com.twopercent.render.Bird;
@@ -35,10 +36,33 @@ public class PlayGame {
 
 	}
 
+	public static void resetGame() {
+		platformSys.reset();
+		bird.reset();
+		// Attribs
+		Global.inPlayGame = true;
+		Global.inHighScores = false;
+		Global.inStats = false;
+		Global.inOptions = false;
+		Global.inHelp = false;
+		Global.inPaused = false;
+		Global.inGameOver = false;
+		Global.score = 0;
+
+		Global.gameStateChanged = true;
+	}
+
 	public void update() {
-		backgroundA.update();
-		backgroundB.update();
-		platformSys.update();
-		bird.update();
+		if (!Global.inPaused) {
+			backgroundA.update();
+			backgroundB.update();
+			platformSys.update();
+			bird.update();
+
+		}
+		if (Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions && !Global.inHelp
+				&& !Global.inPaused && !Global.inGameOver) {
+			Global.score += 1;
+		}
 	}
 }

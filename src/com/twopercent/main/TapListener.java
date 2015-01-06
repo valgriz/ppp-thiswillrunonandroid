@@ -11,22 +11,18 @@ public class TapListener extends InputController {
 		scene.setOnTouchPressed(new EventHandler<TouchEvent>() {
 
 			public void handle(TouchEvent event) {
-				if (event.getTouchPoint().getX() > 0 && event.getTouchPoint().getX() < (scene.getWidth() / 2)) {
-					onLeft(1);
-				}
-				if (event.getTouchPoint().getX() > (scene.getWidth() / 2)
-						&& event.getTouchPoint().getX() < scene.getWidth()) {
-					onRight(1);
-				}
+				coordinatePressed((int) event.getTouchPoint().getX(), (int) event.getTouchPoint().getY());
 			}
 		});
 
-		scene.setOnTouchMoved(new EventHandler<TouchEvent>() {
+		scene.setOnTouchReleased((new EventHandler<TouchEvent>() {
 
+			@Override
 			public void handle(TouchEvent event) {
-				onLeft(0);
-				onRight(0);
+				coordinateReleased();
+
 			}
-		});
+		}));
+
 	}
 }

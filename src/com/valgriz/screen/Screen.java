@@ -1,6 +1,8 @@
 package com.valgriz.screen;
 
+import com.twopercent.main.InputController;
 import com.twopercent.main.Main;
+import com.twopercent.render.UI;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -17,10 +19,15 @@ import javafx.util.Duration;
 public class Screen {
 	private Group root;
 	private PlayGame playGame;
+	private UI userInterface;
 
 	public Screen(Group root) {
 		this.root = root;
 		playGame = new PlayGame(root);
+
+		userInterface = new UI();
+
+		root.getChildren().add(userInterface.getGroup());
 
 		startTimeline();
 	}
@@ -37,7 +44,9 @@ public class Screen {
 	}
 
 	private void update() {
+
 		playGame.update();
+		userInterface.update();
 
 	}
 }

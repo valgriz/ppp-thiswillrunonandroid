@@ -2,8 +2,11 @@ package com.twopercent.render;
 
 import java.util.ArrayList;
 
+import com.twopercent.main.Global;
 import com.valgriz.screen.PlayGame;
 
+import javafx.animation.Animation;
+import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -17,16 +20,17 @@ public class Bird extends VisibleObject {
 	private static boolean onLeft, onRight;
 
 	private static ScaleTransition scaleTransition;
+	private RotateTransition rt1, rt2;
 
 	public Bird() {
 		super(new Group());
 		setImageViewToImage(new Image(Bird.class.getResource("/res/images/bird.png").toString()));
 		getGroup().getChildren().add(getImageView());
-		getImageView().setViewport(new Rectangle2D(0, 0, 57, 40));
+		getImageView().setViewport(new Rectangle2D(0, 0, 56, 40));
 		setWidth(57);
 		setHeight(40);
-		setX(100);
-		setY(30);
+		setX(200);
+		setY(-200);
 
 		collisionObjectArrayList = new ArrayList<>();
 		hit = false;
@@ -34,10 +38,32 @@ public class Bird extends VisibleObject {
 		onLeft = onRight = false;
 
 		setVerticalGravity(getY(), 0, .9, 2);
-		syncCoords();
 
 		scaleTransition = new ScaleTransition(Duration.millis(200), getImageView());
 
+		rt1 = new RotateTransition(Duration.millis(500), getGroup());
+		rt1.setToAngle(30);
+
+		rt2 = new RotateTransition(Duration.millis(500), getGroup());
+		rt2.setToAngle(-30);
+
+		Global.inPlayGame = true;
+
+		syncCoords();
+
+	}
+
+	public void reset() {
+		setX(200);
+		setY(-200);
+		setDx(0);
+		setDy(0);
+		hit = false;
+		Global.inPlayGame = true;
+		onRight();
+		collisionObjectArrayList.clear();
+		addCollisionDetection();
+		syncCoords();
 	}
 
 	public static void offLeft() {
@@ -66,24 +92,45 @@ public class Bird extends VisibleObject {
 		}
 	}
 
+	private void reverseAnimation() {
+		if (getDy() < 0) {
+			if (rt2.getStatus() != Animation.Status.RUNNING) {
+				rt2.play();
+			}
+		} else if (getDy() > 0) {
+			if (rt1.getStatus() != Animation.Status.RUNNING) {
+				rt1.play();
+			}
+		}
+
+	}
+
+	public void birdFell() {
+		if (Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions && !Global.inHelp
+				&& !Global.inPaused && !Global.inGameOver) {
+			Global.inGameOver = true;
+			Global.gameStateChanged = true;
+		}
+	}
+
 	public void update() {
 		if (onLeft) {
-                    if(getDx()<0)
-			setDx(getDx()-1.5);
-                    else
-                        setDx(-5);
+			if (getDx() < 0)
+				setDx(getDx() - 1.5);
+			else
+				setDx(-5);
 		}
 		if (onRight) {
-                    if(getDx()>0)
-                        setDx(getDx()+1.5);
-                    else
-			setDx(5);
+			if (getDx() > 0)
+				setDx(getDx() + 1.5);
+			else
+				setDx(5);
 		}
 		if (!onLeft && !onRight) {
 			setDx(0);
 		}
 		for (int i = 0; i < PlayGame.platformSys.platformArrayList.size(); i++) {
-			if (collisionObjectArrayList.get(i).checkCollision()) {
+			if (collisionObjectArrayList.get(i).checkCollision() && getDy() > 0) {
 				setDy(-25);
 				hit = true;
 				setY(PlayGame.platformSys.platformArrayList.get(i).getY() - getHeight() - 2);
@@ -96,7 +143,12 @@ public class Bird extends VisibleObject {
 			hit = false;
 		}
 
+		if (getY() > 500) {
+			birdFell();
+		}
+		reverseAnimation();
 		updateX();
 		syncCoords();
 	}
+
 }

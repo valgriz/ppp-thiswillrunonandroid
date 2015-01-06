@@ -10,6 +10,8 @@ public abstract class VisibleObject extends CollisionObject {
 	private ImageView imageView;
 	private double x, y, dy, dx, dt, scale, gravity;
 	private int height, width, frame;
+	private boolean visible;
+	private String type;
 
 	public VisibleObject() {
 
@@ -51,6 +53,17 @@ public abstract class VisibleObject extends CollisionObject {
 
 	public abstract void update();
 
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+		if (imageView != null) {
+			imageView.setVisible(visible);
+		}
+	}
+
 	public void setVerticalGravity(double y, double dy, double dt, double gravity) {
 		this.y = y;
 		this.dy = dy;
@@ -73,6 +86,14 @@ public abstract class VisibleObject extends CollisionObject {
 
 	public void setX(double x) {
 		this.x = x;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public double getY() {

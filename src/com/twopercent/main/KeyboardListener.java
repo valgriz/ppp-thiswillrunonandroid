@@ -17,6 +17,12 @@ public class KeyboardListener extends InputController {
 				if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
 					onRight(1);
 				}
+				if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+					onUp(1);
+				}
+				if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+					onDown(1);
+				}
 			}
 		});
 
@@ -27,6 +33,12 @@ public class KeyboardListener extends InputController {
 				}
 				if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
 					onRight(0);
+				}
+				if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+					onUp(0);
+				}
+				if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+					onDown(0);
 				}
 			}
 		});
