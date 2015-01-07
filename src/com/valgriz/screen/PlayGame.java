@@ -48,7 +48,6 @@ public class PlayGame {
 		Global.inPaused = false;
 		Global.inGameOver = false;
 		Global.score = 0;
-
 		Global.gameStateChanged = true;
 	}
 
@@ -60,9 +59,15 @@ public class PlayGame {
 			bird.update();
 
 		}
+
+		if (Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
+			Bird.pauseAllAnimation();
+		}
+
 		if (Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions && !Global.inHelp
 				&& !Global.inPaused && !Global.inGameOver) {
 			Global.score += 1;
+
 		}
 	}
 }

@@ -20,7 +20,8 @@ public class Bird extends VisibleObject {
 	private static boolean onLeft, onRight;
 
 	private static ScaleTransition scaleTransition;
-	private RotateTransition rt1, rt2;
+	private static RotateTransition rt1;
+	private static RotateTransition rt2;
 
 	public Bird() {
 		super(new Group());
@@ -56,11 +57,15 @@ public class Bird extends VisibleObject {
 	public void reset() {
 		setX(200);
 		setY(-200);
+
+		scaleTransition.setToX(1);
+		scaleTransition.play();
+		onLeft = onLeft = false;
 		setDx(0);
 		setDy(0);
+
 		hit = false;
 		Global.inPlayGame = true;
-		onRight();
 		collisionObjectArrayList.clear();
 		addCollisionDetection();
 		syncCoords();
@@ -105,6 +110,13 @@ public class Bird extends VisibleObject {
 
 	}
 
+	public static void dontDoIt() {
+		scaleTransition.setToX(-1);
+		scaleTransition.play();
+		onLeft = true;
+		onRight = false;
+	}
+
 	public void birdFell() {
 		if (Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions && !Global.inHelp
 				&& !Global.inPaused && !Global.inGameOver) {
@@ -113,7 +125,16 @@ public class Bird extends VisibleObject {
 		}
 	}
 
+	public static void pauseAllAnimation() {
+		if (Global.gameStateChanged && Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
+			rt1.pause();
+			rt2.pause();
+			scaleTransition.stop();
+		}
+	}
+
 	public void update() {
+
 		if (onLeft) {
 			if (getDx() < 0)
 				setDx(getDx() - 1.5);
@@ -126,9 +147,11 @@ public class Bird extends VisibleObject {
 			else
 				setDx(5);
 		}
+
 		if (!onLeft && !onRight) {
 			setDx(0);
 		}
+
 		for (int i = 0; i < PlayGame.platformSys.platformArrayList.size(); i++) {
 			if (collisionObjectArrayList.get(i).checkCollision() && getDy() > 0) {
 				setDy(-25);

@@ -138,6 +138,7 @@ public class InputController {
 				Global.inPaused = false;
 				Global.inGameOver = true;
 				Global.gameStateChanged = true;
+				Bird.dontDoIt();
 				break;
 			}
 		}
@@ -147,6 +148,160 @@ public class InputController {
 		if (temp.getType().equals("button")) {
 			Button b = (Button) temp;
 			b.setState(2);
+		}
+	}
+
+	public void onSelectionAction() {
+		// Performing actions
+		if (Global.inPlayGame && !Global.inPaused && !Global.inGameOver) {
+
+		}
+
+		if (Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
+			switch (UI.selection) {
+			case -2:
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				break;
+			case -1:
+				Global.inPaused = false;
+				Global.inGameOver = true;
+				Global.gameStateChanged = true;
+				Bird.dontDoIt();
+				break;
+			case 0:
+
+				break;
+			case 1:
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				break;
+			case 2:
+				Global.inPaused = false;
+				Global.inGameOver = true;
+				Global.gameStateChanged = true;
+				Bird.dontDoIt();
+				break;
+
+			}
+		} else if (Global.inPlayGame && !Global.inPaused && Global.inGameOver) {
+			switch (UI.selection) {
+			case -2:
+				Global.inPaused = false;
+				Global.inGameOver = false;
+				PlayGame.resetGame();
+				Global.inPlayGame = true;
+				Global.gameStateChanged = true;
+				break;
+			case -1:
+				System.exit(0);
+				break;
+			case 0:
+
+				break;
+			case 1:
+				Global.inPaused = false;
+				Global.inGameOver = false;
+				PlayGame.resetGame();
+				Global.inPlayGame = true;
+				Global.gameStateChanged = true;
+				break;
+			case 2:
+				System.exit(0);
+				break;
+			}
+		}
+		if (UI.selection != 0) {
+			onMiddle();
+		}
+	}
+
+	public void onMiddle() {
+		UI.selection = 0;
+		unhighlightAllButtons();
+	}
+
+	public void onUp() {
+		// For menu use only
+		UI.selection -= 1;
+		applySelectionChange();
+	}
+
+	public void onDown() {
+		// For menu use only
+		UI.selection += 1;
+		applySelectionChange();
+	}
+
+	public void unhighlightAllButtons() {
+		UI.unhighlightAllButtons();
+	}
+
+	public void applySelectionChange() {
+		// Highlighting
+		if (Global.inPlayGame && !Global.inPaused && !Global.inGameOver) {
+			UI.selection = 0;
+		}
+
+		if (Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
+			if (UI.selection > 2) {
+				UI.selection = 1;
+			}
+			if (UI.selection < -2) {
+				UI.selection = -1;
+			}
+			switch (UI.selection) {
+			case -2:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("gpResume");
+				break;
+			case -1:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("gpEndGame");
+				break;
+			case 0:
+				UI.unhighlightAllButtons();
+				break;
+			case 1:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("gpResume");
+				break;
+			case 2:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("gpEndGame");
+				break;
+
+			}
+		}
+
+		if (Global.inPlayGame && !Global.inPaused && Global.inGameOver) {
+			if (UI.selection > 2) {
+				UI.selection = 1;
+			}
+			if (UI.selection < -2) {
+				UI.selection = -1;
+			}
+			switch (UI.selection) {
+			case -2:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("goPlayAgain");
+				break;
+			case -1:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("goMainMenu");
+				break;
+			case 0:
+				UI.unhighlightAllButtons();
+				break;
+			case 1:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("goPlayAgain");
+				break;
+			case 2:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("goMainMenu");
+				break;
+			}
 		}
 	}
 
@@ -170,19 +325,18 @@ public class InputController {
 		}
 	}
 
-	public void onUp(int state) {
-		if (Global.inPlayGame && !Global.inGameOver && !Global.inPaused) {
-			if (state == 0) {
-			} else if (state == 1) {
-			}
-		}
-	}
+	public void onEscape(int state) {
+		if (state == 0) {
 
-	public void onDown(int state) {
-		if (Global.inPlayGame && !Global.inGameOver && !Global.inPaused) {
-			if (state == 0) {
-			} else if (state == 1) {
+		} else if (state == 1) {
+			if (Global.inPlayGame && !Global.inPaused && !Global.inGameOver) {
+				Global.inPaused = true;
+				Global.gameStateChanged = true;
+			} else if (Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
 			}
 		}
+		unhighlightAllButtons();
 	}
 }

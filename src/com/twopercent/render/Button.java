@@ -13,15 +13,14 @@ import javafx.scene.text.Text;
 
 public class Button extends VisibleObject {
 	private String text, id;
-	private int buttonKey, buttonHoverKey;
+	private int buttonKey = 0, buttonHoverKey = 1, buttonSpriteKey;
 	private static int state;
 	private Text textView;
 
-	public Button(int x, int y, int width, int height, String text, int buttonKey, int buttonHoverKey, String id) {
+	public Button(int x, int y, int width, int height, String text, int buttonSpriteKey, String id) {
 		super(new Group());
 		this.text = text;
-		this.buttonKey = buttonKey;
-		this.buttonHoverKey = buttonHoverKey;
+		this.buttonSpriteKey = buttonSpriteKey;
 		this.id = id;
 		setX(x);
 		setY(y);
@@ -31,7 +30,8 @@ public class Button extends VisibleObject {
 		state = 0;
 
 		setImageViewToImage(new Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
-		getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey, 0, getWidth(), getHeight()));
+		getImageView().setViewport(
+				new Rectangle2D(getWidth() * buttonKey, getHeight() * buttonSpriteKey, getWidth(), getHeight()));
 		getImageView().setX(getX());
 		getImageView().setY(getY());
 		getGroup().getChildren().add(getImageView());
@@ -114,13 +114,21 @@ public class Button extends VisibleObject {
 		this.state = state;
 		if (getImageView() != null) {
 			if (state == 0) {
-				getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey, 0, getWidth(), getHeight()));
+				getImageView()
+						.setViewport(
+								new Rectangle2D(getWidth() * buttonKey, getHeight() * buttonSpriteKey, getWidth(),
+										getHeight()));
 			}
 			if (state == 1) {
-				getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey, 0, getWidth(), getHeight()));
+				getImageView()
+						.setViewport(
+								new Rectangle2D(getWidth() * buttonKey, getHeight() * buttonSpriteKey, getWidth(),
+										getHeight()));
 			}
 			if (state == 2) {
-				getImageView().setViewport(new Rectangle2D(getWidth() * buttonHoverKey, 0, getWidth(), getHeight()));
+				getImageView().setViewport(
+						new Rectangle2D(getWidth() * buttonHoverKey, getHeight() * buttonSpriteKey, getWidth(),
+								getHeight()));
 			}
 		}
 	}

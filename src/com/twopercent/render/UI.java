@@ -17,6 +17,7 @@ public class UI extends UserInterfaceCreator {
 
 	private Text gameMessage;
 	private String gameEndMessageString;
+	public static int selection = 0;
 
 	public UI() {
 		super();
@@ -47,10 +48,10 @@ public class UI extends UserInterfaceCreator {
 		addNullButton(358, 0, 357, 500, "pgRightTap");
 		addNullButton(0, 0, 130, 60, "pgPauseGame");
 
-		addButton(210, 195, 300, 69, "PLAY AGAIN", 0, 1, "goPlayAgain");
-		addButton(210, 287, 300, 69, "MAIN MENU", 0, 1, "goMainMenu");
-		addButton(210, 195, 300, 69, "RESUME", 0, 1, "gpResume");
-		addButton(210, 287, 300, 69, "END GAME", 0, 1, "gpEndGame");
+		addButton(210, 195, 300, 69, "PLAY AGAIN", 0, "goPlayAgain");
+		addButton(210, 287, 300, 69, "MAIN MENU", 0, "goMainMenu");
+		addButton(210, 195, 300, 69, "RESUME", 0, "gpResume");
+		addButton(210, 287, 300, 69, "END GAME", 0, "gpEndGame");
 
 		stateChanged();
 
@@ -72,8 +73,18 @@ public class UI extends UserInterfaceCreator {
 		return getButton(id);
 	}
 
-	public void stateChanged() {
+	public static void unhighlightAllButtons() {
+		for (int i = 0; i < getButtonArrayList().size(); i++) {
+			getButtonArrayList().get(i).setState(0);
+		}
+	}
 
+	public static void highlightButton(String id) {
+		getButton(id).setState(2);
+	}
+
+	public void stateChanged() {
+		selection = 0;
 		System.out.println("screenStateChanged");
 		// Attribs
 		if (Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions && !Global.inHelp

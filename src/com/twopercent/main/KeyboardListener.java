@@ -18,10 +18,16 @@ public class KeyboardListener extends InputController {
 					onRight(1);
 				}
 				if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
-					onUp(1);
+					onUp();
 				}
 				if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
-					onDown(1);
+					onDown();
+				}
+				if (event.getCode() == KeyCode.ESCAPE) {
+					onEscape(1);
+				}
+				if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE) {
+					onSelectionAction();
 				}
 			}
 		});
@@ -35,10 +41,11 @@ public class KeyboardListener extends InputController {
 					onRight(0);
 				}
 				if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
-					onUp(0);
 				}
 				if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
-					onDown(0);
+				}
+				if (event.getCode() == KeyCode.ESCAPE) {
+
 				}
 			}
 		});

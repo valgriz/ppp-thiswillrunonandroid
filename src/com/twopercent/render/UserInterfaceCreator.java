@@ -23,8 +23,8 @@ public class UserInterfaceCreator {
 
 	}
 
-	public void addButton(int x, int y, int width, int height, String text, int buttonKey, int buttonHoverKey, String id) {
-		buttonArrayList.add(new Button(x, y, width, height, text, buttonKey, buttonHoverKey, id));
+	public void addButton(int x, int y, int width, int height, String text, int buttonSpriteKey, String id) {
+		buttonArrayList.add(new Button(x, y, width, height, text, buttonSpriteKey, id));
 		group.getChildren().add(buttonArrayList.get(buttonArrayList.size() - 1).getGroup());
 		buttonArrayList.get(buttonArrayList.size() - 1).setVisible(false);
 	}
@@ -75,6 +75,14 @@ public class UserInterfaceCreator {
 
 	public void setScoreText(Text scoreText) {
 		this.scoreText = scoreText;
+	}
+
+	public static ArrayList<Button> getButtonArrayList() {
+		return buttonArrayList;
+	}
+
+	public static void setButtonArrayList(ArrayList<Button> buttonArrayList) {
+		UserInterfaceCreator.buttonArrayList = buttonArrayList;
 	}
 
 }
