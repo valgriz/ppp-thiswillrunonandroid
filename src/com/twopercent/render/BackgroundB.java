@@ -3,11 +3,14 @@ package com.twopercent.render;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javafx.animation.Animation;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 public class BackgroundB extends VisibleObject {
 

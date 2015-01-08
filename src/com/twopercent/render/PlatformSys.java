@@ -8,7 +8,9 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class PlatformSys extends VisibleObject {
@@ -100,8 +102,11 @@ class Platform extends VisibleObject {
 		this.i = i;
 		this.n = n;
 		f = 0;
+
+		int whichPlatform = 2;
+
 		setImageViewToImage(new Image(Platform.class.getResource("/res/images/platform.png").toString()));
-		getImageView().setViewport(new Rectangle2D(0, 0, 180, 45));
+		getImageView().setViewport(new Rectangle2D(whichPlatform * 180, 0, 180, 45));
 		setWidth(180);
 		setHeight(45);
 		setX(i * getWidth());
@@ -118,8 +123,12 @@ class Platform extends VisibleObject {
 		bounceTranslateTransition.setCycleCount(2);
 		bounceTranslateTransition.setAutoReverse(true);
 
-		syncCoords();
+		DropShadow ds = new DropShadow(15, Color.BLACK);
+		ds.setOffsetX(5);
+		ds.setOffsetY(5);
+		getImageView().setEffect(ds);
 
+		syncCoords();
 	}
 
 	public void update() {

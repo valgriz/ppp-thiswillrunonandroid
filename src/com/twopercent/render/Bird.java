@@ -166,7 +166,7 @@ public class Bird extends VisibleObject {
 			hit = false;
 		}
 
-		if (getY() > 500) {
+		if (getY() > 600) {
 			birdFell();
 		}
 		reverseAnimation();

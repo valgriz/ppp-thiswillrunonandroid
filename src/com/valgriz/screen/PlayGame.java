@@ -30,7 +30,6 @@ public class PlayGame {
 
 		bird.addCollisionDetection();
 
-		// Bird
 		// Any extras
 		// UI
 
