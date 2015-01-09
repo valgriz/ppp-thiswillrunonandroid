@@ -25,6 +25,7 @@ public class Bird extends VisibleObject {
 
 	public Bird() {
 		super(new Group());
+
 		setImageViewToImage(new Image(Bird.class.getResource("/res/images/bird.png").toString()));
 		getGroup().getChildren().add(getImageView());
 		getImageView().setViewport(new Rectangle2D(0, 0, 56, 40));
@@ -135,13 +136,15 @@ public class Bird extends VisibleObject {
 
 	public void update() {
 
-		if (onLeft) {
+		if (onLeft) { 
+                        SoundPlayer.playButton();
 			if (getDx() < 0)
 				setDx(getDx() - 1.5);
 			else
 				setDx(-5);
 		}
 		if (onRight) {
+                        SoundPlayer.playButton();
 			if (getDx() > 0)
 				setDx(getDx() + 1.5);
 			else
@@ -154,10 +157,15 @@ public class Bird extends VisibleObject {
 
 		for (int i = 0; i < PlayGame.platformSys.platformArrayList.size(); i++) {
 			if (collisionObjectArrayList.get(i).checkCollision() && getDy() > 0) {
+                                SoundPlayer.playBounce(); //MP3 Bounce sound, tested against WAV and MP3 was faster
+                                //SoundPlayer.playBounce2();
 				setDy(-25);
 				hit = true;
 				setY(PlayGame.platformSys.platformArrayList.get(i).getY() - getHeight() - 2);
 				PlayGame.platformSys.platformArrayList.get(i).bounceTranslateTransition.play();
+                                if(PlayGame.platformSys.platformArrayList.get(i).falling){
+                                    PlayGame.platformSys.platformArrayList.get(i).setDy(30);
+                                }
 			}
 		}
 		if (!hit) {

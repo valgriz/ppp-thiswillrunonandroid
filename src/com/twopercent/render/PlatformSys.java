@@ -46,28 +46,50 @@ public class PlatformSys extends VisibleObject {
 			if (platformArrayList.get(i).getX() < (0 - platformArrayList.get(i).getWidth())) {
 				if (i == 0) { // Set the X value for the platform at the X value
 								// of the last spawned platform
-								// + platform width + random value from 1-150
-					platformArrayList.get(i).setX(
+								// + platform width + random value from 1-150 + random time dependent value
+                                    if(!(platformArrayList.get(platformArrayList.size()-1).falling)){ //check if last platform was falling
+                                        platformArrayList.get(0).setX(
 							platformArrayList.get(platformArrayList.size() - 1).getX()
 									+ platformArrayList.get(platformArrayList.size() - 1).getWidth()
-									+ (int) (150 * Math.random()) + (int) (t * .2 * Math.random()));
+									+ (int) (150 * Math.random()) + (int) (t * .1 * Math.random()));
+                                    }
+                                    else{ //If last platform was falling, set it close
+                                        platformArrayList.get(0).setX(
+                                                        platformArrayList.get(platformArrayList.size() - 1).getX()
+                                                                        + platformArrayList.get(platformArrayList.size() - 1).getWidth()
+                                                                        + (int) (110 * Math.random()));
+                                    }
 				} else { // Set the X value for hte platform at the X value of
 							// the platform spawned right before
-							// + platform width + random value from 1 - 150
-					platformArrayList.get(i).setX(
+							// + platform width + random value from 1 - 150 + random time dependent value
+                                    if(!(platformArrayList.get(i - 1).falling)){
+                                        platformArrayList.get(i).setX(
 							platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
 									+ (int) (150 * Math.random()) + (int) (t * .2 * Math.random()));
+                                    }
+                                    else{
+                                        platformArrayList.get(i).setX(
+                                                        platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
+                                                                        + (int) (100* Math.random()));
+                                    }
 				}
 
 				// Randomize Y value
-				platformArrayList.get(i).setY(300 - (int) (150 * Math.random()) + (int) (150 * Math.random()));
+				platformArrayList.get(i).setY(300 - (int) (120 * Math.random()) + (int) (120 * Math.random()));
 
 				// Randomize oscillationing platforms
 				platformArrayList.get(i).oscillate = false;
+                                platformArrayList.get(i).falling = false;
+                                platformArrayList.get(i).getImageViewAndSetViewport(0);
 				platformArrayList.get(i).oscillationTracker = 0;
 				if (Math.random() < (double) t / 3000) {
 					platformArrayList.get(i).oscillate = true;
+                                        platformArrayList.get(i).getImageViewAndSetViewport(1);
 				}
+                                else if ((Math.random()+(double)t/6000)>.9){
+                                    platformArrayList.get(i).falling = true;
+                                    platformArrayList.get(i).getImageViewAndSetViewport(2);
+                                }
 
 			}
 			platformArrayList.get(i).update();
@@ -95,7 +117,7 @@ class Platform extends VisibleObject {
 	private int i, n, f;
 	public ScaleTransition scaleTransition;
 	public TranslateTransition bounceTranslateTransition;
-	protected boolean oscillate = false;
+	protected boolean oscillate = false, falling;
 	protected double oscillationTracker = 0, oscillationConstant = 0.03, oscillationBuildup = 0;
 
 	public Platform(int i, int n) {
@@ -103,10 +125,8 @@ class Platform extends VisibleObject {
 		this.n = n;
 		f = 0;
 
-		int whichPlatform = 2;
-
 		setImageViewToImage(new Image(Platform.class.getResource("/res/images/platform.png").toString()));
-		getImageView().setViewport(new Rectangle2D(whichPlatform * 180, 0, 180, 45));
+		getImageViewAndSetViewport(0);
 		setWidth(180);
 		setHeight(45);
 		setX(i * getWidth());
@@ -135,7 +155,12 @@ class Platform extends VisibleObject {
 		if (oscillate) {
 			setDy(oscillationBuildup * Math.sin(oscillationTracker));
 			oscillationTracker += oscillationConstant;
-		} else {
+		}
+                
+                if(falling){
+                   // System.out.println("FALLING");
+                }
+                else {
 			setDy(0);
 			oscillationConstant = Math.random() * .05;
 			if (oscillationBuildup <= 2.5) {
@@ -156,4 +181,9 @@ class Platform extends VisibleObject {
 			f++;
 		}
 	}
+        
+        public void getImageViewAndSetViewport(int whichPlatform){
+            getImageView().setViewport(new Rectangle2D(whichPlatform * 180, 0, 180, 45));
+        }
+        
 }
