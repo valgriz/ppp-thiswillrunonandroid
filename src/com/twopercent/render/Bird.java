@@ -22,12 +22,14 @@ public class Bird extends VisibleObject {
 	private static ScaleTransition scaleTransition;
 	private static RotateTransition rt1;
 	private static RotateTransition rt2;
+	private static int birdIndex;
 
 	public Bird() {
 		super(new Group());
 		setImageViewToImage(new Image(Bird.class.getResource("/res/images/bird.png").toString()));
 		getGroup().getChildren().add(getImageView());
-		getImageView().setViewport(new Rectangle2D(0, 0, 56, 40));
+		birdIndex = 0;
+		getImageView().setViewport(new Rectangle2D(66 * birdIndex, 0, 66, 40));
 		setWidth(57);
 		setHeight(40);
 		setX(200);

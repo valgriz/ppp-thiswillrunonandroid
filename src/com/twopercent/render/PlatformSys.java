@@ -43,7 +43,7 @@ public class PlatformSys extends VisibleObject {
 
 			// Checks if platform has scrolled of screen, if so resets some
 			// values
-			if (platformArrayList.get(i).getX() < (0 - platformArrayList.get(i).getWidth())) {
+			if (platformArrayList.get(i).getX() < (0 - platformArrayList.get(i).getWidth() - 10)) {
 				if (i == 0) { // Set the X value for the platform at the X value
 								// of the last spawned platform
 								// + platform width + random value from 1-150
@@ -103,7 +103,7 @@ class Platform extends VisibleObject {
 		this.n = n;
 		f = 0;
 
-		int whichPlatform = 2;
+		int whichPlatform = 0;
 
 		setImageViewToImage(new Image(Platform.class.getResource("/res/images/platform.png").toString()));
 		getImageView().setViewport(new Rectangle2D(whichPlatform * 180, 0, 180, 45));

@@ -162,6 +162,8 @@ public class InputController {
 			case -2:
 				Global.inPaused = false;
 				Global.gameStateChanged = true;
+				Bird.offLeft();
+				Bird.offRight();
 				break;
 			case -1:
 				Global.inPaused = false;
@@ -175,6 +177,8 @@ public class InputController {
 			case 1:
 				Global.inPaused = false;
 				Global.gameStateChanged = true;
+				Bird.offLeft();
+				Bird.offRight();
 				break;
 			case 2:
 				Global.inPaused = false;
@@ -192,6 +196,8 @@ public class InputController {
 				PlayGame.resetGame();
 				Global.inPlayGame = true;
 				Global.gameStateChanged = true;
+				Bird.offLeft();
+				Bird.offRight();
 				break;
 			case -1:
 				System.exit(0);
@@ -205,6 +211,8 @@ public class InputController {
 				PlayGame.resetGame();
 				Global.inPlayGame = true;
 				Global.gameStateChanged = true;
+				Bird.offLeft();
+				Bird.offRight();
 				break;
 			case 2:
 				System.exit(0);
