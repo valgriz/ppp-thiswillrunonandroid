@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.twopercent.render.Bird;
 import com.twopercent.render.Button;
+import com.twopercent.render.SoundPlayer;
 import com.twopercent.render.UI;
 import com.twopercent.render.UserInterfaceCreator;
 import com.twopercent.render.VisibleObject;
@@ -110,6 +111,7 @@ public class InputController {
 
 	public void action(VisibleObject temp) {
 		if (temp.getType().equals("button") || temp.getType().equals("nullButton")) {
+                        SoundPlayer.playButton();
 			Button b = (Button) temp;
 			b.setState(1);
 			switch (b.getId()) {
@@ -158,6 +160,7 @@ public class InputController {
 		}
 
 		if (Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
+                        SoundPlayer.playButton();
 			switch (UI.selection) {
 			case -2:
 				Global.inPaused = false;
@@ -189,6 +192,7 @@ public class InputController {
 
 			}
 		} else if (Global.inPlayGame && !Global.inPaused && Global.inGameOver) {
+                        SoundPlayer.playButton();
 			switch (UI.selection) {
 			case -2:
 				Global.inPaused = false;
