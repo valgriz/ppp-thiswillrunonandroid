@@ -140,14 +140,12 @@ public class Bird extends VisibleObject {
 
 
 		if (onLeft) {
-			SoundPlayer.playButton();
 			if (getDx() < 0)
 				setDx(getDx() - 1.5);
 			else
 				setDx(-5);
 		}
 		if (onRight) {
-			SoundPlayer.playButton();
 			if (getDx() > 0)
 				setDx(getDx() + 1.5);
 			else
