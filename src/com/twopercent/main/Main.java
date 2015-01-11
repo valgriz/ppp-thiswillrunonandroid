@@ -31,12 +31,15 @@ public class Main extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Flappy Jump - 2%");
 
+		Global.inMainMenu = true;
+		Global.inPlayGame = false;
+		Global.inPaused = false;
+		Global.inGameOver = false;
+
 		// Initializes base case
 		root = new Group();
 		screen = new Screen(root);
 		mainScene = new Scene(root);
-
-		Global.inPlayGame = true;
 
 		KeyboardListener keyboardListener = new KeyboardListener(mainScene);
 		MouseListener mouseListener = new MouseListener(mainScene);

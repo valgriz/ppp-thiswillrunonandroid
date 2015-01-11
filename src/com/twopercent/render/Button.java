@@ -3,6 +3,10 @@ package com.twopercent.render;
 import com.twopercent.main.ActionZone;
 import com.twopercent.main.InputController;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
@@ -10,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class Button extends VisibleObject {
 	private String text, id;
@@ -73,6 +78,34 @@ public class Button extends VisibleObject {
 
 		addActionListener();
 
+	}
+
+	public void fadeOut() {
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), getGroup());
+		fadeTransition.setFromValue(1);
+		fadeTransition.setToValue(0);
+		fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				setVisible(false);
+			}
+		});
+		fadeTransition.play();
+	}
+
+	public void translateToY(int start, int finish, boolean startVisibility, boolean finishVisibility) {
+		setVisible(startVisibility);
+		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), getGroup());
+		translateTransition.setCycleCount(1);
+		translateTransition.setFromY(start);
+		translateTransition.setToY(finish);
+		translateTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				setVisible(finishVisibility);
+			}
+		});
+		translateTransition.play();
 	}
 
 	public void addActionListener() {

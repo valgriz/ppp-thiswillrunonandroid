@@ -40,7 +40,7 @@ public class PlatformSys extends VisibleObject {
 		}
 
 		for (int i = 0; i < n; i++) {
-                        //platformArrayList.get(i).setDx(-2-t/750);
+			// platformArrayList.get(i).setDx(-2-t/750);
 
 			// Checks if platform has scrolled of screen, if so resets some
 			// values
@@ -88,7 +88,7 @@ public class PlatformSys extends VisibleObject {
 				platformArrayList.get(i).falling = false;
 				platformArrayList.get(i).getImageViewAndSetViewport(0);
 				platformArrayList.get(i).oscillationTracker = 0;
-                                platformArrayList.get(i).setDy(0);
+				platformArrayList.get(i).setDy(0);
 				if (Math.random() < (double) t / 4000) {
 					platformArrayList.get(i).oscillate = true;
 					platformArrayList.get(i).getImageViewAndSetViewport(1);
@@ -153,7 +153,7 @@ class Platform extends VisibleObject {
 		DropShadow ds = new DropShadow(15, Color.BLACK);
 		ds.setOffsetX(5);
 		ds.setOffsetY(5);
-		getImageView().setEffect(ds);
+		// getImageView().setEffect(ds);
 
 		syncCoords();
 	}
@@ -164,20 +164,20 @@ class Platform extends VisibleObject {
 			oscillationTracker += oscillationConstant;
 		}
 
-                else if (falling) {
+		else if (falling) {
 			// System.out.println("FALLING");
-		} 
-                
-                else {
+		}
+
+		else {
 			if (oscillationBuildup <= 2.5) {
 				oscillationBuildup += .003;
 			}
 		}
-                
-                if(getDx()>-5){
-                   setDx(getDx() - .0001);
-                }
-                
+
+		if (getDx() > -5) {
+			setDx(getDx() - .0001);
+		}
+
 		updateX();
 		updateY();
 		syncCoords();

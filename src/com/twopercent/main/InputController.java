@@ -8,6 +8,7 @@ import com.twopercent.render.SoundPlayer;
 import com.twopercent.render.UI;
 import com.twopercent.render.UserInterfaceCreator;
 import com.twopercent.render.VisibleObject;
+import com.valgriz.screen.MainMenu;
 import com.valgriz.screen.PlayGame;
 
 public class InputController {
@@ -111,7 +112,7 @@ public class InputController {
 
 	public void action(VisibleObject temp) {
 		if (temp.getType().equals("button") || temp.getType().equals("nullButton")) {
-                        SoundPlayer.playButton();
+			SoundPlayer.playButton();
 			Button b = (Button) temp;
 			b.setState(1);
 			switch (b.getId()) {
@@ -126,7 +127,13 @@ public class InputController {
 				PlayGame.resetGame();
 				break;
 			case "goMainMenu":
-				System.exit(0);
+				Global.inPlayGame = false;
+				Global.inPaused = false;
+				Global.inGameOver = false;
+				Global.inMainMenu = true;
+				PlayGame.translateOut();
+				MainMenu.goToMainMenu();
+				Global.gameStateChanged = true;
 				break;
 			case "pgPauseGame":
 				Global.inPaused = true;
@@ -142,6 +149,33 @@ public class InputController {
 				Global.gameStateChanged = true;
 				Bird.dontDoIt();
 				break;
+			case "mmPlay":
+				Global.inMainMenu = false;
+				Global.inPlayGame = true;
+				Global.inPaused = false;
+				Global.inGameOver = false;
+				Global.gameStateChanged = true;
+				PlayGame.resetGame();
+				MainMenu.goToPlayGame();
+				PlayGame.goToPlayGame();
+				break;
+			case "mmScores":
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				break;
+			case "mmStats":
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				break;
+			case "mmOptions":
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				break;
+			case "mmHelp":
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				break;
+
 			}
 		}
 	}
@@ -155,13 +189,32 @@ public class InputController {
 
 	public void onSelectionAction() {
 		// Performing actions
-		if (Global.inPlayGame && !Global.inPaused && !Global.inGameOver) {
 
-		}
-
-		if (Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
-                        SoundPlayer.playButton();
+		if (Global.inMainMenu) {
+			SoundPlayer.playButton();
 			switch (UI.selection) {
+			case -5:
+				Global.inMainMenu = false;
+				Global.inPlayGame = true;
+				Global.inPaused = false;
+				Global.inGameOver = false;
+				Global.gameStateChanged = true;
+				PlayGame.resetGame();
+				MainMenu.goToPlayGame();
+				PlayGame.goToPlayGame();
+				break;
+			case -4:
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				Bird.offLeft();
+				Bird.offRight();
+				break;
+			case -3:
+				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				Bird.offLeft();
+				Bird.offRight();
+				break;
 			case -2:
 				Global.inPaused = false;
 				Global.gameStateChanged = true;
@@ -178,10 +231,15 @@ public class InputController {
 
 				break;
 			case 1:
+				Global.inMainMenu = false;
+				Global.inPlayGame = true;
 				Global.inPaused = false;
+				Global.inGameOver = false;
 				Global.gameStateChanged = true;
-				Bird.offLeft();
-				Bird.offRight();
+				PlayGame.resetGame();
+				MainMenu.goToPlayGame();
+				PlayGame.goToPlayGame();
+
 				break;
 			case 2:
 				Global.inPaused = false;
@@ -189,43 +247,114 @@ public class InputController {
 				Global.gameStateChanged = true;
 				Bird.dontDoIt();
 				break;
-
-			}
-		} else if (Global.inPlayGame && !Global.inPaused && Global.inGameOver) {
-                        SoundPlayer.playButton();
-			switch (UI.selection) {
-			case -2:
+			case 3:
 				Global.inPaused = false;
-				Global.inGameOver = false;
-				PlayGame.resetGame();
-				Global.inPlayGame = true;
+				Global.inGameOver = true;
 				Global.gameStateChanged = true;
-				Bird.offLeft();
-				Bird.offRight();
+				Bird.dontDoIt();
 				break;
-			case -1:
-				System.exit(0);
-				break;
-			case 0:
-
-				break;
-			case 1:
+			case 4:
 				Global.inPaused = false;
-				Global.inGameOver = false;
-				PlayGame.resetGame();
-				Global.inPlayGame = true;
+				Global.inGameOver = true;
 				Global.gameStateChanged = true;
-				Bird.offLeft();
-				Bird.offRight();
+				Bird.dontDoIt();
 				break;
-			case 2:
-				System.exit(0);
+			case 5:
+				Global.inPaused = false;
+				Global.inGameOver = true;
+				Global.gameStateChanged = true;
+				Bird.dontDoIt();
 				break;
 			}
 		}
+
+		if (Global.inPlayGame) {
+			if (Global.inPaused && !Global.inGameOver) {
+
+			}
+
+			if (Global.inPaused && !Global.inGameOver) {
+				SoundPlayer.playButton();
+				switch (UI.selection) {
+				case -2:
+					Global.inPaused = false;
+					Global.gameStateChanged = true;
+					Bird.offLeft();
+					Bird.offRight();
+					break;
+				case -1:
+					Global.inPaused = false;
+					Global.inGameOver = true;
+					Global.gameStateChanged = true;
+					Bird.dontDoIt();
+					break;
+				case 0:
+
+					break;
+				case 1:
+					Global.inPaused = false;
+					Global.gameStateChanged = true;
+					Bird.offLeft();
+					Bird.offRight();
+					break;
+				case 2:
+					Global.inPaused = false;
+					Global.inGameOver = true;
+					Global.gameStateChanged = true;
+					Bird.dontDoIt();
+					break;
+
+				}
+			} else if (!Global.inPaused && Global.inGameOver) {
+				SoundPlayer.playButton();
+				switch (UI.selection) {
+				case -2:
+					Global.inPaused = false;
+					Global.inGameOver = false;
+					PlayGame.resetGame();
+					Global.inPlayGame = true;
+					Global.gameStateChanged = true;
+					Bird.offLeft();
+					Bird.offRight();
+					break;
+				case -1:
+					Global.inPlayGame = false;
+					Global.inPaused = false;
+					Global.inGameOver = false;
+					Global.inMainMenu = true;
+					Global.gameStateChanged = true;
+					PlayGame.translateOut();
+					MainMenu.goToMainMenu();
+					break;
+				case 0:
+					break;
+				case 1:
+					Global.inPaused = false;
+					Global.inGameOver = false;
+					PlayGame.resetGame();
+					Global.inPlayGame = true;
+					Global.gameStateChanged = true;
+					Bird.offLeft();
+					Bird.offRight();
+					break;
+				case 2:
+					Global.inPlayGame = false;
+					Global.inPaused = false;
+					Global.inGameOver = false;
+					Global.inMainMenu = true;
+					Global.gameStateChanged = true;
+					PlayGame.translateOut();
+					MainMenu.goToMainMenu();
+
+					break;
+				}
+			}
+		}
+
 		if (UI.selection != 0) {
 			onMiddle();
 		}
+
 	}
 
 	public void onMiddle() {
@@ -251,70 +380,130 @@ public class InputController {
 
 	public void applySelectionChange() {
 		// Highlighting
-		if (Global.inPlayGame && !Global.inPaused && !Global.inGameOver) {
-			UI.selection = 0;
-		}
 
-		if (Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
-			if (UI.selection > 2) {
+		if (Global.inMainMenu) {
+			if (UI.selection > 5) {
 				UI.selection = 1;
 			}
-			if (UI.selection < -2) {
+			if (UI.selection < -5) {
 				UI.selection = -1;
 			}
 			switch (UI.selection) {
+			case -5:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("mmPlay");
+				break;
+			case -4:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("mmScores");
+				break;
+			case -3:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("mmStats");
+				break;
 			case -2:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("gpResume");
+				UI.highlightButton("mmOptions");
 				break;
 			case -1:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("gpEndGame");
+				UI.highlightButton("mmHelp");
 				break;
 			case 0:
 				UI.unhighlightAllButtons();
 				break;
 			case 1:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("gpResume");
+				UI.highlightButton("mmPlay");
 				break;
 			case 2:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("gpEndGame");
+				UI.highlightButton("mmScores");
 				break;
+			case 3:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("mmStats");
+				break;
+			case 4:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("mmOptions");
+				break;
+			case 5:
+				UI.unhighlightAllButtons();
+				UI.highlightButton("mmHelp");
+				break;
+			}
 
+		}
+
+		if (Global.inPlayGame) {
+
+			if (!Global.inPaused && !Global.inGameOver) {
+				UI.selection = 0;
+			}
+
+			if (Global.inPaused && !Global.inGameOver) {
+				if (UI.selection > 2) {
+					UI.selection = 1;
+				}
+				if (UI.selection < -2) {
+					UI.selection = -1;
+				}
+				switch (UI.selection) {
+				case -2:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("gpResume");
+					break;
+				case -1:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("gpEndGame");
+					break;
+				case 0:
+					UI.unhighlightAllButtons();
+					break;
+				case 1:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("gpResume");
+					break;
+				case 2:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("gpEndGame");
+					break;
+
+				}
+			}
+
+			if (!Global.inPaused && Global.inGameOver) {
+				if (UI.selection > 2) {
+					UI.selection = 1;
+				}
+				if (UI.selection < -2) {
+					UI.selection = -1;
+				}
+				switch (UI.selection) {
+				case -2:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("goPlayAgain");
+					break;
+				case -1:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("goMainMenu");
+					break;
+				case 0:
+					UI.unhighlightAllButtons();
+					break;
+				case 1:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("goPlayAgain");
+					break;
+				case 2:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("goMainMenu");
+					break;
+				}
 			}
 		}
 
-		if (Global.inPlayGame && !Global.inPaused && Global.inGameOver) {
-			if (UI.selection > 2) {
-				UI.selection = 1;
-			}
-			if (UI.selection < -2) {
-				UI.selection = -1;
-			}
-			switch (UI.selection) {
-			case -2:
-				UI.unhighlightAllButtons();
-				UI.highlightButton("goPlayAgain");
-				break;
-			case -1:
-				UI.unhighlightAllButtons();
-				UI.highlightButton("goMainMenu");
-				break;
-			case 0:
-				UI.unhighlightAllButtons();
-				break;
-			case 1:
-				UI.unhighlightAllButtons();
-				UI.highlightButton("goPlayAgain");
-				break;
-			case 2:
-				UI.unhighlightAllButtons();
-				UI.highlightButton("goMainMenu");
-				break;
-			}
-		}
 	}
 
 	public void onLeft(int state) {
