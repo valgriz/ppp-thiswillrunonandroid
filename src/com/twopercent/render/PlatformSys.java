@@ -17,7 +17,7 @@ public class PlatformSys extends VisibleObject {
 
 	static ArrayList<Platform> platformArrayList;
 	private int n;
-	private double t;
+	private double t = 0;
 
 	public PlatformSys() {
 		super(new Group());
@@ -35,7 +35,7 @@ public class PlatformSys extends VisibleObject {
 	}
 
 	public void update() {
-		while (t < 1500) {
+		if (t < 1500) {
 			t += getDt();
 		}
 
@@ -58,12 +58,12 @@ public class PlatformSys extends VisibleObject {
 						platformArrayList.get(0).setX(
 								platformArrayList.get(platformArrayList.size() - 1).getX()
 										+ platformArrayList.get(platformArrayList.size() - 1).getWidth()
-										+ (int) (150 * Math.random()) + (int) (t * .1 * Math.random()));
+										+ (int) (125 * Math.random()) + (int) (t * .1 * Math.random()));
 					} else { // If last platform was falling, set it close
 						platformArrayList.get(0).setX(
 								platformArrayList.get(platformArrayList.size() - 1).getX()
 										+ platformArrayList.get(platformArrayList.size() - 1).getWidth()
-										+ (int) (110 * Math.random()));
+										+ (int) (90 * Math.random()));
 					}
 				} else { // Set the X value for hte platform at the X value of
 							// the platform spawned right before
@@ -72,26 +72,26 @@ public class PlatformSys extends VisibleObject {
 					if (!(platformArrayList.get(i - 1).falling)) {
 						platformArrayList.get(i).setX(
 								platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
-										+ (int) (150 * Math.random()) + (int) (t * .2 * Math.random()));
+										+ (int) (125 * Math.random()) + (int) (t * .2 * Math.random()));
 					} else {
 						platformArrayList.get(i).setX(
 								platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
-										+ (int) (100 * Math.random()));
+										+ (int) (90 * Math.random()));
 					}
 				}
 
 				// Randomize Y value
-				platformArrayList.get(i).setY(300 - (int) (120 * Math.random()) + (int) (120 * Math.random()));
+				platformArrayList.get(i).setY(300 - (int) (125 * Math.random()) + (int) (125 * Math.random()));
 
 				// Randomize oscillationing platforms
 				platformArrayList.get(i).oscillate = false;
 				platformArrayList.get(i).falling = false;
 				platformArrayList.get(i).getImageViewAndSetViewport(0);
 				platformArrayList.get(i).oscillationTracker = 0;
-				if (Math.random() < (double) t / 3000) {
+				if (Math.random() < (double) t / 4000) {
 					platformArrayList.get(i).oscillate = true;
 					platformArrayList.get(i).getImageViewAndSetViewport(1);
-				} else if ((Math.random() + (double) t / 6000) > .9) {
+				} else if ((Math.random() + (double) t / 6000) > .92) {
 					platformArrayList.get(i).falling = true;
 					platformArrayList.get(i).getImageViewAndSetViewport(2);
 				}
@@ -159,11 +159,12 @@ class Platform extends VisibleObject {
 
 	public void update() {
 		if (oscillate) {
-			setDy(oscillationBuildup * Math.sin(oscillationTracker));
+			setDy(oscillationBuildup * Math.cos(oscillationTracker));
 			oscillationTracker += oscillationConstant;
 		}
 
                 else if (falling) {
+                        setDy(0);
 			// System.out.println("FALLING");
 		} 
                 
@@ -175,7 +176,7 @@ class Platform extends VisibleObject {
 		}
                 
                 if(getDx()>-5){
-                   setDx(getDx() - .00001);
+                   setDx(getDx() - .0001);
                 }
                 
 		updateX();
