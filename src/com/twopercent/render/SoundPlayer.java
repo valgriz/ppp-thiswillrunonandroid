@@ -16,7 +16,8 @@ public class SoundPlayer {
     }
 
     public static void playButton(){
-        new MediaPlayer(button).play();
+        MediaPlayer buttonPlay = new MediaPlayer(button);
+        buttonPlay.setVolume(0.2); buttonPlay.play();
     }
     
     public static void playFallingPlatform(){
