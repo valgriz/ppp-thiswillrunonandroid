@@ -35,11 +35,12 @@ public class PlatformSys extends VisibleObject {
 	}
 
 	public void update() {
-		if (t < 1500) {
+		while (t < 1500) {
 			t += getDt();
 		}
 
 		for (int i = 0; i < n; i++) {
+                        //platformArrayList.get(i).setDx(-2-t/750);
 
 			// Checks if platform has scrolled of screen, if so resets some
 			// values
@@ -162,15 +163,21 @@ class Platform extends VisibleObject {
 			oscillationTracker += oscillationConstant;
 		}
 
-		if (falling) {
+                else if (falling) {
 			// System.out.println("FALLING");
-		} else {
+		} 
+                
+                else {
 			setDy(0);
-			oscillationConstant = Math.random() * .05;
 			if (oscillationBuildup <= 2.5) {
 				oscillationBuildup += .003;
 			}
 		}
+                
+                if(getDx()>-5){
+                   setDx(getDx() - .00001);
+                }
+                
 		updateX();
 		updateY();
 		syncCoords();

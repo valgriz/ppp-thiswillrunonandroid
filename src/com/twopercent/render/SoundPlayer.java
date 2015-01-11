@@ -8,7 +8,8 @@ import javafx.scene.media.MediaPlayer;
 public class SoundPlayer {
     private static Media bounce = new Media(SoundPlayer.class.getResource("/res/sounds/BounceEffect.mp3").toString());
     private static Media button = new Media(SoundPlayer.class.getResource("/res/sounds/ButtonSound.mp3").toString());
-    private static AudioClip bounce2 = new AudioClip(SoundPlayer.class.getResource("/res/sounds/BounceEffect2.wav").toString());
+    private static Media fallingPlatform = new Media(SoundPlayer.class.getResource("/res/sounds/FallingPlatform.mp3").toString());
+   // private static Media 
     
     public static void playBounce(){
         new MediaPlayer(bounce).play();
@@ -18,8 +19,9 @@ public class SoundPlayer {
         new MediaPlayer(button).play();
     }
     
-    public static void playBounce2(){
-        bounce2.play();
+    public static void playFallingPlatform(){
+        MediaPlayer fallingPlat = new MediaPlayer(fallingPlatform);
+        fallingPlat.setVolume(0.1); fallingPlat.play();
     }
-
+    
 }

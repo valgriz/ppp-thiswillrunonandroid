@@ -166,7 +166,8 @@ public class Bird extends VisibleObject {
 				setY(PlayGame.platformSys.platformArrayList.get(i).getY() - getHeight() - 2);
 				PlayGame.platformSys.platformArrayList.get(i).bounceTranslateTransition.play();
 				if (PlayGame.platformSys.platformArrayList.get(i).falling) {
-					PlayGame.platformSys.platformArrayList.get(i).setDy(30);
+					PlayGame.platformSys.platformArrayList.get(i).setDy(PlayGame.platformSys.platformArrayList.get(i).getDy() + 5);
+                                        SoundPlayer.playFallingPlatform();
 				}
 			}
 		}
