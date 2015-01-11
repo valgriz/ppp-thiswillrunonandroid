@@ -88,6 +88,7 @@ public class PlatformSys extends VisibleObject {
 				platformArrayList.get(i).falling = false;
 				platformArrayList.get(i).getImageViewAndSetViewport(0);
 				platformArrayList.get(i).oscillationTracker = 0;
+                                platformArrayList.get(i).setDy(0);
 				if (Math.random() < (double) t / 4000) {
 					platformArrayList.get(i).oscillate = true;
 					platformArrayList.get(i).getImageViewAndSetViewport(1);
@@ -164,12 +165,10 @@ class Platform extends VisibleObject {
 		}
 
                 else if (falling) {
-                        setDy(0);
 			// System.out.println("FALLING");
 		} 
                 
                 else {
-			setDy(0);
 			if (oscillationBuildup <= 2.5) {
 				oscillationBuildup += .003;
 			}
