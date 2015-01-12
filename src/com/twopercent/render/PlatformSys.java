@@ -10,6 +10,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -58,12 +59,12 @@ public class PlatformSys extends VisibleObject {
 						platformArrayList.get(0).setX(
 								platformArrayList.get(platformArrayList.size() - 1).getX()
 										+ platformArrayList.get(platformArrayList.size() - 1).getWidth()
-										+ (int) (125 * Math.random()) + (int) (t * .1 * Math.random()));
+										+ (int) (150 * Math.random()) + (int) (t * .15 * Math.random()));
 					} else { // If last platform was falling, set it close
 						platformArrayList.get(0).setX(
 								platformArrayList.get(platformArrayList.size() - 1).getX()
 										+ platformArrayList.get(platformArrayList.size() - 1).getWidth()
-										+ (int) (90 * Math.random()));
+										+ (int) (130 * Math.random()));
 					}
 				} else { // Set the X value for hte platform at the X value of
 							// the platform spawned right before
@@ -72,11 +73,11 @@ public class PlatformSys extends VisibleObject {
 					if (!(platformArrayList.get(i - 1).falling)) {
 						platformArrayList.get(i).setX(
 								platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
-										+ (int) (125 * Math.random()) + (int) (t * .2 * Math.random()));
+										+ (int) (150 * Math.random()) + (int) (t * .15 * Math.random()));
 					} else {
 						platformArrayList.get(i).setX(
 								platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
-										+ (int) (90 * Math.random()));
+										+ (int) (130 * Math.random()));
 					}
 				}
 
@@ -94,6 +95,9 @@ public class PlatformSys extends VisibleObject {
 					platformArrayList.get(i).getImageViewAndSetViewport(1);
 				} else if ((Math.random() + (double) t / 6000) > .92) {
 					platformArrayList.get(i).falling = true;
+                                        if(!getGroup().getChildren().contains(platformArrayList.get(i).arrowView)){
+                                            getGroup().getChildren().add(platformArrayList.get(i).arrowView);
+                                        }
 					platformArrayList.get(i).getImageViewAndSetViewport(2);
 				}
 
@@ -125,7 +129,9 @@ class Platform extends VisibleObject {
 	public TranslateTransition bounceTranslateTransition;
 	protected boolean oscillate = false, falling;
 	protected double oscillationTracker = 0, oscillationConstant = 0.03, oscillationBuildup = 0;
-
+        
+        protected ImageView arrowView = new ImageView(new Image(Platform.class.getResource("/res/images/arrow.png").toString()));
+        
 	public Platform(int i, int n) {
 		this.i = i;
 		this.n = n;
@@ -138,7 +144,7 @@ class Platform extends VisibleObject {
 		setHeight(45);
 		setX(i * getWidth());
 		setY(300);
-		setDx(-1 * 2);
+		setDx(-1 * 2.5);
 
 		scaleTransition = new ScaleTransition(Duration.millis(1000), getImageView());
 		scaleTransition.setToY(.5);
@@ -151,6 +157,7 @@ class Platform extends VisibleObject {
 		bounceTranslateTransition.setAutoReverse(true);
 
 		DropShadow ds = new DropShadow(15, Color.BLACK);
+                arrowView.setOpacity(.5);
 		ds.setOffsetX(5);
 		ds.setOffsetY(5);
 		getImageView().setEffect(ds);
@@ -165,7 +172,12 @@ class Platform extends VisibleObject {
 		}
 
                 else if (falling) {
-			// System.out.println("FALLING");
+                        arrowView.setX(getX() + getWidth()/2 - 20);
+                        arrowView.setY(getY() + getHeight()*1.5);
+			System.out.println("FALLING");
+                        if(getDy()==0){
+                            arrowView.setOpacity(.5*Math.sin(.05*getX()));
+                        }
 		} 
                 
                 else {
@@ -175,13 +187,12 @@ class Platform extends VisibleObject {
 		}
                 
                 if(getDx()>-5){
-                   setDx(getDx() - .0001);
+                   setDx(getDx() - .002);
                 }
                 
 		updateX();
 		updateY();
 		syncCoords();
-
 	}
 
 	public void playAnimation() {

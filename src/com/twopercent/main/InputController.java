@@ -111,7 +111,7 @@ public class InputController {
 
 	public void action(VisibleObject temp) {
 		if (temp.getType().equals("button") || temp.getType().equals("nullButton")) {
-                        SoundPlayer.playButton();
+                        
 			Button b = (Button) temp;
 			b.setState(1);
 			switch (b.getId()) {
@@ -123,20 +123,25 @@ public class InputController {
 				break;
 
 			case "goPlayAgain":
+                                SoundPlayer.playButton();
 				PlayGame.resetGame();
 				break;
 			case "goMainMenu":
+                                SoundPlayer.playButton();
 				System.exit(0);
 				break;
 			case "pgPauseGame":
+                                SoundPlayer.playButton();
 				Global.inPaused = true;
 				Global.gameStateChanged = true;
 				break;
 			case "gpResume":
+                                SoundPlayer.playButton();
 				Global.inPaused = false;
 				Global.gameStateChanged = true;
 				break;
 			case "gpEndGame":
+                                SoundPlayer.playButton();
 				Global.inPaused = false;
 				Global.inGameOver = true;
 				Global.gameStateChanged = true;
