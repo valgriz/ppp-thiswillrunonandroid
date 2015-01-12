@@ -1,11 +1,11 @@
-
 package com.twopercent.render;
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-        
+
 public class SoundPlayer {
+
     private static Media bounce = new Media(SoundPlayer.class.getResource("/res/sounds/BounceEffect.mp3").toString());
     private static Media button = new Media(SoundPlayer.class.getResource("/res/sounds/ButtonSound.mp3").toString());
     private static Media fallingPlatform = new Media(SoundPlayer.class.getResource("/res/sounds/FallingPlatform.mp3").toString());
@@ -37,5 +37,5 @@ public class SoundPlayer {
     public static void unmute(){
         volume = 1;
     }
-    
+   
 }

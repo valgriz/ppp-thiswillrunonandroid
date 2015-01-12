@@ -24,6 +24,8 @@ public class Bird extends VisibleObject {
 	private static RotateTransition rt2;
 	private static int birdIndex;
 
+	private static double friction;
+
 	public Bird() {
 		super(new Group());
 
@@ -34,7 +36,7 @@ public class Bird extends VisibleObject {
 		setWidth(57);
 		setHeight(40);
 		setX(200);
-		setY(-200);
+		setY(-500);
 
 		collisionObjectArrayList = new ArrayList<>();
 		hit = false;
@@ -42,6 +44,10 @@ public class Bird extends VisibleObject {
 		onLeft = onRight = false;
 
 		setVerticalGravity(getY(), 0, .9, 2);
+
+		// When you let go of left/right, penguin will continue to move for a
+		// few frames
+		friction = .8;
 
 		scaleTransition = new ScaleTransition(Duration.millis(200), getImageView());
 
@@ -51,7 +57,7 @@ public class Bird extends VisibleObject {
 		rt2 = new RotateTransition(Duration.millis(500), getGroup());
 		rt2.setToAngle(-30);
 
-		Global.inPlayGame = true;
+		// Global.inPlayGame = true;
 
 		syncCoords();
 
@@ -72,6 +78,7 @@ public class Bird extends VisibleObject {
 		collisionObjectArrayList.clear();
 		addCollisionDetection();
 		syncCoords();
+
 	}
 
 	public static void offLeft() {
@@ -138,7 +145,6 @@ public class Bird extends VisibleObject {
 
 	public void update() {
 
-
 		if (onLeft) {
 			if (getDx() < 0)
 				setDx(getDx() - 1.5);
@@ -153,7 +159,7 @@ public class Bird extends VisibleObject {
 		}
 
 		if (!onLeft && !onRight) {
-			setDx(0);
+			setDx(getDx() * friction);
 		}
 
 		for (int i = 0; i < PlayGame.platformSys.platformArrayList.size(); i++) {

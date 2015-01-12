@@ -2,6 +2,7 @@ package com.twopercent.render;
 
 import java.util.ArrayList;
 
+import com.twopercent.main.Global;
 import com.valgriz.screen.PlayGame;
 
 import javafx.animation.ScaleTransition;
@@ -41,7 +42,7 @@ public class PlatformSys extends VisibleObject {
 		}
 
 		for (int i = 0; i < n; i++) {
-                        //platformArrayList.get(i).setDx(-2-t/750);
+			// platformArrayList.get(i).setDx(-2-t/750);
 
 			// Checks if platform has scrolled of screen, if so resets some
 			// values
@@ -59,12 +60,12 @@ public class PlatformSys extends VisibleObject {
 						platformArrayList.get(0).setX(
 								platformArrayList.get(platformArrayList.size() - 1).getX()
 										+ platformArrayList.get(platformArrayList.size() - 1).getWidth()
-										+ (int) (150 * Math.random()) + (int) (t * .15 * Math.random()));
+										+ (int) (200 * Math.random()) + (int) (t * .1 * Math.random()));
 					} else { // If last platform was falling, set it close
 						platformArrayList.get(0).setX(
 								platformArrayList.get(platformArrayList.size() - 1).getX()
 										+ platformArrayList.get(platformArrayList.size() - 1).getWidth()
-										+ (int) (130 * Math.random()));
+										+ (int) (150 * Math.random()));
 					}
 				} else { // Set the X value for hte platform at the X value of
 							// the platform spawned right before
@@ -73,11 +74,11 @@ public class PlatformSys extends VisibleObject {
 					if (!(platformArrayList.get(i - 1).falling)) {
 						platformArrayList.get(i).setX(
 								platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
-										+ (int) (150 * Math.random()) + (int) (t * .15 * Math.random()));
+										+ (int) (200 * Math.random()) + (int) (t * .1 * Math.random()));
 					} else {
 						platformArrayList.get(i).setX(
 								platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
-										+ (int) (130 * Math.random()));
+										+ (int) (150 * Math.random()));
 					}
 				}
 
@@ -89,7 +90,7 @@ public class PlatformSys extends VisibleObject {
 				platformArrayList.get(i).falling = false;
 				platformArrayList.get(i).getImageViewAndSetViewport(0);
 				platformArrayList.get(i).oscillationTracker = 0;
-                                platformArrayList.get(i).setDy(0);
+				platformArrayList.get(i).setDy(0);
 				if (Math.random() < (double) t / 4000) {
 					platformArrayList.get(i).oscillate = true;
 					platformArrayList.get(i).getImageViewAndSetViewport(1);
@@ -160,7 +161,7 @@ class Platform extends VisibleObject {
                 arrowView.setOpacity(.5);
 		ds.setOffsetX(5);
 		ds.setOffsetY(5);
-		getImageView().setEffect(ds);
+		// getImageView().setEffect(ds);
 
 		syncCoords();
 	}
@@ -171,6 +172,7 @@ class Platform extends VisibleObject {
 			oscillationTracker += oscillationConstant;
 		}
 
+
                 else if (falling) {
                         arrowView.setX(getX() + getWidth()/2 - 20);
                         arrowView.setY(getY() + getHeight()*1.5);
@@ -180,7 +182,8 @@ class Platform extends VisibleObject {
                         }
 		} 
                 
-                else {
+		else {
+
 			if (oscillationBuildup <= 2.5) {
 				oscillationBuildup += .003;
 			}
@@ -189,7 +192,15 @@ class Platform extends VisibleObject {
                 if(getDx()>-5){
                    setDx(getDx() - .002);
                 }
-                
+
+
+		{ // STEVE'S CODE
+
+			if (Global.inPlayGame && !Global.inGameOver && !Global.inPaused) {
+				setDx(getDx() - .001);
+			}
+		}
+
 		updateX();
 		updateY();
 		syncCoords();
