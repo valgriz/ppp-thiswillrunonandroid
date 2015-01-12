@@ -5,9 +5,13 @@ import com.twopercent.render.BackgroundA;
 import com.twopercent.render.BackgroundB;
 import com.twopercent.render.Bird;
 import com.twopercent.render.PlatformSys;
+import com.twopercent.render.UI;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.layout.Background;
@@ -19,6 +23,7 @@ public class PlayGame {
 	public static BackgroundB backgroundB;
 	public static PlatformSys platformSys;
 	public static Bird bird;
+	private static Timeline timeline;
 
 	public PlayGame(Group root) {
 		backgroundA = new BackgroundA();
@@ -33,7 +38,7 @@ public class PlayGame {
 		root.getChildren().add(bird.getGroup());
 
 		bird.addCollisionDetection();
-
+		timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> changePenguinOptionVisibility()));
 		// Any extras
 		// UI
 
@@ -52,6 +57,15 @@ public class PlayGame {
 		Global.inGameOver = false;
 		Global.score = 0;
 		Global.gameStateChanged = true;
+		timeline.play();
+
+	}
+
+	public static void changePenguinOptionVisibility() {
+		UI.getButton("pgChangePenguin").fadeIn();
+		UI.getButton("pgChangePenguin").setVisible(true);
+		System.out.println(UI.getButton("pgChangePenguin").isVisible());
+
 	}
 
 	public void update() {
@@ -63,14 +77,20 @@ public class PlayGame {
 
 		}
 
-		if (Global.inPlayGame && Global.inPaused && !Global.inGameOver) {
-			Bird.pauseAllAnimation();
+		if (Global.inPlayGame) {
+			if (Global.inPaused && !Global.inGameOver) {
+				Bird.pauseAllAnimation();
+			}
+			if (!Global.inHighScores && !Global.inStats && !Global.inOptions && !Global.inHelp && !Global.inPaused
+					&& !Global.inGameOver) {
+				Global.score += 1;
+			}
 		}
 
-		if (Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions && !Global.inHelp
-				&& !Global.inPaused && !Global.inGameOver) {
-			Global.score += 1;
-
+		if (Global.score >= 300 && Global.score <= 310 && !UI.showChangePenguin) {
+			if (UI.getButton("pgChangePenguin").isVisible()) {
+				UI.changePenguinButtonExit();
+			}
 		}
 	}
 
@@ -97,6 +117,15 @@ public class PlayGame {
 		translateTransition2.play();
 		translateTransition3.play();
 		translateTransition4.play();
+
+		translateTransition4.setOnFinished(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				// UI.getButton("pgChangePenguin").fadeIn();
+				// UI.getButton("pgChangePenguin").translateToY(100, 10, true,
+				// true);
+				UI.getButton("pgChangePenguin").setVisible(true);
+			}
+		});
 
 	}
 

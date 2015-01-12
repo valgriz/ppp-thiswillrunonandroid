@@ -1,6 +1,7 @@
 //2%
 package com.twopercent.main;
 
+import com.valgriz.screen.LoadingScreen;
 import com.valgriz.screen.Screen;
 
 import javafx.application.Application;
@@ -14,9 +15,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	// Objects
-	private static Scene mainScene;
-	private Group root;
+	public static Scene mainScene, loadingScene;
+	private Group root, load;
 	private Screen screen;
+	public static Stage primaryStage;
+	private static LoadingScreen loadingScreen;
 
 	public static void main(String args[]) {
 		launch(args);
@@ -24,29 +27,41 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
+		this.primaryStage = primaryStage;
 		// Defines startup parameters
 		primaryStage.setWidth(720);
 		primaryStage.setHeight(480);
 		primaryStage.setResizable(false);
-		primaryStage.setTitle("Flappy Jump - 2%");
+		primaryStage.setTitle("Penguin Plunge");
 
 		Global.inMainMenu = true;
 		Global.inPlayGame = false;
 		Global.inPaused = false;
 		Global.inGameOver = false;
 
-		// Initializes base case
+		// Sets up loading screen before anything else
+		load = new Group();
+		loadingScreen = new LoadingScreen(load);
+		loadingScene = new Scene(load);
+		primaryStage.setScene(loadingScene);
+		primaryStage.show();
+		// Displays the loading screen
+
+		// Screen takes care of initializing almost every other memory intensive
+		// object in the game
 		root = new Group();
 		screen = new Screen(root);
 		mainScene = new Scene(root);
 
+		// Once graphics have been loaded into RAM, listeners are set up
 		KeyboardListener keyboardListener = new KeyboardListener(mainScene);
 		MouseListener mouseListener = new MouseListener(mainScene);
+		TapListener tapListener = new TapListener(mainScene);
 
-		// Shows Stage & Scene
+		// Once everything in the game has been loaded, scene switches from
+		// loadingScene to mainScene
 		primaryStage.setScene(mainScene);
-		primaryStage.show();
+
 	}
 
 	public Main() {

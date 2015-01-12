@@ -437,6 +437,27 @@ public class InputController {
 		}
 
 		if (Global.inPlayGame) {
+			if (UI.getButton("pgChangePenguin").isVisible()) {
+				if (UI.selection > 1) {
+					UI.selection = 0;
+				}
+				if (UI.selection < -1) {
+					UI.selection = 0;
+				}
+				switch (UI.selection) {
+				case -1:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("pgChangePenguin");
+					break;
+				case 0:
+					UI.unhighlightAllButtons();
+					break;
+				case 1:
+					UI.unhighlightAllButtons();
+					UI.highlightButton("pgChangePenguin");
+					break;
+				}
+			}
 
 			if (!Global.inPaused && !Global.inGameOver) {
 				UI.selection = 0;

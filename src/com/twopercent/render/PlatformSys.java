@@ -2,6 +2,7 @@ package com.twopercent.render;
 
 import java.util.ArrayList;
 
+import com.twopercent.main.Global;
 import com.valgriz.screen.PlayGame;
 
 import javafx.animation.ScaleTransition;
@@ -174,8 +175,18 @@ class Platform extends VisibleObject {
 			}
 		}
 
-		if (getDx() > -5) {
-			setDx(getDx() - .0001);
+		// if (getDx() > -5) {
+		// setDx(getDx() - .0001);
+		// }
+
+		// JOSH I AM GOING TO EDIT SOME CODE TO TRY SOMETHING; SORRY IF I MESS
+		// YOU UP
+
+		{ // STEVE'S CODE
+
+			if (Global.inPlayGame && !Global.inGameOver && !Global.inPaused) {
+				setDx(getDx() - .001);
+			}
 		}
 
 		updateX();

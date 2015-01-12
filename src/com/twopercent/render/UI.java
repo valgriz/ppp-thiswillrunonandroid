@@ -18,6 +18,7 @@ public class UI extends UserInterfaceCreator {
 	private Text gameMessage;
 	private String gameEndMessageString;
 	public static int selection = 0;
+	public static boolean showChangePenguin;
 
 	public UI() {
 		super();
@@ -52,6 +53,7 @@ public class UI extends UserInterfaceCreator {
 		addButton(210, 287, 300, 69, "MAIN MENU", 0, "goMainMenu");
 		addButton(210, 195, 300, 69, "RESUME", 0, "gpResume");
 		addButton(210, 287, 300, 69, "END GAME", 0, "gpEndGame");
+		addCustomButton(210, 367, 300, 69, "CHANGE PENGUIN", 28, 43, 0, "pgChangePenguin");
 		addButton(387, 32, 300, 69, "PLAY", 0, "mmPlay");
 		addButton(387, 113, 300, 69, "SCORES", 0, "mmScores");
 		addButton(387, 194, 300, 69, "STATS", 0, "mmStats");
@@ -95,6 +97,9 @@ public class UI extends UserInterfaceCreator {
 		// Attribs
 
 		if (Global.inPlayGame) {
+			if (showChangePenguin) {
+				UI.getButton("pgChangePenguin").setVisible(true);
+			}
 			if (Global.inGameOver) {
 				gameMessage.setText("GAME OVER");
 				gameMessage.setX((720 / 2) - (gameMessage.getLayoutBounds().getWidth() / 2));
@@ -103,6 +108,7 @@ public class UI extends UserInterfaceCreator {
 				getButton("pgRightTap").setVisible(false);
 				getButton("goPlayAgain").setVisible(true);
 				getButton("goMainMenu").setVisible(true);
+				UI.getButton("pgChangePenguin").setVisible(false);
 			} else {
 				gameMessage.setVisible(false);
 				getButton("pgLeftTap").setVisible(true);
@@ -119,19 +125,17 @@ public class UI extends UserInterfaceCreator {
 				getButton("pgRightTap").setVisible(false);
 				getButton("gpEndGame").setVisible(true);
 				getButton("gpResume").setVisible(true);
+				UI.getButton("pgChangePenguin").setVisible(false);
 			} else {
 				getButton("pgLeftTap").setVisible(true);
 				getButton("pgRightTap").setVisible(true);
 				getButton("gpEndGame").setVisible(false);
 				getButton("gpResume").setVisible(false);
 			}
-
-			if (Global.inPaused) {
-
-			}
 		} else {
 			gameMessage.setVisible(false);
 		}
+
 		if (!Global.inMainMenu && Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions
 				&& !Global.inHelp && !Global.inPaused && !Global.inGameOver) {
 			gameMessage.setVisible(false);
@@ -159,6 +163,8 @@ public class UI extends UserInterfaceCreator {
 			getButton("mmOptions").setVisible(true);
 			getButton("mmHelp").setVisible(true);
 			getScoreText().setVisible(false);
+		} else {
+
 		}
 
 		Global.gameStateChanged = false;
@@ -167,12 +173,16 @@ public class UI extends UserInterfaceCreator {
 	public void update() {
 		super.update();
 
-		showScreenStatus();
+		// showScreenStatus();
 
 		if (Global.gameStateChanged)
 			stateChanged();
 		// Add Highscore Message
 
 		getScoreText().setText("" + Global.score);
+	}
+
+	public static void changePenguinButtonExit() {
+		getButton("pgChangePenguin").fadeOut();
 	}
 }

@@ -78,6 +78,7 @@ public class Bird extends VisibleObject {
 		collisionObjectArrayList.clear();
 		addCollisionDetection();
 		syncCoords();
+
 	}
 
 	public static void offLeft() {

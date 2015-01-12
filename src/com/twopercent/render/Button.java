@@ -3,6 +3,7 @@ package com.twopercent.render;
 import com.twopercent.main.ActionZone;
 import com.twopercent.main.InputController;
 
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -64,6 +65,49 @@ public class Button extends VisibleObject {
 
 	}
 
+	public Button(int x, int y, int width, int height, String text, int textSize, int yOffset, int buttonSpriteKey,
+			String id) {
+		super(new Group());
+		this.text = text;
+		this.buttonSpriteKey = buttonSpriteKey;
+		this.id = id;
+		setX(x);
+		setY(y);
+		setWidth(width);
+		setHeight(height);
+
+		state = 0;
+
+		setImageViewToImage(new Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
+		getImageView().setViewport(
+				new Rectangle2D(getWidth() * buttonKey, getHeight() * buttonSpriteKey, getWidth(), getHeight()));
+		getImageView().setX(getX());
+		getImageView().setY(getY());
+		getGroup().getChildren().add(getImageView());
+
+		textView = new Text();
+		textView.setFont(new Font("Arial", textSize));
+		textView.setFill(new Color(1, 1, 1, 1));
+		DropShadow dropShadow = new DropShadow();
+		dropShadow.setRadius(5);
+		dropShadow.setOffsetX(2);
+		dropShadow.setOffsetY(2);
+		dropShadow.setColor(new Color(0, 0, 0, 1));
+		textView.setEffect(dropShadow);
+
+		textView.setText(text);
+
+		textView.setX(getX() + (getWidth() / 2) - (textView.getLayoutBounds().getWidth() / 2));
+		textView.setY(getY() + yOffset);
+
+		setType("button");
+
+		addActionListener();
+
+		getGroup().getChildren().add(textView);
+
+	}
+
 	public Button(int x, int y, int width, int height, String id) {
 		// this button will NOT be viewable, however visible always returns TRUE
 		super(new Group());
@@ -81,15 +125,31 @@ public class Button extends VisibleObject {
 	}
 
 	public void fadeOut() {
-		FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), getGroup());
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), getGroup());
 		fadeTransition.setFromValue(1);
 		fadeTransition.setToValue(0);
 		fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				setVisible(false);
+				// fadeTransition.stop();
 			}
 		});
 		fadeTransition.play();
+	}
+
+	public void fadeIn() {
+
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(1), getGroup());
+		fadeTransition.setFromValue(0);
+
+		fadeTransition.setToValue(1);
+		fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				setVisible(true);
+			}
+		});
+		fadeTransition.play();
+		setVisible(true);
 	}
 
 	public void translateToY(int start, int finish, boolean startVisibility, boolean finishVisibility) {
@@ -106,6 +166,7 @@ public class Button extends VisibleObject {
 			}
 		});
 		translateTransition.play();
+		translateTransition.setAutoReverse(true);
 	}
 
 	public void addActionListener() {

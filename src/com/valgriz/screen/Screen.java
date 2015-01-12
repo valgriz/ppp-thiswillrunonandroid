@@ -23,11 +23,17 @@ public class Screen {
 	private MainMenu mainMenu;
 	private UI userInterface;
 
+	private LoadingScreen loadingScreen;
+
 	public Screen(Group root) {
 		this.root = root;
+
+		// loadingScreen = new LoadingScreen(root);
+
 		playGame = new PlayGame(root);
 		mainMenu = new MainMenu(root);
 		userInterface = new UI();
+
 		// Can use some optimization
 		root.getChildren().add(userInterface.getGroup());
 
