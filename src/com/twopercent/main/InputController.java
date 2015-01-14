@@ -128,19 +128,19 @@ public class InputController {
 				PlayGame.resetGame();
 				break;
 			case "goMainMenu":
+				System.out.println("Main Menu");
 				SoundPlayer.playButton();
-
 				Global.inPlayGame = false;
 				Global.inPaused = false;
 				Global.inGameOver = false;
 				Global.inMainMenu = false;
 				Global.inOptions = false;
 				Global.inHighScores = false;
-
-				Global.gameStateChanged = true;
-				Screen.setVisibleGroup("MainMenu");
 				PlayGame.translateOut();
 				MainMenu.goToMainMenu();
+				Global.gameStateChanged = true;
+				Screen.setVisibleGroup("MainMenu");
+				Global.inMainMenuLoaded = false;
 				break;
 			case "pgPauseGame":
 				SoundPlayer.playButton();
@@ -178,16 +178,23 @@ public class InputController {
 				Screen.setVisibleGroup("HighScores");
 				break;
 			case "mmStats":
-				Global.inPaused = false;
-				Global.gameStateChanged = true;
-				break;
+				if (Global.inMainMenuLoaded) {
+					Global.inPaused = false;
+					Global.gameStateChanged = true;
+					break;
+				} else
+					break;
 			case "mmOptions":
-				Global.inOptions = true;
-				Global.inMainMenu = false;
-				Global.inHighScores = false;
-				Global.gameStateChanged = true;
-				Screen.setVisibleGroup("Options");
-				break;
+				if (Global.inMainMenuLoaded) {
+					System.out.println("Options Screen Activated");
+					Global.inOptions = true;
+					Global.inMainMenu = false;
+					Global.inHighScores = false;
+					Global.gameStateChanged = true;
+					Screen.setVisibleGroup("Options");
+					break;
+				} else
+					break;
 			case "mmHelp":
 				Global.inPaused = false;
 				Global.gameStateChanged = true;

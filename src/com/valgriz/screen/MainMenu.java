@@ -24,6 +24,9 @@ public class MainMenu {
 		logo = new Logo();
 		root.getChildren().add(backgroundC.getGroup());
 		root.getChildren().add(logo.getGroup());
+
+		Global.inMainMenuLoaded = true;
+
 		setVisible();
 	}
 
@@ -119,7 +122,7 @@ public class MainMenu {
 		Global.inPlayGame = false;
 		Global.inGameOver = false;
 		Global.inPaused = false;
-		
+
 	}
 
 	public void update() {
@@ -138,7 +141,7 @@ public class MainMenu {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				Global.inMainMenuLoaded = true;
 			}
 		});
 		translateTransition1.setOnFinished(new EventHandler<ActionEvent>() {

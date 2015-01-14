@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 public abstract class VisibleObject extends CollisionObject {
 	private Image image;
 	private Group group;
-	private ImageView imageView;
+	protected ImageView imageView;
 	private double x, y, dy, dx, dt, scale, gravity;
 	private int height, width, frame;
 	private boolean visible;
@@ -36,6 +36,7 @@ public abstract class VisibleObject extends CollisionObject {
 		} else if (imageView != null) {
 			imageView.setImage(image);
 		}
+                
 	}
 
 	public void updateX() {
