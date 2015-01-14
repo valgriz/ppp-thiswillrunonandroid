@@ -152,6 +152,23 @@ public class Button extends VisibleObject {
 		setVisible(true);
 	}
 
+	public void translateToYrn(int start, int finish, boolean startVisibility, boolean finishVisibility) {
+		setVisible(startVisibility);
+		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1), getGroup());
+		translateTransition.setCycleCount(1);
+		translateTransition.setFromY(start);
+		translateTransition.setToY(finish);
+		translateTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				setVisible(finishVisibility);
+			}
+		});
+		translateTransition.play();
+		translateTransition.setAutoReverse(true);
+	}
+
 	public void translateToY(int start, int finish, boolean startVisibility, boolean finishVisibility) {
 		setVisible(startVisibility);
 		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), getGroup());

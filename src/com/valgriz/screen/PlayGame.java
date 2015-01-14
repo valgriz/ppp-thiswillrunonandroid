@@ -24,8 +24,10 @@ public class PlayGame {
 	public static PlatformSys platformSys;
 	public static Bird bird;
 	private static Timeline timeline;
+	private static Group root;
 
-	public PlayGame(Group root) {
+	public PlayGame() {
+		root = new Group();
 		backgroundA = new BackgroundA();
 		backgroundB = new BackgroundB();
 		platformSys = new PlatformSys();
@@ -152,4 +154,13 @@ public class PlayGame {
 
 		// Code to make game screen flow downward when main menu is called
 	}
+
+	public static Group getGroup() {
+		return root;
+	}
+
+	public static void setGroup(Group root) {
+		PlayGame.root = root;
+	}
+
 }

@@ -96,9 +96,9 @@ public class PlatformSys extends VisibleObject {
 					platformArrayList.get(i).getImageViewAndSetViewport(1);
 				} else if ((Math.random() + (double) t / 6000) > .92) {
 					platformArrayList.get(i).falling = true;
-                                        if(!getGroup().getChildren().contains(platformArrayList.get(i).arrowView)){
-                                            getGroup().getChildren().add(platformArrayList.get(i).arrowView);
-                                        }
+					if (!getGroup().getChildren().contains(platformArrayList.get(i).arrowView)) {
+						getGroup().getChildren().add(platformArrayList.get(i).arrowView);
+					}
 					platformArrayList.get(i).getImageViewAndSetViewport(2);
 				}
 
@@ -130,9 +130,10 @@ class Platform extends VisibleObject {
 	public TranslateTransition bounceTranslateTransition;
 	protected boolean oscillate = false, falling;
 	protected double oscillationTracker = 0, oscillationConstant = 0.03, oscillationBuildup = 0;
-        
-        protected ImageView arrowView = new ImageView(new Image(Platform.class.getResource("/res/images/arrow.png").toString()));
-        
+
+	protected ImageView arrowView = new ImageView(new Image(Platform.class.getResource("/res/images/arrow.png")
+			.toString()));
+
 	public Platform(int i, int n) {
 		this.i = i;
 		this.n = n;
@@ -158,7 +159,7 @@ class Platform extends VisibleObject {
 		bounceTranslateTransition.setAutoReverse(true);
 
 		DropShadow ds = new DropShadow(15, Color.BLACK);
-                arrowView.setOpacity(.5);
+		arrowView.setOpacity(.5);
 		ds.setOffsetX(5);
 		ds.setOffsetY(5);
 		// getImageView().setEffect(ds);
@@ -172,27 +173,25 @@ class Platform extends VisibleObject {
 			oscillationTracker += oscillationConstant;
 		}
 
+		else if (falling) {
+			arrowView.setX(getX() + getWidth() / 2 - 20);
+			arrowView.setY(getY() + getHeight() * 1.5);
+			// System.out.println("FALLING");
+			if (getDy() == 0) {
+				arrowView.setOpacity(.5 * Math.sin(.05 * getX()));
+			}
+		}
 
-                else if (falling) {
-                        arrowView.setX(getX() + getWidth()/2 - 20);
-                        arrowView.setY(getY() + getHeight()*1.5);
-			System.out.println("FALLING");
-                        if(getDy()==0){
-                            arrowView.setOpacity(.5*Math.sin(.05*getX()));
-                        }
-		} 
-                
 		else {
 
 			if (oscillationBuildup <= 2.5) {
 				oscillationBuildup += .003;
 			}
 		}
-                
-                if(getDx()>-5){
-                   setDx(getDx() - .002);
-                }
 
+		if (getDx() > -5) {
+			setDx(getDx() - .002);
+		}
 
 		{ // STEVE'S CODE
 

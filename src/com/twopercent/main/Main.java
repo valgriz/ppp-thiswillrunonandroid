@@ -20,6 +20,7 @@ public class Main extends Application {
 	private Screen screen;
 	public static Stage primaryStage;
 	private static LoadingScreen loadingScreen;
+	DataManager dataManager;
 
 	public static void main(String args[]) {
 		launch(args);
@@ -47,6 +48,8 @@ public class Main extends Application {
 		primaryStage.show();
 		// Displays the loading screen
 
+		dataManager = new DataManager();
+		dataManager.loadFile();
 		// Screen takes care of initializing almost every other memory intensive
 		// object in the game
 		root = new Group();

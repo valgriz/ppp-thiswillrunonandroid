@@ -4,7 +4,9 @@ import java.awt.Color;
 
 import com.sun.javafx.css.FontFace;
 import com.sun.javafx.scene.control.behavior.TextBinding;
+import com.twopercent.main.DataManager;
 import com.twopercent.main.Global;
+import com.valgriz.screen.Screen;
 
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
@@ -59,6 +61,8 @@ public class UI extends UserInterfaceCreator {
 		addButton(387, 194, 300, 69, "STATS", 0, "mmStats");
 		addButton(387, 275, 300, 69, "OPTIONS", 0, "mmOptions");
 		addButton(387, 356, 300, 69, "HELP", 0, "mmHelp");
+		addButton(33, 356, 300, 69, "MAIN MENU", 0, "smMainMenu");
+		addButton(387, 356, 300, 69, "PLAY GAME", 0, "smPlayGame");
 
 		stateChanged();
 
@@ -109,6 +113,7 @@ public class UI extends UserInterfaceCreator {
 				getButton("goPlayAgain").setVisible(true);
 				getButton("goMainMenu").setVisible(true);
 				UI.getButton("pgChangePenguin").setVisible(false);
+				DataManager.addScore(Global.score);
 			} else {
 				gameMessage.setVisible(false);
 				getButton("pgLeftTap").setVisible(true);
@@ -134,6 +139,31 @@ public class UI extends UserInterfaceCreator {
 			}
 		} else {
 			gameMessage.setVisible(false);
+		}
+
+		if (Global.inHighScores || Global.inOptions) {
+			if (Global.inHighScores)
+				Screen.setVisibleGroup("HighScores");
+			else
+				Screen.setVisibleGroup("Options");
+
+			getButton("smMainMenu").setVisible(true);
+			getButton("smPlayGame").setVisible(true);
+			getButton("mmPlay").setVisible(false);
+			getButton("mmScores").setVisible(false);
+			getButton("mmStats").setVisible(false);
+			getButton("mmOptions").setVisible(false);
+			getButton("mmHelp").setVisible(false);
+			getButton("goPlayAgain").setVisible(false);
+			getButton("goMainMenu").setVisible(false);
+			getButton("pgLeftTap").setVisible(false);
+			getButton("pgRightTap").setVisible(false);
+			getButton("gpEndGame").setVisible(false);
+			getButton("gpResume").setVisible(false);
+		} else {
+			getButton("smMainMenu").setVisible(false);
+			getButton("smPlayGame").setVisible(false);
+
 		}
 
 		if (!Global.inMainMenu && Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions
