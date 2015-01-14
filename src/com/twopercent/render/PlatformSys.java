@@ -18,6 +18,7 @@ import javafx.util.Duration;
 public class PlatformSys extends VisibleObject {
 
 	static ArrayList<Platform> platformArrayList;
+        ArrayList<Star> stars = new ArrayList();
 	private int n;
 	private double t = 0;
 
@@ -30,7 +31,7 @@ public class PlatformSys extends VisibleObject {
 		platformArrayList = new ArrayList<>();
 
 		for (int i = 0; i < n; i++) {
-			platformArrayList.add(new Platform(i, platformArrayList.size()));
+                        platformArrayList.add(new Platform(i, platformArrayList.size()));
 			getGroup().getChildren().add(platformArrayList.get(i).getImageView());
 		}
 
@@ -40,27 +41,31 @@ public class PlatformSys extends VisibleObject {
 		if (t < 1500) {
 			t += getDt();
 		}
-
+                
+                if ( Math.random() < (.1 + t/12000) ){
+                    stars.add(new Star(-2, getGroup()));
+                }
+                    
+                for(int i = 0; i < stars.size(); i++){
+                    stars.get(i).update();
+                }
+                
 		for (int i = 0; i < n; i++) {
 			// platformArrayList.get(i).setDx(-2-t/750);
-
 			// Checks if platform has scrolled of screen, if so resets some
 			// values
 			if (platformArrayList.get(i).getX() < (0 - platformArrayList.get(i).getWidth() - 10)) {
+                            
 				if (i == 0) { // Set the X value for the platform at the X value
 								// of the last spawned platform
 								// + platform width + random value from 1-150 +
 								// random time dependent value
 					if (!(platformArrayList.get(platformArrayList.size() - 1).falling)) { // check
-																							// if
-																							// last
-																							// platform
-																							// was
-																							// falling
+																	// falling
 						platformArrayList.get(0).setX(
 								platformArrayList.get(platformArrayList.size() - 1).getX()
 										+ platformArrayList.get(platformArrayList.size() - 1).getWidth()
-										+ (int) (200 * Math.random()) + (int) (t * .1 * Math.random()));
+										+ (int) (300 * Math.random()) + (int) (t * .1 * Math.random()));
 					} else { // If last platform was falling, set it close
 						platformArrayList.get(0).setX(
 								platformArrayList.get(platformArrayList.size() - 1).getX()
@@ -74,7 +79,7 @@ public class PlatformSys extends VisibleObject {
 					if (!(platformArrayList.get(i - 1).falling)) {
 						platformArrayList.get(i).setX(
 								platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
-										+ (int) (200 * Math.random()) + (int) (t * .1 * Math.random()));
+										+ (int) (300 * Math.random()) + (int) (t * .1 * Math.random()));
 					} else {
 						platformArrayList.get(i).setX(
 								platformArrayList.get(i - 1).getX() + platformArrayList.get(i - 1).getWidth()
@@ -83,7 +88,7 @@ public class PlatformSys extends VisibleObject {
 				}
 
 				// Randomize Y value
-				platformArrayList.get(i).setY(300 - (int) (125 * Math.random()) + (int) (125 * Math.random()));
+				platformArrayList.get(i).setY(310 - (int) (125 * Math.random()) + (int) (125 * Math.random()));
 
 				// Randomize oscillationing platforms
 				platformArrayList.get(i).oscillate = false;
@@ -146,7 +151,7 @@ class Platform extends VisibleObject {
 		setHeight(45);
 		setX(i * getWidth());
 		setY(300);
-		setDx(-1 * 2.5);
+		setDx(-1 * 3);
 
 		scaleTransition = new ScaleTransition(Duration.millis(1000), getImageView());
 		scaleTransition.setToY(.5);

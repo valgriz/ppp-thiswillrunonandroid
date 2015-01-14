@@ -104,8 +104,10 @@ public class Bird extends VisibleObject {
 	public void addCollisionDetection() {
 		for (int i = 0; i < PlayGame.platformSys.platformArrayList.size(); i++) {
 			collisionObjectArrayList.add(new CollisionObject(this, PlayGame.platformSys.platformArrayList.get(i)));
-		}
+                }
 	}
+        
+  
 
 	private void reverseAnimation() {
 		if (getDy() < 0) {
@@ -178,6 +180,22 @@ public class Bird extends VisibleObject {
 				}
 			}
 		}
+                if(PlayGame.platformSys.stars.size()>=1){
+                    for (int i = PlayGame.platformSys.stars.size()-1 ; i >= 0; i--){
+                       
+                        CollisionObject starCheck = new CollisionObject(this,PlayGame.platformSys.stars.get(i));
+                            if (starCheck.checkCollision()){
+                                PlayGame.platformSys.stars.get(i).removeStar();//Play Transition and remove from group
+                                PlayGame.platformSys.stars.remove(i);//Remove from array list
+                            }
+                            
+                            else if(PlayGame.platformSys.stars.get(i).gone){
+                                PlayGame.platformSys.stars.remove(i);
+                            }
+                        
+                    }
+                }
+                
 		if (!hit) {
 			useVerticalGravity();
 		} else {
@@ -186,6 +204,10 @@ public class Bird extends VisibleObject {
 
 		if (getY() > 600) {
 			birdFell();
+                        for (int i=PlayGame.platformSys.stars.size()-1 ; i >= 0; i--){
+                            PlayGame.platformSys.stars.get(i).gone();
+                        }
+                        PlayGame.platformSys.stars = new ArrayList();
 		}
 		reverseAnimation();
 		updateX();

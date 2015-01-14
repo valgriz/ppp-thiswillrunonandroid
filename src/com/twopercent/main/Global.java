@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Global {
 
-	public static boolean inMainMenu, inPlayGame, inHighScores, inStats, inOptions, inHelp, inPaused, inGameOver,
+	public static boolean inMainMenu, inMainMenuLoaded, inPlayGame, inHighScores, inStats, inOptions, inHelp, inPaused, inGameOver,
 			gameStateChanged;
 	public static int score;
 

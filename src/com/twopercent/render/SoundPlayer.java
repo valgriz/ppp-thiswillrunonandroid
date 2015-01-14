@@ -9,6 +9,7 @@ public class SoundPlayer {
     private static Media bounce = new Media(SoundPlayer.class.getResource("/res/sounds/BounceEffect.mp3").toString());
     private static Media button = new Media(SoundPlayer.class.getResource("/res/sounds/ButtonSound.mp3").toString());
     private static Media fallingPlatform = new Media(SoundPlayer.class.getResource("/res/sounds/FallingPlatform.mp3").toString());
+    private static Media starSound = new Media(SoundPlayer.class.getResource("/res/sounds/StarSound.mp3").toString());
     private static double volume = 1.0;
     // private static Media 
     
@@ -28,6 +29,12 @@ public class SoundPlayer {
         MediaPlayer fallingPlat = new MediaPlayer(fallingPlatform);
         fallingPlat.setVolume(volume/10); 
         fallingPlat.play();
+    }
+    
+    public static void playStarSound(){
+        MediaPlayer starPlayer = new MediaPlayer(starSound);
+        starPlayer.setVolume(volume/20);
+        starPlayer.play();
     }
     
     public static void mute(){

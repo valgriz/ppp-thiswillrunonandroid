@@ -137,7 +137,7 @@ public class MainMenu {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+                            Global.inMainMenuLoaded = true;
 			}
 		});
 		translateTransition1.setOnFinished(new EventHandler<ActionEvent>() {
