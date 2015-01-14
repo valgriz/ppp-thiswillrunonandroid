@@ -119,6 +119,7 @@ public class MainMenu {
 		Global.inPlayGame = false;
 		Global.inGameOver = false;
 		Global.inPaused = false;
+		
 	}
 
 	public void update() {

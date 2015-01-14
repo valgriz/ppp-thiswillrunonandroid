@@ -133,13 +133,14 @@ public class InputController {
 				Global.inPlayGame = false;
 				Global.inPaused = false;
 				Global.inGameOver = false;
-				Global.inMainMenu = true;
+				Global.inMainMenu = false;
 				Global.inOptions = false;
 				Global.inHighScores = false;
-				PlayGame.translateOut();
-				MainMenu.goToMainMenu();
+
 				Global.gameStateChanged = true;
 				Screen.setVisibleGroup("MainMenu");
+				PlayGame.translateOut();
+				MainMenu.goToMainMenu();
 				break;
 			case "pgPauseGame":
 				SoundPlayer.playButton();
@@ -158,6 +159,7 @@ public class InputController {
 				Global.gameStateChanged = true;
 				Bird.dontDoIt();
 				break;
+
 			case "mmPlay":
 				Global.inMainMenu = false;
 				Global.inPlayGame = true;
@@ -190,6 +192,7 @@ public class InputController {
 				Global.inPaused = false;
 				Global.gameStateChanged = true;
 				break;
+
 			case "smMainMenu":
 				Global.inMainMenu = true;
 				Global.inHighScores = false;

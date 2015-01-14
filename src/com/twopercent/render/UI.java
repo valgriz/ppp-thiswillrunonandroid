@@ -63,7 +63,9 @@ public class UI extends UserInterfaceCreator {
 		addButton(387, 356, 300, 69, "HELP", 0, "mmHelp");
 		addButton(33, 356, 300, 69, "MAIN MENU", 0, "smMainMenu");
 		addButton(387, 356, 300, 69, "PLAY GAME", 0, "smPlayGame");
-
+		addCustomButton(576, 95, 45, 236, "", 1, 0, 69, "omRight");
+		addCustomButton(94, 95, 45, 236, "", 1, 0, 305, "omLeft");
+		addCustomButton(340, 95, 34, 21, "", 1, 0, 541, "omSound");
 		stateChanged();
 
 	}
@@ -100,6 +102,24 @@ public class UI extends UserInterfaceCreator {
 		System.out.println("screenStateChanged");
 		// Attribs
 
+		// Main Menu
+		if (Global.inMainMenu) {
+			getButton("pgLeftTap").setVisible(false);
+			getButton("pgRightTap").setVisible(false);
+			getButton("goPlayAgain").setVisible(false);
+			getButton("goMainMenu").setVisible(false);
+			getButton("pgPauseGame").setVisible(false);
+			getButton("gpEndGame").setVisible(false);
+			getButton("gpResume").setVisible(false);
+			getButton("mmPlay").setVisible(true);
+			getButton("mmScores").setVisible(true);
+			getButton("mmStats").setVisible(true);
+			getButton("mmOptions").setVisible(true);
+			getButton("mmHelp").setVisible(true);
+			getScoreText().setVisible(false);
+		}
+
+		// In Game
 		if (Global.inPlayGame) {
 			if (showChangePenguin) {
 				UI.getButton("pgChangePenguin").setVisible(true);
@@ -120,6 +140,7 @@ public class UI extends UserInterfaceCreator {
 				getButton("pgRightTap").setVisible(true);
 				getButton("goPlayAgain").setVisible(false);
 				getButton("goMainMenu").setVisible(false);
+
 			}
 
 			if (Global.inPaused) {
@@ -137,16 +158,39 @@ public class UI extends UserInterfaceCreator {
 				getButton("gpEndGame").setVisible(false);
 				getButton("gpResume").setVisible(false);
 			}
+
+			if (!Global.inGameOver && !Global.inPaused) {
+				gameMessage.setVisible(false);
+				getButton("pgLeftTap").setVisible(true);
+				getButton("pgRightTap").setVisible(true);
+				getButton("goPlayAgain").setVisible(false);
+				getButton("goMainMenu").setVisible(false);
+				getButton("pgPauseGame").setVisible(true);
+				getButton("gpEndGame").setVisible(false);
+				getButton("gpResume").setVisible(false);
+				getScoreText().setVisible(true);
+
+			}
 		} else {
 			gameMessage.setVisible(false);
+			getButton("pgChangePenguin").setVisible(false);
 		}
 
+		// In Highscores
 		if (Global.inHighScores || Global.inOptions) {
-			if (Global.inHighScores)
+			if (Global.inHighScores) {
 				Screen.setVisibleGroup("HighScores");
-			else
+			} else if (Global.inOptions) {
 				Screen.setVisibleGroup("Options");
-
+				getButton("omRight").setVisible(true);
+				getButton("omLeft").setVisible(true);
+				getButton("omSound").setVisible(true);
+			} else {
+				Screen.setVisibleGroup("MainMenu");
+				getButton("omRight").setVisible(false);
+				getButton("omLeft").setVisible(false);
+				getButton("omSound").setVisible(false);
+			}
 			getButton("smMainMenu").setVisible(true);
 			getButton("smPlayGame").setVisible(true);
 			getButton("mmPlay").setVisible(false);
@@ -163,39 +207,16 @@ public class UI extends UserInterfaceCreator {
 		} else {
 			getButton("smMainMenu").setVisible(false);
 			getButton("smPlayGame").setVisible(false);
+			getButton("omRight").setVisible(false);
+			getButton("omLeft").setVisible(false);
+			getButton("omSound").setVisible(false);
 
 		}
 
-		if (!Global.inMainMenu && Global.inPlayGame && !Global.inHighScores && !Global.inStats && !Global.inOptions
-				&& !Global.inHelp && !Global.inPaused && !Global.inGameOver) {
-			gameMessage.setVisible(false);
-			getButton("pgLeftTap").setVisible(true);
-			getButton("pgRightTap").setVisible(true);
-			getButton("goPlayAgain").setVisible(false);
-			getButton("goMainMenu").setVisible(false);
-			getButton("pgPauseGame").setVisible(true);
-			getButton("gpEndGame").setVisible(false);
-			getButton("gpResume").setVisible(false);
-			getScoreText().setVisible(true);
-		}
-
-		if (Global.inMainMenu && !Global.inPlayGame && !Global.inPaused && !Global.inGameOver) {
-			getButton("pgLeftTap").setVisible(false);
-			getButton("pgRightTap").setVisible(false);
-			getButton("goPlayAgain").setVisible(false);
-			getButton("goMainMenu").setVisible(false);
-			getButton("pgPauseGame").setVisible(false);
-			getButton("gpEndGame").setVisible(false);
-			getButton("gpResume").setVisible(false);
-			getButton("mmPlay").setVisible(true);
-			getButton("mmScores").setVisible(true);
-			getButton("mmStats").setVisible(true);
-			getButton("mmOptions").setVisible(true);
-			getButton("mmHelp").setVisible(true);
-			getScoreText().setVisible(false);
-		} else {
-
-		}
+		// if (!Global.inMainMenu && Global.inPlayGame && !Global.inHighScores
+		// && !Global.inStats && !Global.inOptions
+		// && !Global.inHelp && !Global.inPaused && !Global.inGameOver) {
+		// }
 
 		Global.gameStateChanged = false;
 	}
@@ -203,7 +224,7 @@ public class UI extends UserInterfaceCreator {
 	public void update() {
 		super.update();
 
-		// showScreenStatus();
+		showScreenStatus();
 
 		if (Global.gameStateChanged)
 			stateChanged();

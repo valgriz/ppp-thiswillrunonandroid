@@ -30,8 +30,8 @@ public class UserInterfaceCreator {
 		buttonArrayList.get(buttonArrayList.size() - 1).setVisible(false);
 	}
 
-	public void addButton(int x, int y, int width, int height, String text, int buttonSpriteKey, String id) {
-		buttonArrayList.add(new Button(x, y, width, height, text, buttonSpriteKey, id));
+	public void addButton(int x, int y, int width, int height, String text, int yOffset, String id) {
+		buttonArrayList.add(new Button(x, y, width, height, text, yOffset, id));
 		group.getChildren().add(buttonArrayList.get(buttonArrayList.size() - 1).getGroup());
 		buttonArrayList.get(buttonArrayList.size() - 1).setVisible(false);
 	}

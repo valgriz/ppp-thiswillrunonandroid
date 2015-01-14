@@ -59,10 +59,12 @@ public class Screen {
 	public static void setVisibleGroup(String s) {
 
 		root.getChildren().clear();
+		System.out.println("> GROUP CLEARED");
 		switch (s) {
 		case "MainMenu":
 			root.getChildren().add(playGame.getGroup());
 			root.getChildren().add(mainMenu.getGroup());
+			root.getChildren().add(userInterface.getGroup());
 			break;
 		case "PlayGame":
 			root.getChildren().add(playGame.getGroup());
@@ -70,20 +72,26 @@ public class Screen {
 			MainMenu.goToPlayGameRightNow();
 			MainMenu.translateOutButtonsRightNow();
 			PlayGame.resetGame();
+			root.getChildren().add(userInterface.getGroup());
 			break;
 		case "HighScores":
 			root.getChildren().add(highScores.getGroup());
+			root.getChildren().add(userInterface.getGroup());
 			break;
 		case "Stats":
 			break;
 		case "Options":
 			root.getChildren().add(options.getGroup());
+			root.getChildren().add(userInterface.getGroup());
+			root.getChildren().add(options.getSubGroup());
 			break;
 		case "Help":
+			root.getChildren().add(userInterface.getGroup());
 			break;
 
 		}
-		root.getChildren().add(userInterface.getGroup());
+
+		System.out.println("> UI ADDED");
 	}
 
 	@SuppressWarnings("deprecati" + "on")

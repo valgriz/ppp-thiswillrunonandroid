@@ -79,8 +79,7 @@ public class Button extends VisibleObject {
 		state = 0;
 
 		setImageViewToImage(new Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
-		getImageView().setViewport(
-				new Rectangle2D(getWidth() * buttonKey, getHeight() * buttonSpriteKey, getWidth(), getHeight()));
+		getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
 		getImageView().setX(getX());
 		getImageView().setY(getY());
 		getGroup().getChildren().add(getImageView());
@@ -225,21 +224,16 @@ public class Button extends VisibleObject {
 		this.state = state;
 		if (getImageView() != null) {
 			if (state == 0) {
-				getImageView()
-						.setViewport(
-								new Rectangle2D(getWidth() * buttonKey, getHeight() * buttonSpriteKey, getWidth(),
-										getHeight()));
+				getImageView().setViewport(
+						new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
 			}
 			if (state == 1) {
-				getImageView()
-						.setViewport(
-								new Rectangle2D(getWidth() * buttonKey, getHeight() * buttonSpriteKey, getWidth(),
-										getHeight()));
+				getImageView().setViewport(
+						new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
 			}
 			if (state == 2) {
 				getImageView().setViewport(
-						new Rectangle2D(getWidth() * buttonHoverKey, getHeight() * buttonSpriteKey, getWidth(),
-								getHeight()));
+						new Rectangle2D(getWidth() * buttonHoverKey, buttonSpriteKey, getWidth(), getHeight()));
 			}
 		}
 	}
