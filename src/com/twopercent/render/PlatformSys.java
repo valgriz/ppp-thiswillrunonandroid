@@ -174,9 +174,9 @@ class Platform extends VisibleObject {
 
 
                 else if (falling) {
+                    //  System.out.println("FALLING");
                         arrowView.setX(getX() + getWidth()/2 - 20);
                         arrowView.setY(getY() + getHeight()*1.5);
-			System.out.println("FALLING");
                         if(getDy()==0){
                             arrowView.setOpacity(.5*Math.sin(.05*getX()));
                         }
