@@ -17,9 +17,9 @@ public class MainMenu {
 	public static Logo logo;
 	private static Group root;
 
-	public MainMenu(Group root) {
+	public MainMenu() {
+		root = new Group();
 		backgroundC = new BackgroundC();
-		this.root = root;
 		// Logo will be used to change what the menu "advertisement" looks like
 		logo = new Logo();
 		root.getChildren().add(backgroundC.getGroup());
@@ -59,6 +59,32 @@ public class MainMenu {
 		translateOutButtons();
 	}
 
+	public static void goToPlayGameRightNow() {
+		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1), backgroundC.getGroup());
+		translateTransition.setCycleCount(1);
+		translateTransition.setToY(-500);
+		TranslateTransition translateTransition1 = new TranslateTransition(Duration.millis(1), logo.getGroup());
+		translateTransition1.setToY(-500);
+		translateTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				backgroundC.setVisible(false);
+			}
+		});
+		translateTransition1.setOnFinished(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				logo.setVisible(false);
+			}
+		});
+		translateTransition1.setCycleCount(0);
+		translateTransition.play();
+		translateTransition1.play();
+		translateOutButtons();
+	}
+
 	public static void fadeOutButtons() {
 		UI.getButton("mmPlay").fadeOut();
 		UI.getButton("mmScores").fadeOut();
@@ -73,6 +99,14 @@ public class MainMenu {
 		UI.getButton("mmStats").translateToY(0, -500, true, false);
 		UI.getButton("mmOptions").translateToY(0, -500, true, false);
 		UI.getButton("mmHelp").translateToY(0, -500, true, false);
+	}
+
+	public static void translateOutButtonsRightNow() {
+		UI.getButton("mmPlay").translateToYrn(0, -500, true, false);
+		UI.getButton("mmScores").translateToYrn(0, -500, true, false);
+		UI.getButton("mmStats").translateToYrn(0, -500, true, false);
+		UI.getButton("mmOptions").translateToYrn(0, -500, true, false);
+		UI.getButton("mmHelp").translateToYrn(0, -500, true, false);
 	}
 
 	public static void translateInButtons() {
@@ -120,6 +154,14 @@ public class MainMenu {
 		translateTransition1.play();
 		translateInButtons();
 
+	}
+
+	public static Group getGroup() {
+		return root;
+	}
+
+	public static void setGroup(Group root) {
+		MainMenu.root = root;
 	}
 
 }

@@ -10,6 +10,7 @@ import com.twopercent.render.UserInterfaceCreator;
 import com.twopercent.render.VisibleObject;
 import com.valgriz.screen.MainMenu;
 import com.valgriz.screen.PlayGame;
+import com.valgriz.screen.Screen;
 
 public class InputController {
 	public static ArrayList<ActionZone> actionZoneArrayList = new ArrayList<>();
@@ -123,31 +124,35 @@ public class InputController {
 				break;
 
 			case "goPlayAgain":
-                                SoundPlayer.playButton();
+				SoundPlayer.playButton();
 				PlayGame.resetGame();
 				break;
 			case "goMainMenu":
-                                SoundPlayer.playButton();
+				SoundPlayer.playButton();
+
 				Global.inPlayGame = false;
 				Global.inPaused = false;
 				Global.inGameOver = false;
 				Global.inMainMenu = true;
+				Global.inOptions = false;
+				Global.inHighScores = false;
 				PlayGame.translateOut();
 				MainMenu.goToMainMenu();
 				Global.gameStateChanged = true;
+				Screen.setVisibleGroup("MainMenu");
 				break;
 			case "pgPauseGame":
-                                SoundPlayer.playButton();
+				SoundPlayer.playButton();
 				Global.inPaused = true;
 				Global.gameStateChanged = true;
 				break;
 			case "gpResume":
-                                SoundPlayer.playButton();
+				SoundPlayer.playButton();
 				Global.inPaused = false;
 				Global.gameStateChanged = true;
 				break;
 			case "gpEndGame":
-                                SoundPlayer.playButton();
+				SoundPlayer.playButton();
 				Global.inPaused = false;
 				Global.inGameOver = true;
 				Global.gameStateChanged = true;
@@ -165,18 +170,38 @@ public class InputController {
 				break;
 			case "mmScores":
 				Global.inPaused = false;
+				Global.inHighScores = true;
+				Global.inMainMenu = false;
 				Global.gameStateChanged = true;
+				Screen.setVisibleGroup("HighScores");
 				break;
 			case "mmStats":
 				Global.inPaused = false;
 				Global.gameStateChanged = true;
 				break;
 			case "mmOptions":
-				Global.inPaused = false;
+				Global.inOptions = true;
+				Global.inMainMenu = false;
+				Global.inHighScores = false;
 				Global.gameStateChanged = true;
+				Screen.setVisibleGroup("Options");
 				break;
 			case "mmHelp":
 				Global.inPaused = false;
+				Global.gameStateChanged = true;
+				break;
+			case "smMainMenu":
+				Global.inMainMenu = true;
+				Global.inHighScores = false;
+				Global.inOptions = false;
+				Screen.setVisibleGroup("MainMenu");
+				Global.gameStateChanged = true;
+				break;
+			case "smPlayGame":
+				Global.inPlayGame = true;
+				Global.inHighScores = false;
+				Global.inOptions = false;
+				Screen.setVisibleGroup("PlayGame");
 				Global.gameStateChanged = true;
 				break;
 
@@ -208,10 +233,9 @@ public class InputController {
 				PlayGame.goToPlayGame();
 				break;
 			case -4:
-				Global.inPaused = false;
+				Global.inHighScores = true;
+				Global.inMainMenu = false;
 				Global.gameStateChanged = true;
-				Bird.offLeft();
-				Bird.offRight();
 				break;
 			case -3:
 				Global.inPaused = false;
@@ -246,10 +270,10 @@ public class InputController {
 
 				break;
 			case 2:
-				Global.inPaused = false;
-				Global.inGameOver = true;
+				Global.inHighScores = true;
+				Global.inMainMenu = false;
 				Global.gameStateChanged = true;
-				Bird.dontDoIt();
+
 				break;
 			case 3:
 				Global.inPaused = false;
@@ -370,6 +394,7 @@ public class InputController {
 		// For menu use only
 		UI.selection -= 1;
 		applySelectionChange();
+		DataManager.printArray();
 	}
 
 	public void onDown() {

@@ -1,8 +1,6 @@
 package com.valgriz.screen;
 
 import com.twopercent.main.Global;
-import com.twopercent.main.InputController;
-import com.twopercent.main.Main;
 import com.twopercent.render.UI;
 
 import javafx.animation.Animation;
@@ -18,21 +16,30 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Screen {
-	private Group root;
-	private PlayGame playGame;
-	private MainMenu mainMenu;
-	private UI userInterface;
-
+	private static Group root;
+	private static PlayGame playGame;
+	private static MainMenu mainMenu;
+	private static UI userInterface;
+	private static HighScores highScores;
 	private LoadingScreen loadingScreen;
+	private static Options options;
 
 	public Screen(Group root) {
 		this.root = root;
 
 		// loadingScreen = new LoadingScreen(root);
 
-		playGame = new PlayGame(root);
-		mainMenu = new MainMenu(root);
+		highScores = new HighScores();
+		playGame = new PlayGame();
+		mainMenu = new MainMenu();
+		options = new Options();
+
 		userInterface = new UI();
+
+		root.getChildren().add(options.getGroup());
+		root.getChildren().add(highScores.getGroup());
+		root.getChildren().add(playGame.getGroup());
+		root.getChildren().add(mainMenu.getGroup());
 
 		// Can use some optimization
 		root.getChildren().add(userInterface.getGroup());
@@ -47,6 +54,36 @@ public class Screen {
 		Global.inStats = false;
 
 		startTimeline();
+	}
+
+	public static void setVisibleGroup(String s) {
+
+		root.getChildren().clear();
+		switch (s) {
+		case "MainMenu":
+			root.getChildren().add(playGame.getGroup());
+			root.getChildren().add(mainMenu.getGroup());
+			break;
+		case "PlayGame":
+			root.getChildren().add(playGame.getGroup());
+			root.getChildren().add(mainMenu.getGroup());
+			MainMenu.goToPlayGameRightNow();
+			MainMenu.translateOutButtonsRightNow();
+			PlayGame.resetGame();
+			break;
+		case "HighScores":
+			root.getChildren().add(highScores.getGroup());
+			break;
+		case "Stats":
+			break;
+		case "Options":
+			root.getChildren().add(options.getGroup());
+			break;
+		case "Help":
+			break;
+
+		}
+		root.getChildren().add(userInterface.getGroup());
 	}
 
 	@SuppressWarnings("deprecati" + "on")
@@ -67,7 +104,22 @@ public class Screen {
 		if (Global.inPlayGame) {
 			playGame.update();
 		}
+		if (Global.inHighScores) {
+			highScores.update();
+		}
+		if (Global.inOptions) {
+			options.update();
+		}
 		userInterface.update();
 
 	}
+
+	public static Group getGroup() {
+		return root;
+	}
+
+	public static void setGroup(Group root) {
+		Screen.root = root;
+	}
+
 }
