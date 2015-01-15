@@ -9,6 +9,7 @@ import com.twopercent.render.UI;
 import com.twopercent.render.UserInterfaceCreator;
 import com.twopercent.render.VisibleObject;
 import com.valgriz.screen.MainMenu;
+import com.valgriz.screen.Options;
 import com.valgriz.screen.PlayGame;
 import com.valgriz.screen.Screen;
 
@@ -213,6 +214,12 @@ public class InputController {
 				Global.inOptions = false;
 				Screen.setVisibleGroup("PlayGame");
 				Global.gameStateChanged = true;
+				break;
+			case "omLeft":
+				Options.selectionLeft();
+				break;
+			case "omRight":
+				Options.selectionRight();
 				break;
 
 			}

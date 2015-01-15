@@ -63,9 +63,10 @@ public class UI extends UserInterfaceCreator {
 		addButton(387, 356, 300, 69, "HELP", 0, "mmHelp");
 		addButton(33, 356, 300, 69, "MAIN MENU", 0, "smMainMenu");
 		addButton(387, 356, 300, 69, "PLAY GAME", 0, "smPlayGame");
-		addCustomButton(576, 95, 45, 236, "", 1, 0, 69, "omRight");
 		addCustomButton(94, 95, 45, 236, "", 1, 0, 305, "omLeft");
+		addCustomButton(576, 95, 45, 236, "", 1, 0, 69, "omRight");
 		addCustomButton(340, 95, 34, 21, "", 1, 0, 541, "omSound");
+		addCustomButton(277, 180, 160, 43, "", 1, 0, 583, "omUnlock");
 		stateChanged();
 
 	}
@@ -185,11 +186,13 @@ public class UI extends UserInterfaceCreator {
 				getButton("omRight").setVisible(true);
 				getButton("omLeft").setVisible(true);
 				getButton("omSound").setVisible(true);
+				getButton("omUnlock").setVisible(true);
 			} else {
 				Screen.setVisibleGroup("MainMenu");
 				getButton("omRight").setVisible(false);
 				getButton("omLeft").setVisible(false);
 				getButton("omSound").setVisible(false);
+				getButton("omUnlock").setVisible(false);
 			}
 			getButton("smMainMenu").setVisible(true);
 			getButton("smPlayGame").setVisible(true);
@@ -210,6 +213,7 @@ public class UI extends UserInterfaceCreator {
 			getButton("omRight").setVisible(false);
 			getButton("omLeft").setVisible(false);
 			getButton("omSound").setVisible(false);
+			getButton("omUnlock").setVisible(false);
 
 		}
 
@@ -224,7 +228,7 @@ public class UI extends UserInterfaceCreator {
 	public void update() {
 		super.update();
 
-		showScreenStatus();
+		// showScreenStatus();
 
 		if (Global.gameStateChanged)
 			stateChanged();
