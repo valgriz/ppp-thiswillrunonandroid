@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +14,8 @@ import javafx.scene.text.Text;
 
 import com.twopercent.main.Penguin;
 import com.twopercent.render.BackgroundD;
+import com.twopercent.render.UI;
+import com.twopercent.render.UserInterfaceCreator;
 
 public class Options {
 
@@ -35,6 +39,8 @@ public class Options {
 	private static ImageView birdA;
 	private static ImageView birdB;
 	private static ImageView birdC;
+	private Image vcFrameImage;
+	private ImageView vcFrameImageView;
 
 	private final static int TOTAL_NUMBER_OF_PENGUINS = 7;
 	private final static int PENGUIN_WIDTH = 66;
@@ -126,6 +132,12 @@ public class Options {
 				PENGUIN_HEIGHT));
 		birdC.setX(465);
 		birdC.setY(180);
+		BoxBlur bb = new BoxBlur();
+		bb.setWidth(2);
+		bb.setHeight(2);
+		bb.setIterations(3);
+		birdA.setEffect(bb);
+		birdC.setEffect(bb);
 
 		starImage = new Image(Options.class.getResource("/res/images/star.png").toString());
 		starImageView = new ImageView(starImage);
@@ -134,17 +146,23 @@ public class Options {
 		starImageView.setScaleX(.5);
 		starImageView.setScaleY(.5);
 
+		vcFrameImage = new Image(Options.class.getResource("/res/images/dockVolumeControl.png").toString());
+		vcFrameImageView = new ImageView(vcFrameImage);
+		vcFrameImageView.setX(334);
+		vcFrameImageView.setY(91);
+
 		root.getChildren().add(title);
+		root.getChildren().add(centerDockImageView);
+		root.getChildren().add(birdB);
 
 		subGroup.getChildren().add(dockImageView);
 		subGroup.getChildren().add(sideLeftImageView);
 		subGroup.getChildren().add(sideRightImageView);
-		subGroup.getChildren().add(centerDockImageView);
 
 		// Penguins
 
 		subGroup.getChildren().add(birdA);
-		subGroup.getChildren().add(birdB);
+
 		subGroup.getChildren().add(birdC);
 
 		subGroup.getChildren().add(shadowImageView);
@@ -152,6 +170,7 @@ public class Options {
 		subGroup.getChildren().add(penguinName);
 		subGroup.getChildren().add(starImageView);
 		subGroup.getChildren().add(penguinPrice);
+		subGroup.getChildren().add(vcFrameImageView);
 
 		updatePenguinPositions();
 	}
@@ -178,7 +197,7 @@ public class Options {
 		updatePenguinPositions();
 	}
 
-	private static void updatePenguinPositions() {
+	public static void updatePenguinPositions() {
 		if (currentPenguinSelection > TOTAL_NUMBER_OF_PENGUINS - 1)
 			currentPenguinSelection = 0;
 		if (currentPenguinSelection < 0)
@@ -207,6 +226,14 @@ public class Options {
 		penguinName.setX((720 / 2) - (penguinName.getBoundsInLocal().getWidth() / 2));
 
 		penguinPrice.setText("" + p.getStarsRequired());
+
+		if (UserInterfaceCreator.getButtonArrayList() != null) {
+			if (p.isUnlocked()) {
+				UI.getButton("omUnlock").setVisible(false);
+			} else {
+				UI.getButton("omUnlock").setVisible(true);
+			}
+		}
 	}
 
 	public void update() {

@@ -13,7 +13,7 @@ public class HighScores {
 
 	public static BackgroundD backgroundD;
 	private Group root;
-	private Text scoreArray[] = new Text[10];
+	private static Text scoreArray[] = new Text[10];
 	private Text title;
 
 	public HighScores() {
@@ -55,11 +55,15 @@ public class HighScores {
 		root.getChildren().add(title);
 	}
 
-	public void update() {
-		backgroundD.update();
+	public static void incrementalUpdate() {
+
 		for (int i = 0; i < scoreArray.length; i++) {
 			scoreArray[i].setText((i + 1) + ". " + (DataManager.getHighscore())[i]);
 		}
+	}
+
+	public void update() {
+		backgroundD.update();
 	}
 
 	public Group getGroup() {

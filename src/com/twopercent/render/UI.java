@@ -6,6 +6,8 @@ import com.sun.javafx.css.FontFace;
 import com.sun.javafx.scene.control.behavior.TextBinding;
 import com.twopercent.main.DataManager;
 import com.twopercent.main.Global;
+import com.valgriz.screen.HighScores;
+import com.valgriz.screen.Options;
 import com.valgriz.screen.Screen;
 
 import javafx.scene.Group;
@@ -67,6 +69,9 @@ public class UI extends UserInterfaceCreator {
 		addCustomButton(576, 95, 45, 236, "", 1, 0, 69, "omRight");
 		addCustomButton(340, 95, 34, 21, "", 1, 0, 541, "omSound");
 		addCustomButton(277, 180, 160, 43, "", 1, 0, 583, "omUnlock");
+		addNullButton(94, 95, 183, 236, "omLeft");
+		addNullButton(437, 95, 184, 236, "omRight");
+		addButton(210, 369, 300, 69, "MAIN MENU", 0, "hmMainMenu");
 		stateChanged();
 
 	}
@@ -118,6 +123,12 @@ public class UI extends UserInterfaceCreator {
 			getButton("mmOptions").setVisible(true);
 			getButton("mmHelp").setVisible(true);
 			getScoreText().setVisible(false);
+		} else if (!Global.inPlayGame) {
+			getButton("mmPlay").setVisible(false);
+			getButton("mmScores").setVisible(false);
+			getButton("mmStats").setVisible(false);
+			getButton("mmOptions").setVisible(false);
+			getButton("mmHelp").setVisible(false);
 		}
 
 		// In Game
@@ -181,12 +192,15 @@ public class UI extends UserInterfaceCreator {
 		if (Global.inHighScores || Global.inOptions) {
 			if (Global.inHighScores) {
 				Screen.setVisibleGroup("HighScores");
+				HighScores.incrementalUpdate();
 			} else if (Global.inOptions) {
 				Screen.setVisibleGroup("Options");
 				getButton("omRight").setVisible(true);
 				getButton("omLeft").setVisible(true);
 				getButton("omSound").setVisible(true);
 				getButton("omUnlock").setVisible(true);
+				getScoreText().setVisible(false);
+				Options.updatePenguinPositions();
 			} else {
 				Screen.setVisibleGroup("MainMenu");
 				getButton("omRight").setVisible(false);
@@ -217,6 +231,12 @@ public class UI extends UserInterfaceCreator {
 
 		}
 
+		if (Global.inHelp || Global.inStats) {
+			getButton("hmMainMenu").setVisible(true);
+		} else {
+			getButton("hmMainMenu").setVisible(false);
+		}
+
 		// if (!Global.inMainMenu && Global.inPlayGame && !Global.inHighScores
 		// && !Global.inStats && !Global.inOptions
 		// && !Global.inHelp && !Global.inPaused && !Global.inGameOver) {
@@ -228,7 +248,7 @@ public class UI extends UserInterfaceCreator {
 	public void update() {
 		super.update();
 
-		// showScreenStatus();
+		showScreenStatus();
 
 		if (Global.gameStateChanged)
 			stateChanged();

@@ -23,6 +23,8 @@ public class Screen {
 	private static HighScores highScores;
 	private LoadingScreen loadingScreen;
 	private static Options options;
+	private static Help help;
+	private static Stats stats;
 
 	public Screen(Group root) {
 		this.root = root;
@@ -33,9 +35,13 @@ public class Screen {
 		playGame = new PlayGame();
 		mainMenu = new MainMenu();
 		options = new Options();
+		help = new Help();
+		stats = new Stats();
 
 		userInterface = new UI();
 
+		root.getChildren().add(stats.getGroup());
+		root.getChildren().add(help.getGroup());
 		root.getChildren().add(options.getGroup());
 		root.getChildren().add(highScores.getGroup());
 		root.getChildren().add(playGame.getGroup());
@@ -79,6 +85,8 @@ public class Screen {
 			root.getChildren().add(userInterface.getGroup());
 			break;
 		case "Stats":
+			root.getChildren().add(stats.getGroup());
+			root.getChildren().add(userInterface.getGroup());
 			break;
 		case "Options":
 			root.getChildren().add(options.getGroup());
@@ -86,6 +94,7 @@ public class Screen {
 			root.getChildren().add(options.getSubGroup());
 			break;
 		case "Help":
+			root.getChildren().add(help.getGroup());
 			root.getChildren().add(userInterface.getGroup());
 			break;
 
@@ -113,11 +122,12 @@ public class Screen {
 			playGame.update();
 		}
 		if (Global.inHighScores) {
-			highScores.update();
+			//highScores.update();
 		}
 		if (Global.inOptions) {
-			options.update();
+			// options.update();
 		}
+
 		userInterface.update();
 
 	}

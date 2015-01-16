@@ -3,6 +3,7 @@ package com.twopercent.render;
 import java.util.ArrayList;
 
 import com.twopercent.main.Global;
+import com.valgriz.screen.Options;
 
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;

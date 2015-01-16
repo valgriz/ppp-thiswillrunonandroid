@@ -125,6 +125,14 @@ public class MainMenu {
 
 	}
 
+	public static void translateInButtonsRightNow() {
+		UI.getButton("mmPlay").translateToYrn(-500, 0, false, true);
+		UI.getButton("mmScores").translateToYrn(-500, 0, false, true);
+		UI.getButton("mmStats").translateToYrn(-500, 0, false, true);
+		UI.getButton("mmOptions").translateToYrn(-500, 0, false, true);
+		UI.getButton("mmHelp").translateToYrn(-500, 0, false, true);
+	}
+
 	public void update() {
 		backgroundC.update();
 		logo.update();
@@ -157,6 +165,36 @@ public class MainMenu {
 		translateTransition.play();
 		translateTransition1.play();
 		translateInButtons();
+
+	}
+
+	public static void goToMainMenuRightNow() {
+		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1), backgroundC.getGroup());
+		translateTransition.setCycleCount(1);
+		translateTransition.setFromY(-500);
+		translateTransition.setToY(0);
+		TranslateTransition translateTransition1 = new TranslateTransition(Duration.millis(1), logo.getGroup());
+		translateTransition1.setToY(0);
+		translateTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Global.inMainMenuLoaded = true;
+			}
+		});
+		translateTransition1.setOnFinished(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+		translateTransition1.setCycleCount(0);
+		backgroundC.setVisible(true);
+		logo.setVisible(true);
+		translateTransition.play();
+		translateTransition1.play();
+		translateInButtonsRightNow();
 
 	}
 

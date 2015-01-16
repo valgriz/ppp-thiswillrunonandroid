@@ -180,7 +180,9 @@ public class InputController {
 				break;
 			case "mmStats":
 				if (Global.inMainMenuLoaded) {
-					Global.inPaused = false;
+					Global.inMainMenu = false;
+					Global.inStats = true;
+					Screen.setVisibleGroup("Stats");
 					Global.gameStateChanged = true;
 					break;
 				} else
@@ -197,21 +199,27 @@ public class InputController {
 				} else
 					break;
 			case "mmHelp":
-				Global.inPaused = false;
+				Global.inMainMenu = false;
+				Global.inHelp = true;
+				Screen.setVisibleGroup("Help");
 				Global.gameStateChanged = true;
 				break;
-
 			case "smMainMenu":
 				Global.inMainMenu = true;
-				Global.inHighScores = false;
 				Global.inOptions = false;
-				Screen.setVisibleGroup("MainMenu");
+				Global.inPlayGame = false;
+				Global.inGameOver = false;
+				Global.inHighScores = false;
+				PlayGame.translateOut();
+				MainMenu.goToMainMenuRightNow();
 				Global.gameStateChanged = true;
+				Screen.setVisibleGroup("MainMenu");
 				break;
 			case "smPlayGame":
 				Global.inPlayGame = true;
 				Global.inHighScores = false;
 				Global.inOptions = false;
+				Screen.setVisibleGroup("MainMenu");
 				Screen.setVisibleGroup("PlayGame");
 				Global.gameStateChanged = true;
 				break;
@@ -220,6 +228,30 @@ public class InputController {
 				break;
 			case "omRight":
 				Options.selectionRight();
+				break;
+
+			case "pgChangePenguin":
+				Global.inOptions = true;
+				Global.inMainMenu = false;
+				Global.inHighScores = false;
+				Global.inPlayGame = false;
+				UI.getButton("pgChangePenguin").setVisible(false);
+				Global.gameStateChanged = true;
+				Screen.setVisibleGroup("Options");
+				break;
+
+			case "hmMainMenu":
+				Global.inMainMenu = true;
+				Global.inOptions = false;
+				Global.inPlayGame = false;
+				Global.inGameOver = false;
+				Global.inHighScores = false;
+				Global.inStats = false;
+				Global.inHelp = false;
+				PlayGame.translateOut();
+				MainMenu.goToMainMenuRightNow();
+				Global.gameStateChanged = true;
+				Screen.setVisibleGroup("MainMenu");
 				break;
 
 			}
