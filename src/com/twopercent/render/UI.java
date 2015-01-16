@@ -12,6 +12,7 @@ import com.valgriz.screen.Screen;
 
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -29,7 +30,7 @@ public class UI extends UserInterfaceCreator {
 		DropShadow dropShadow = new DropShadow(5, new javafx.scene.paint.Color(0, 0, 0, 1));
 
 		getGroup().getChildren().add(getScoreText());
-
+                
 		getScoreText().setX(15);
 		getScoreText().setY(40);
 		getScoreText().setText("");
@@ -38,6 +39,16 @@ public class UI extends UserInterfaceCreator {
 		getScoreText().setEffect(dropShadow);
 		dropShadow.setOffsetX(3);
 		dropShadow.setOffsetY(3);
+                
+                getGroup().getChildren().add(getStarText());
+                
+                getStarText().setX(640);
+                getStarText().setY(50);
+                getStarText().setText("");
+                getStarText().setFill(new javafx.scene.paint.Color(1,1,.5,1));
+                getStarText().setFont(new Font("Calibri", 42));
+                getStarText().setEffect(new Glow(1));
+                
 
 		gameMessage = new Text("GAME OVER");
 		gameMessage.setFont(new Font("Arial", 60));
@@ -123,6 +134,7 @@ public class UI extends UserInterfaceCreator {
 			getButton("mmOptions").setVisible(true);
 			getButton("mmHelp").setVisible(true);
 			getScoreText().setVisible(false);
+                        getStarText().setVisible(false);
 		} else if (!Global.inPlayGame) {
 			getButton("mmPlay").setVisible(false);
 			getButton("mmScores").setVisible(false);
@@ -146,6 +158,9 @@ public class UI extends UserInterfaceCreator {
 				getButton("goMainMenu").setVisible(true);
 				UI.getButton("pgChangePenguin").setVisible(false);
 				DataManager.addScore(Global.score);
+                                
+                                
+                              //  sssssssssssssssd;
 			} else {
 				gameMessage.setVisible(false);
 				getButton("pgLeftTap").setVisible(true);
@@ -181,6 +196,7 @@ public class UI extends UserInterfaceCreator {
 				getButton("gpEndGame").setVisible(false);
 				getButton("gpResume").setVisible(false);
 				getScoreText().setVisible(true);
+                                getStarText().setVisible(true);
 
 			}
 		} else {
@@ -200,6 +216,7 @@ public class UI extends UserInterfaceCreator {
 				getButton("omSound").setVisible(true);
 				getButton("omUnlock").setVisible(true);
 				getScoreText().setVisible(false);
+                                getStarText().setVisible(false);
 				Options.updatePenguinPositions();
 			} else {
 				Screen.setVisibleGroup("MainMenu");
@@ -255,6 +272,10 @@ public class UI extends UserInterfaceCreator {
 		// Add Highscore Message
 
 		getScoreText().setText("" + Global.score);
+                
+                getStarText().setText("" + Global.stars);
+                
+                
 	}
 
 	public static void changePenguinButtonExit() {

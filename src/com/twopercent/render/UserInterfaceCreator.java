@@ -12,13 +12,14 @@ import javafx.scene.text.Text;
 
 public class UserInterfaceCreator {
 
-	private int score, buttonCount;
+	private int score, stars, buttonCount;
 	private Group group;
-	private Text scoreText;
+	private Text scoreText, starText;
 	private static ArrayList<Button> buttonArrayList;
 
 	public UserInterfaceCreator() {
 		group = new Group();
+                starText = new Text();
 		scoreText = new Text();
 		buttonArrayList = new ArrayList<>();
 
@@ -84,6 +85,14 @@ public class UserInterfaceCreator {
 	public void setScoreText(Text scoreText) {
 		this.scoreText = scoreText;
 	}
+        
+        public Text getStarText(){
+            return starText;
+        }
+        
+        public void setStarText(Text starText){
+            this.starText = starText;
+        }
 
 	public static ArrayList<Button> getButtonArrayList() {
 		return buttonArrayList;

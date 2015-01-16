@@ -17,12 +17,13 @@ public class Bird extends VisibleObject {
 
 	private ArrayList<CollisionObject> collisionObjectArrayList;
 	private boolean hit;
-	private static boolean onLeft, onRight;
+	private static boolean onLeft, onRight, doingIt;
 
 	private static ScaleTransition scaleTransition;
 	private static RotateTransition rt1;
 	private static RotateTransition rt2;
 	private static int birdIndex;
+        private int starCounter;
 
 	private static double friction;
 
@@ -78,6 +79,8 @@ public class Bird extends VisibleObject {
 		collisionObjectArrayList.clear();
 		addCollisionDetection();
 		syncCoords();
+                
+                doingIt = false;
 
 	}
 
@@ -119,7 +122,7 @@ public class Bird extends VisibleObject {
 				rt1.play();
 			}
 		}
-
+                
 	}
 
 	public static void dontDoIt() {
@@ -127,6 +130,7 @@ public class Bird extends VisibleObject {
 		scaleTransition.play();
 		onLeft = true;
 		onRight = false;
+                doingIt = true;
 	}
 
 	public void birdFell() {
@@ -188,6 +192,8 @@ public class Bird extends VisibleObject {
                             if (starCheck.checkCollision()){
                                 PlayGame.platformSys.stars.get(i).removeStar();//Play Transition and remove from group
                                 PlayGame.platformSys.stars.remove(i);//Remove from array list
+                                starCounter++;
+                                Global.stars++;
                             }
                             
                             else if(PlayGame.platformSys.stars.get(i).gone){
@@ -205,11 +211,22 @@ public class Bird extends VisibleObject {
 
 		if (getY() > 600) {
 			birdFell();
-                        for (int i=PlayGame.platformSys.stars.size()-1 ; i >= 0; i--){
-                            PlayGame.platformSys.stars.get(i).gone();
-                        }
-                        PlayGame.platformSys.stars = new ArrayList();
+                        
 		}
+                
+                //CODE FOR SWITCHING SIDES WHEN OFFSCREEN
+                if(!doingIt){
+                    if (getX() < -30){
+                        setX(734);
+                    }
+
+                    if (getX() > 744){
+                        setX(-20);
+                    }
+                }
+                
+                //END CODE FOR SWITCHING SIDES
+                        
 		reverseAnimation();
 		updateX();
 		syncCoords();

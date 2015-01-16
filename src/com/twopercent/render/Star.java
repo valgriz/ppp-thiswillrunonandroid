@@ -41,7 +41,7 @@ public class Star extends VisibleObject{
         else{
             setX(250 + 800 * Math.random());
             setY(-50);
-            setDx(-4);
+            setDx(-6);
             setDy(5);
             super.imageView.setEffect(new Glow(.3));
             shooting = true;

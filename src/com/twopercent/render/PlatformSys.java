@@ -38,11 +38,11 @@ public class PlatformSys extends VisibleObject {
 	}
 
 	public void update() {
-		if (t < 1500) {
+		if (t < 1500 && !Global.inGameOver) {
 			t += getDt();
 		}
                 
-                if ( Math.random() < (.1 + t/12000) ){
+                if ( Math.random() < (.02 + t/15000) && stars.size()<20){
                     stars.add(new Star(-2, getGroup()));
                 }
                     
@@ -124,6 +124,14 @@ public class PlatformSys extends VisibleObject {
 			platformArrayList.add(new Platform(i, platformArrayList.size()));
 			getGroup().getChildren().add(platformArrayList.get(i).getImageView());
 		}
+                
+                for ( int i=PlayGame.platformSys.stars.size()-1 ; i >= 0; i-- ){
+                            PlayGame.platformSys.stars.get(i).gone();
+                        }
+                PlayGame.platformSys.stars = new ArrayList();
+                
+                //RESET STARS
+                Global.stars = 0;
 
 	}
 }
