@@ -214,6 +214,8 @@ public class InputController {
 				MainMenu.goToMainMenuRightNow();
 				Global.gameStateChanged = true;
 				Screen.setVisibleGroup("MainMenu");
+				DataManager.setStatValue("penguinInUse", Global.penguinInUse);
+				DataManager.loadFile();
 				break;
 			case "smPlayGame":
 				Global.inPlayGame = true;
@@ -222,6 +224,8 @@ public class InputController {
 				Screen.setVisibleGroup("MainMenu");
 				Screen.setVisibleGroup("PlayGame");
 				Global.gameStateChanged = true;
+				DataManager.setStatValue("penguinInUse", Global.penguinInUse);
+				DataManager.loadFile();
 				break;
 			case "omLeft":
 				Options.selectionLeft();
@@ -254,6 +258,9 @@ public class InputController {
 				Screen.setVisibleGroup("MainMenu");
 				break;
 
+			case "omUnlock":
+				Options.unlockPressed();
+				break;
 			}
 		}
 	}

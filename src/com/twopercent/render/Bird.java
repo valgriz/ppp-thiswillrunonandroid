@@ -2,6 +2,7 @@ package com.twopercent.render;
 
 import java.util.ArrayList;
 
+import com.twopercent.main.DataManager;
 import com.twopercent.main.Global;
 import com.valgriz.screen.PlayGame;
 
@@ -23,7 +24,7 @@ public class Bird extends VisibleObject {
 	private static RotateTransition rt1;
 	private static RotateTransition rt2;
 	private static int birdIndex;
-        private int starCounter;
+	private int starCounter;
 
 	private static double friction;
 
@@ -33,7 +34,7 @@ public class Bird extends VisibleObject {
 		setImageViewToImage(new Image(Bird.class.getResource("/res/images/bird.png").toString()));
 		getGroup().getChildren().add(getImageView());
 		birdIndex = 0;
-		getImageView().setViewport(new Rectangle2D(66 * birdIndex, 0, 66, 40));
+		getImageView().setViewport(new Rectangle2D(66 * Global.penguinInUse, 0, 66, 40));
 		setWidth(57);
 		setHeight(40);
 		setX(200);
@@ -65,6 +66,10 @@ public class Bird extends VisibleObject {
 	}
 
 	public void reset() {
+		getImageView().setViewport(new Rectangle2D(66 * Global.penguinInUse, 0, 66, 40));
+
+		System.out.println("BIIW " + Global.penguinInUse);
+
 		setX(200);
 		setY(-200);
 
@@ -79,8 +84,8 @@ public class Bird extends VisibleObject {
 		collisionObjectArrayList.clear();
 		addCollisionDetection();
 		syncCoords();
-                
-                doingIt = false;
+
+		doingIt = false;
 
 	}
 
@@ -107,10 +112,8 @@ public class Bird extends VisibleObject {
 	public void addCollisionDetection() {
 		for (int i = 0; i < PlayGame.platformSys.platformArrayList.size(); i++) {
 			collisionObjectArrayList.add(new CollisionObject(this, PlayGame.platformSys.platformArrayList.get(i)));
-                }
+		}
 	}
-        
-  
 
 	private void reverseAnimation() {
 		if (getDy() < 0) {
@@ -122,7 +125,7 @@ public class Bird extends VisibleObject {
 				rt1.play();
 			}
 		}
-                
+
 	}
 
 	public static void dontDoIt() {
@@ -130,7 +133,7 @@ public class Bird extends VisibleObject {
 		scaleTransition.play();
 		onLeft = true;
 		onRight = false;
-                doingIt = true;
+		doingIt = true;
 	}
 
 	public void birdFell() {
@@ -185,24 +188,30 @@ public class Bird extends VisibleObject {
 				}
 			}
 		}
-                if(PlayGame.platformSys.stars.size()>=1){
-                    for (int i = PlayGame.platformSys.stars.size()-1 ; i >= 0; i--){
-                       
-                        CollisionObject starCheck = new CollisionObject(this,PlayGame.platformSys.stars.get(i));
-                            if (starCheck.checkCollision()){
-                                PlayGame.platformSys.stars.get(i).removeStar();//Play Transition and remove from group
-                                PlayGame.platformSys.stars.remove(i);//Remove from array list
-                                starCounter++;
-                                Global.stars++;
-                            }
-                            
-                            else if(PlayGame.platformSys.stars.get(i).gone){
-                                PlayGame.platformSys.stars.remove(i);
-                            }
-                        
-                    }
-                }
-                
+		if (PlayGame.platformSys.stars.size() >= 1) {
+			for (int i = PlayGame.platformSys.stars.size() - 1; i >= 0; i--) {
+
+				CollisionObject starCheck = new CollisionObject(this, PlayGame.platformSys.stars.get(i));
+				if (starCheck.checkCollision()) {
+					PlayGame.platformSys.stars.get(i).removeStar();// Play
+																	// Transition
+																	// and
+																	// remove
+																	// from
+																	// group
+					PlayGame.platformSys.stars.remove(i);// Remove from array
+															// list
+					starCounter++;
+					Global.stars++;
+				}
+
+				else if (PlayGame.platformSys.stars.get(i).gone) {
+					PlayGame.platformSys.stars.remove(i);
+				}
+
+			}
+		}
+
 		if (!hit) {
 			useVerticalGravity();
 		} else {
@@ -211,22 +220,22 @@ public class Bird extends VisibleObject {
 
 		if (getY() > 600) {
 			birdFell();
-                        
-		}
-                
-                //CODE FOR SWITCHING SIDES WHEN OFFSCREEN
-                if(!doingIt){
-                    if (getX() < -30){
-                        setX(734);
-                    }
 
-                    if (getX() > 744){
-                        setX(-20);
-                    }
-                }
-                
-                //END CODE FOR SWITCHING SIDES
-                        
+		}
+
+		// CODE FOR SWITCHING SIDES WHEN OFFSCREEN
+		if (!doingIt) {
+			if (getX() < -30) {
+				setX(734);
+			}
+
+			if (getX() > 744) {
+				setX(-20);
+			}
+		}
+
+		// END CODE FOR SWITCHING SIDES
+
 		reverseAnimation();
 		updateX();
 		syncCoords();

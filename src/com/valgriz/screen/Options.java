@@ -1,5 +1,6 @@
 package com.valgriz.screen;
 
+import java.sql.Savepoint;
 import java.util.ArrayList;
 
 import javafx.geometry.Rectangle2D;
@@ -12,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import com.twopercent.main.DataManager;
+import com.twopercent.main.Global;
 import com.twopercent.main.Penguin;
 import com.twopercent.render.BackgroundD;
 import com.twopercent.render.UI;
@@ -47,7 +50,6 @@ public class Options {
 	private final static int PENGUIN_HEIGHT = 40;
 
 	private static int currentPenguinSelection;
-
 	private static ArrayList penguinArrayList;
 
 	public Options() {
@@ -56,11 +58,11 @@ public class Options {
 		backgroundD = new BackgroundD();
 		root.getChildren().add(backgroundD.getGroup());
 		DropShadow dropShadow = new DropShadow(5, new javafx.scene.paint.Color(0, 0, 0, 1));
-		title = new Text("OPTIONS");
+		title = new Text("CUSTOMIZE");
 		title.setFill(new javafx.scene.paint.Color(1, 1, 1, 1));
 		title.setFont(new Font("Arial", 42));
 		title.setEffect(dropShadow);
-		title.setX(265);
+		title.setX((720 / 2) - (title.getBoundsInLocal().getWidth() / 2));
 		title.setY(60);
 		dropShadow.setOffsetX(3);
 		dropShadow.setOffsetY(3);
@@ -175,20 +177,16 @@ public class Options {
 		updatePenguinPositions();
 	}
 
-	private void definePenguins() {
-		penguinArrayList.add(new Penguin(0, 300, true, "A PENGUIN"));
-		penguinArrayList.add(new Penguin(1, 350, false, "BLUE BEAK"));
-		penguinArrayList.add(new Penguin(2, 420, false, "WU-TANG-PENG"));
-		penguinArrayList.add(new Penguin(3, 500, false, "SASSY"));
-		penguinArrayList.add(new Penguin(4, 600, false, "GREEN PENGUIN WITH A MOHAWK"));
-		penguinArrayList.add(new Penguin(5, 1337, false, "BALLIN"));
-		penguinArrayList.add(new Penguin(6, 80085, false, "GABEN"));
-
+	public static void definePenguins() {
+		DataManager.loadFile();
+		Penguin[] p = DataManager.getPenguinArray();
+		for (int i = 0; i < p.length; i++) {
+			penguinArrayList.add(p[i]);
+		}
 	}
 
 	public static void selectionRight() {
 		currentPenguinSelection++;
-
 		updatePenguinPositions();
 	}
 
@@ -230,9 +228,24 @@ public class Options {
 		if (UserInterfaceCreator.getButtonArrayList() != null) {
 			if (p.isUnlocked()) {
 				UI.getButton("omUnlock").setVisible(false);
+				DataManager.saveFile();
+				Global.penguinInUse = currentPenguinSelection;
 			} else {
 				UI.getButton("omUnlock").setVisible(true);
 			}
+		}
+	}
+
+	public static void unlockPressed() {
+		Penguin p = (Penguin) penguinArrayList.get(currentPenguinSelection);
+		if (DataManager.getStatValue("bankStarCount") >= p.getStarsRequired()) {
+			DataManager.setStatValue("bankStarCount", DataManager.getStatValue("bankStarCount") - p.getStarsRequired());
+			Penguin[] q = DataManager.getPenguinArray();
+			q[currentPenguinSelection].setUnlocked(true);
+			p.setUnlocked(true);
+			DataManager.saveFile();
+			DataManager.loadFile();
+			Global.gameStateChanged = true;
 		}
 	}
 

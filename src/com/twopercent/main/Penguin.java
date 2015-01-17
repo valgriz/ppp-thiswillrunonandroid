@@ -1,6 +1,8 @@
 package com.twopercent.main;
 
-public class Penguin {
+import java.io.Serializable;
+
+public class Penguin implements Serializable {
 	private int penguinNumber, starsRequired;
 	private boolean unlocked;
 	private String name;

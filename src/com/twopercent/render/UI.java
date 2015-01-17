@@ -6,6 +6,7 @@ import com.sun.javafx.css.FontFace;
 import com.sun.javafx.scene.control.behavior.TextBinding;
 import com.twopercent.main.DataManager;
 import com.twopercent.main.Global;
+import com.twopercent.main.Stat;
 import com.valgriz.screen.HighScores;
 import com.valgriz.screen.Options;
 import com.valgriz.screen.Screen;
@@ -30,7 +31,7 @@ public class UI extends UserInterfaceCreator {
 		DropShadow dropShadow = new DropShadow(5, new javafx.scene.paint.Color(0, 0, 0, 1));
 
 		getGroup().getChildren().add(getScoreText());
-                
+
 		getScoreText().setX(15);
 		getScoreText().setY(40);
 		getScoreText().setText("");
@@ -39,16 +40,15 @@ public class UI extends UserInterfaceCreator {
 		getScoreText().setEffect(dropShadow);
 		dropShadow.setOffsetX(3);
 		dropShadow.setOffsetY(3);
-                
-                getGroup().getChildren().add(getStarText());
-                
-                getStarText().setX(640);
-                getStarText().setY(50);
-                getStarText().setText("");
-                getStarText().setFill(new javafx.scene.paint.Color(1,1,.5,1));
-                getStarText().setFont(new Font("Calibri", 42));
-                getStarText().setEffect(new Glow(1));
-                
+
+		getGroup().getChildren().add(getStarText());
+
+		getStarText().setX(620);
+		getStarText().setY(40);
+		getStarText().setText("");
+		getStarText().setFill(new javafx.scene.paint.Color(1, 1, .5, 1));
+		getStarText().setFont(new Font("Calibri", 42));
+		getStarText().setEffect(new Glow(1));
 
 		gameMessage = new Text("GAME OVER");
 		gameMessage.setFont(new Font("Arial", 60));
@@ -69,20 +69,25 @@ public class UI extends UserInterfaceCreator {
 		addButton(210, 195, 300, 69, "RESUME", 0, "gpResume");
 		addButton(210, 287, 300, 69, "END GAME", 0, "gpEndGame");
 		addCustomButton(210, 367, 300, 69, "CHANGE PENGUIN", 28, 43, 0, "pgChangePenguin");
-		addButton(387, 32, 300, 69, "PLAY", 0, "mmPlay");
-		addButton(387, 113, 300, 69, "SCORES", 0, "mmScores");
-		addButton(387, 194, 300, 69, "STATS", 0, "mmStats");
-		addButton(387, 275, 300, 69, "OPTIONS", 0, "mmOptions");
+		addButton(387, 32, 300, 69, "PLAY!", 0, "mmPlay");
+		addButton(387, 113, 300, 69, "CUSTOMIZE", 0, "mmOptions");
+
+		addButton(387, 194, 300, 69, "SCORES", 0, "mmScores");
+		addButton(387, 275, 300, 69, "STATS", 0, "mmStats");
+
 		addButton(387, 356, 300, 69, "HELP", 0, "mmHelp");
 		addButton(33, 356, 300, 69, "MAIN MENU", 0, "smMainMenu");
 		addButton(387, 356, 300, 69, "PLAY GAME", 0, "smPlayGame");
-		addCustomButton(94, 95, 45, 236, "", 1, 0, 305, "omLeft");
-		addCustomButton(576, 95, 45, 236, "", 1, 0, 69, "omRight");
+		addCustomButton(94, 95, 45, 236, "", 1, 0, 305, "omLeft0");
+		addCustomButton(576, 95, 45, 236, "", 1, 0, 69, "omRight0");
 		addCustomButton(340, 95, 34, 21, "", 1, 0, 541, "omSound");
 		addCustomButton(277, 180, 160, 43, "", 1, 0, 583, "omUnlock");
 		addNullButton(94, 95, 183, 236, "omLeft");
 		addNullButton(437, 95, 184, 236, "omRight");
 		addButton(210, 369, 300, 69, "MAIN MENU", 0, "hmMainMenu");
+
+		DataManager.initStat();
+
 		stateChanged();
 
 	}
@@ -134,7 +139,8 @@ public class UI extends UserInterfaceCreator {
 			getButton("mmOptions").setVisible(true);
 			getButton("mmHelp").setVisible(true);
 			getScoreText().setVisible(false);
-                        getStarText().setVisible(false);
+			getStarText().setVisible(false);
+
 		} else if (!Global.inPlayGame) {
 			getButton("mmPlay").setVisible(false);
 			getButton("mmScores").setVisible(false);
@@ -158,9 +164,26 @@ public class UI extends UserInterfaceCreator {
 				getButton("goMainMenu").setVisible(true);
 				UI.getButton("pgChangePenguin").setVisible(false);
 				DataManager.addScore(Global.score);
-                                
-                                
-                              //  sssssssssssssssd;
+				DataManager.setStatValue("totalStarCount", DataManager.getStatValue("totalStarCount") + Global.stars);
+				DataManager.setStatValue("bankStarCount", DataManager.getStatValue("bankStarCount") + Global.stars);
+
+				// DataManager.updateStat("totalStarCount",
+				// DataManager.getStat("totalStarCount") + Global.stars);
+				// DataManager.updateStat("bankStarCount",
+				// DataManager.getStat("bankStarCount") + Global.stars);
+				// System.out.println("Total Star Count " +
+				// DataManager.getStat("totalStarCount"));
+				// System.out.println("Bank Star Count " +
+				// DataManager.getStat("bankStarCount"));
+
+				System.out.println(DataManager.getStatArraySize());
+
+				if (DataManager.isInHighScores(Global.score)) {
+					gameMessage.setText("HIGH SCORE!");
+				} else {
+					gameMessage.setText("GAME OVER");
+				}
+
 			} else {
 				gameMessage.setVisible(false);
 				getButton("pgLeftTap").setVisible(true);
@@ -196,7 +219,7 @@ public class UI extends UserInterfaceCreator {
 				getButton("gpEndGame").setVisible(false);
 				getButton("gpResume").setVisible(false);
 				getScoreText().setVisible(true);
-                                getStarText().setVisible(true);
+				getStarText().setVisible(true);
 
 			}
 		} else {
@@ -213,15 +236,21 @@ public class UI extends UserInterfaceCreator {
 				Screen.setVisibleGroup("Options");
 				getButton("omRight").setVisible(true);
 				getButton("omLeft").setVisible(true);
+				getButton("omRight0").setVisible(true);
+				getButton("omLeft0").setVisible(true);
 				getButton("omSound").setVisible(true);
 				getButton("omUnlock").setVisible(true);
 				getScoreText().setVisible(false);
-                                getStarText().setVisible(false);
+				getStarText().setVisible(true);
+				getStarText().setText(DataManager.getStatValue("bankStarCount") + "");
 				Options.updatePenguinPositions();
+				Options.definePenguins();
 			} else {
 				Screen.setVisibleGroup("MainMenu");
 				getButton("omRight").setVisible(false);
 				getButton("omLeft").setVisible(false);
+				getButton("omRight0").setVisible(false);
+				getButton("omLeft0").setVisible(false);
 				getButton("omSound").setVisible(false);
 				getButton("omUnlock").setVisible(false);
 			}
@@ -243,6 +272,8 @@ public class UI extends UserInterfaceCreator {
 			getButton("smPlayGame").setVisible(false);
 			getButton("omRight").setVisible(false);
 			getButton("omLeft").setVisible(false);
+			getButton("omRight0").setVisible(false);
+			getButton("omLeft0").setVisible(false);
 			getButton("omSound").setVisible(false);
 			getButton("omUnlock").setVisible(false);
 
@@ -252,6 +283,10 @@ public class UI extends UserInterfaceCreator {
 			getButton("hmMainMenu").setVisible(true);
 		} else {
 			getButton("hmMainMenu").setVisible(false);
+		}
+
+		if (Global.inStats) {
+			DataManager.pringAllStatValues();
 		}
 
 		// if (!Global.inMainMenu && Global.inPlayGame && !Global.inHighScores
@@ -265,17 +300,17 @@ public class UI extends UserInterfaceCreator {
 	public void update() {
 		super.update();
 
-		showScreenStatus();
+		// showScreenStatus();
 
 		if (Global.gameStateChanged)
 			stateChanged();
 		// Add Highscore Message
 
 		getScoreText().setText("" + Global.score);
-                
-                getStarText().setText("" + Global.stars);
-                
-                
+
+		if (Global.inPlayGame) {
+			getStarText().setText("" + Global.stars);
+		}
 	}
 
 	public static void changePenguinButtonExit() {
