@@ -10,6 +10,7 @@ import com.twopercent.main.Stat;
 import com.valgriz.screen.HighScores;
 import com.valgriz.screen.Options;
 import com.valgriz.screen.Screen;
+import com.valgriz.screen.Stats;
 
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
@@ -166,16 +167,12 @@ public class UI extends UserInterfaceCreator {
 				DataManager.addScore(Global.score);
 				DataManager.setStatValue("totalStarCount", DataManager.getStatValue("totalStarCount") + Global.stars);
 				DataManager.setStatValue("bankStarCount", DataManager.getStatValue("bankStarCount") + Global.stars);
-
-				// DataManager.updateStat("totalStarCount",
-				// DataManager.getStat("totalStarCount") + Global.stars);
-				// DataManager.updateStat("bankStarCount",
-				// DataManager.getStat("bankStarCount") + Global.stars);
-				// System.out.println("Total Star Count " +
-				// DataManager.getStat("totalStarCount"));
-				// System.out.println("Bank Star Count " +
-				// DataManager.getStat("bankStarCount"));
-
+				DataManager.setStatValue("totalGames", DataManager.getStatValue("totalGames") + 1);
+				DataManager.setStatValue("totalStars", DataManager.getStatValue("totalStars") + Global.stars);
+				DataManager.setStatValue("totalBounces", DataManager.getStatValue("totalBounces") + Global.bounces);
+				DataManager.setStatValue("totalTime", DataManager.getStatValue("totalTime") + Global.time);
+				Global.time = 0;
+				Global.bounces = 0;
 				System.out.println(DataManager.getStatArraySize());
 
 				if (DataManager.isInHighScores(Global.score)) {
@@ -287,6 +284,7 @@ public class UI extends UserInterfaceCreator {
 
 		if (Global.inStats) {
 			DataManager.pringAllStatValues();
+			Stats.refreshStats();
 		}
 
 		// if (!Global.inMainMenu && Global.inPlayGame && !Global.inHighScores

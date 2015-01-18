@@ -480,15 +480,15 @@ public class InputController {
 				break;
 			case -4:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("mmScores");
+				UI.highlightButton("mmOptions");
 				break;
 			case -3:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("mmStats");
+				UI.highlightButton("mmScores");
 				break;
 			case -2:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("mmOptions");
+				UI.highlightButton("mmStats");
 				break;
 			case -1:
 				UI.unhighlightAllButtons();
@@ -503,15 +503,15 @@ public class InputController {
 				break;
 			case 2:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("mmScores");
+				UI.highlightButton("mmOptions");
 				break;
 			case 3:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("mmStats");
+				UI.highlightButton("mmScores");
 				break;
 			case 4:
 				UI.unhighlightAllButtons();
-				UI.highlightButton("mmOptions");
+				UI.highlightButton("mmStats");
 				break;
 			case 5:
 				UI.unhighlightAllButtons();

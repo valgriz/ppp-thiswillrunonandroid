@@ -7,8 +7,10 @@ import com.twopercent.render.Bird;
 import com.twopercent.render.PlatformSys;
 import com.twopercent.render.UI;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TimelineBuilder;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -25,7 +27,9 @@ public class PlayGame {
 	public static Bird bird;
 	private static Timeline timeline;
 	private static Group root;
+	private static Timeline timeLine;
 
+	@SuppressWarnings("deprecation")
 	public PlayGame() {
 		root = new Group();
 		backgroundA = new BackgroundA();
@@ -44,6 +48,15 @@ public class PlayGame {
 		// Any extras
 		// UI
 
+		TimelineBuilder.create().cycleCount(Animation.INDEFINITE)
+				.keyFrames(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent event) {
+						if (Global.inPlayGame && !Global.inPaused && !Global.inGameOver) {
+							Global.time++;
+							System.out.println("TIME");
+						}
+					}
+				})).build().play();
 	}
 
 	public static void resetGame() {
