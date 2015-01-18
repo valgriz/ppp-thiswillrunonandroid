@@ -81,13 +81,16 @@ public class UI extends UserInterfaceCreator {
 		addButton(387, 356, 300, 69, "PLAY GAME", 0, "smPlayGame");
 		addCustomButton(94, 95, 45, 236, "", 1, 0, 305, "omLeft0");
 		addCustomButton(576, 95, 45, 236, "", 1, 0, 69, "omRight0");
-		addCustomButton(340, 95, 34, 21, "", 1, 0, 541, "omSound");
+		addSwitch(340, 95, 34, 21, 541, "switchA", "switchB", "omSound");
 		addCustomButton(277, 180, 160, 43, "", 1, 0, 583, "omUnlock");
 		addNullButton(94, 95, 183, 236, "omLeft");
 		addNullButton(437, 95, 184, 236, "omRight");
 		addButton(210, 369, 300, 69, "MAIN MENU", 0, "hmMainMenu");
 
 		DataManager.initStat();
+
+		getButton("omSound").setSubState(DataManager.getStatValue("muted"));
+		SoundPlayer.volumeControl(DataManager.getStatValue("muted"));
 
 		stateChanged();
 

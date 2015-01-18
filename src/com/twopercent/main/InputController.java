@@ -74,7 +74,7 @@ public class InputController {
 	}
 
 	public void idle(VisibleObject temp) {
-		if (temp.getType().equals("button")) {
+		if (temp.getType().equals("button") || temp.getType().equals("switch")) {
 			Button b = (Button) temp;
 			b.setState(0);
 		}
@@ -113,6 +113,21 @@ public class InputController {
 	}
 
 	public void action(VisibleObject temp) {
+		if (temp.getType().equals("switch")) {
+			Button b = (Button) temp;
+			b.swapSubState();
+			b.setState(0);
+			if (b.getSubState() == 0) {
+				DataManager.setStatValue("muted", 0);
+				System.out.println("SOUND WILL BE PLAYING");
+			} else {
+				DataManager.setStatValue("muted", 1);
+				System.out.println("NO SOUND WILL BE PLAYING");
+			}
+			SoundPlayer.volumeControl(DataManager.getStatValue("muted"));
+			SoundPlayer.playButton();
+		}
+
 		if (temp.getType().equals("button") || temp.getType().equals("nullButton")) {
 			Button b = (Button) temp;
 			b.setState(1);
@@ -229,9 +244,11 @@ public class InputController {
 				break;
 			case "omLeft":
 				Options.selectionLeft();
+				SoundPlayer.playButton();
 				break;
 			case "omRight":
 				Options.selectionRight();
+				SoundPlayer.playButton();
 				break;
 
 			case "pgChangePenguin":
@@ -266,7 +283,7 @@ public class InputController {
 	}
 
 	public void anticipate(VisibleObject temp) {
-		if (temp.getType().equals("button")) {
+		if (temp.getType().equals("button") || temp.getType().equals("switch")) {
 			Button b = (Button) temp;
 			b.setState(2);
 		}

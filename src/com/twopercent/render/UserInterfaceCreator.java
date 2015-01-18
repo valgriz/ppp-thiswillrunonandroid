@@ -19,10 +19,17 @@ public class UserInterfaceCreator {
 
 	public UserInterfaceCreator() {
 		group = new Group();
-                starText = new Text();
+		starText = new Text();
 		scoreText = new Text();
 		buttonArrayList = new ArrayList<>();
 
+	}
+
+	public void addSwitch(int x, int y, int width, int height, int buttonSpriteKey, String sKeyA, String sKeyB,
+			String id) {
+		buttonArrayList.add(new Button(x, y, width, height, buttonSpriteKey, sKeyA, sKeyB, id));
+		group.getChildren().add(buttonArrayList.get(buttonArrayList.size() - 1).getGroup());
+		buttonArrayList.get(buttonArrayList.size() - 1).setVisible(false);
 	}
 
 	public void addCustomButton(int x, int y, int width, int height, String text, int textSize, int yOffset,
@@ -85,14 +92,14 @@ public class UserInterfaceCreator {
 	public void setScoreText(Text scoreText) {
 		this.scoreText = scoreText;
 	}
-        
-        public Text getStarText(){
-            return starText;
-        }
-        
-        public void setStarText(Text starText){
-            this.starText = starText;
-        }
+
+	public Text getStarText() {
+		return starText;
+	}
+
+	public void setStarText(Text starText) {
+		this.starText = starText;
+	}
 
 	public static ArrayList<Button> getButtonArrayList() {
 		return buttonArrayList;

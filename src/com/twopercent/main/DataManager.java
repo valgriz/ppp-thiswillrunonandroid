@@ -17,7 +17,7 @@ public class DataManager {
 	static ArrayList<Score> scores;
 	public static ArrayList<Stat> stats;
 	private static String[] initStatId = { "totalStarCount", "bankStarCount", "penguinInUse", "totalTime",
-			"totalBounces", "totalGames", "totalStars" };
+			"totalBounces", "totalGames", "totalStars", "muted" };
 	private static Penguin[] penguinArray = { new Penguin(0, 0, true, "A PENGUIN"),
 			new Penguin(1, 100, false, "BLUE BEAK"), new Penguin(2, 250, false, "WU-TANG-PENG"),
 			new Penguin(3, 300, false, "SASSY"), new Penguin(4, 400, false, "GREEN PENGUIN WITH A MOHAWK"),

@@ -39,6 +39,14 @@ public class SoundPlayer {
 		starPlayer.play();
 	}
 
+	public static void volumeControl(int i) {
+		if (i == 0) {
+			unmute();
+		} else {
+			mute();
+		}
+	}
+
 	public static void mute() {
 		volume = 0;
 	}

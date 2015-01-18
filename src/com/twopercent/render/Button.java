@@ -20,7 +20,7 @@ import javafx.util.Duration;
 public class Button extends VisibleObject {
 	private String text, id;
 	private int buttonKey = 0, buttonHoverKey = 1, buttonSpriteKey;
-	private static int state;
+	private static int state, subState;
 	private Text textView;
 
 	public Button(int x, int y, int width, int height, String text, int buttonSpriteKey, String id) {
@@ -108,7 +108,8 @@ public class Button extends VisibleObject {
 	}
 
 	public Button(int x, int y, int width, int height, String id) {
-		// this button will NOT be viewable, however visible always returns TRUE
+		// this button will NOT be viewable, however is only clickable when
+		// setVisible(true);
 		super(new Group());
 		setX(x);
 		setY(y);
@@ -120,6 +121,33 @@ public class Button extends VisibleObject {
 		state = 0;
 
 		addActionListener();
+
+	}
+
+	public Button(int x, int y, int width, int height, int buttonSpriteKey, String sTypeA, String sTypeB, String id) {
+		super(new Group());
+		setX(x);
+		setY(y);
+		setWidth(width);
+		setHeight(height);
+		this.id = id;
+		this.buttonSpriteKey = buttonSpriteKey;
+		this.buttonHoverKey = 1;
+		this.buttonKey = 0;
+
+		setType("switch");
+
+		state = 0;
+		subState = 0;
+
+		setImageViewToImage(new Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
+		getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
+		getImageView().setX(getX());
+		getImageView().setY(getY());
+
+		addActionListener();
+
+		getGroup().getChildren().add(getImageView());
 
 	}
 
@@ -191,7 +219,7 @@ public class Button extends VisibleObject {
 	}
 
 	public void update() {
-		if (getImageView() != null) {
+		if (getImageView() != null && getTextView() != null) {
 			if (getImageView().isVisible()) {
 				textView.setVisible(true);
 			} else if (!getImageView().isVisible()) {
@@ -220,21 +248,51 @@ public class Button extends VisibleObject {
 		return state;
 	}
 
+	public void swapSubState() {
+		if (getType().equals("switch")) {
+			if (getSubState() == 0) {
+				setSubState(1);
+			} else if (getSubState() == 1) {
+				setSubState(0);
+			}
+		}
+	}
+
 	public void setState(int state) {
 		this.state = state;
 		if (getImageView() != null) {
-			if (state == 0) {
-				getImageView().setViewport(
-						new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
+
+			if (!getType().equals("switch")) {
+				if (state == 0) {
+					getImageView().setViewport(
+							new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
+				}
+				if (state == 1) {
+					getImageView().setViewport(
+							new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
+				}
+				if (state == 2) {
+					getImageView().setViewport(
+							new Rectangle2D(getWidth() * buttonHoverKey, buttonSpriteKey, getWidth(), getHeight()));
+				}
+			} else if (getType().equals("switch")) {
+				if (state == 0) {
+					getImageView().setViewport(
+							new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey + (getSubState() * getHeight()),
+									getWidth(), getHeight()));
+				}
+				if (state == 1) {
+					getImageView().setViewport(
+							new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey + (getSubState() * getHeight()),
+									getWidth(), getHeight()));
+				}
+				if (state == 2) {
+					getImageView().setViewport(
+							new Rectangle2D(getWidth() * buttonHoverKey, buttonSpriteKey
+									+ (getSubState() * getHeight()), getWidth(), getHeight()));
+				}
 			}
-			if (state == 1) {
-				getImageView().setViewport(
-						new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
-			}
-			if (state == 2) {
-				getImageView().setViewport(
-						new Rectangle2D(getWidth() * buttonHoverKey, buttonSpriteKey, getWidth(), getHeight()));
-			}
+
 		}
 	}
 
@@ -260,6 +318,22 @@ public class Button extends VisibleObject {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public int getButtonSpriteKey() {
+		return buttonSpriteKey;
+	}
+
+	public void setButtonSpriteKey(int buttonSpriteKey) {
+		this.buttonSpriteKey = buttonSpriteKey;
+	}
+
+	public static int getSubState() {
+		return subState;
+	}
+
+	public static void setSubState(int subState) {
+		Button.subState = subState;
 	}
 
 }

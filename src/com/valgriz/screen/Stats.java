@@ -105,10 +105,10 @@ public class Stats {
 		int hours = 0;
 		int mins = 0;
 		int sec;
-		for (sec = iS; sec > 60; sec -= 60) {
+		for (sec = iS; sec >= 60; sec -= 60) {
 			mins++;
 		}
-		for (hours = 0; mins > 60; mins -= 60) {
+		for (hours = 0; mins >= 60; mins -= 60) {
 			hours++;
 		}
 		String hs;
