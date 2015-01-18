@@ -1,5 +1,6 @@
 package com.valgriz.screen;
 
+import com.twopercent.main.DataManager;
 import com.twopercent.main.Global;
 import com.twopercent.render.UI;
 
@@ -25,6 +26,10 @@ public class Screen {
 	private static Options options;
 	private static Help help;
 	private static Stats stats;
+	private static int version = 20150118;
+
+	// version = (year) + (month) + (day)
+	// the larger the version integer is, the newer the release is
 
 	public Screen(Group root) {
 		this.root = root;
@@ -60,6 +65,13 @@ public class Screen {
 		Global.inStats = false;
 
 		startTimeline();
+
+		// Checks if the game is running the latest version
+		if (DataManager.getStatValue("version") != version) {
+			// Code inside of here will only run on the first game launch, or
+			// game is updated;
+			DataManager.setStatValue("version", version);
+		}
 	}
 
 	public static void setVisibleGroup(String s) {
@@ -122,7 +134,7 @@ public class Screen {
 			playGame.update();
 		}
 		if (Global.inHighScores) {
-			//highScores.update();
+			// highScores.update();
 		}
 		if (Global.inOptions) {
 			// options.update();

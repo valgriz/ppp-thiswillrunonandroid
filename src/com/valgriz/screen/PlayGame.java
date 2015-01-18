@@ -53,7 +53,6 @@ public class PlayGame {
 					public void handle(ActionEvent event) {
 						if (Global.inPlayGame && !Global.inPaused && !Global.inGameOver) {
 							Global.time++;
-							System.out.println("TIME");
 						}
 					}
 				})).build().play();
