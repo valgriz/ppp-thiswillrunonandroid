@@ -19,9 +19,13 @@ public class DataManager {
 	private static String[] initStatId = { "totalStarCount", "bankStarCount", "penguinInUse", "totalTime",
 			"totalBounces", "totalGames", "totalStars", "muted", "version" };
 	private static Penguin[] penguinArray = { new Penguin(0, 0, true, "A PENGUIN"),
-			new Penguin(1, 100, false, "BLUE BEAK"), new Penguin(2, 250, false, "WU-TANG-PENG"),
-			new Penguin(3, 300, false, "SASSY"), new Penguin(4, 400, false, "GREEN PENGUIN WITH A MOHAWK"),
-			new Penguin(5, 500, false, "BALLIN"), new Penguin(6, 600, false, "GABEN") };
+			new Penguin(1, 25, false, "YELLOW"), new Penguin(2, 75, false, "BLUE BEAK"),
+			new Penguin(3, 150, false, "WU-TANG-PENG"), new Penguin(4, 200, false, "SASSY"),
+			new Penguin(5, 250, false, "TIGER"), new Penguin(6, 350, false, "GREEN PENGUIN WITH A MOHAWK"),
+			new Penguin(7, 400, false, "BALLIN"), new Penguin(8, 500, false, "RAIN-BIRD"),
+			new Penguin(9, 650, false, "FIREY"), new Penguin(10, 750, false, "YIN-YANG-PENG"),
+			new Penguin(11, 850, false, "BOLD"), new Penguin(12, 1000, false, "SWIRL"),
+			new Penguin(13, 1300, false, "X-RAY") };
 
 	public DataManager() {
 		scores = new ArrayList<>();

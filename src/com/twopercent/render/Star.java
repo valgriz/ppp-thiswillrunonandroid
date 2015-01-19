@@ -67,7 +67,7 @@ public class Star extends VisibleObject{
         
         setDt(getDt()+6);
         
-        if(getX()<0){
+        if(getX()<0 - getWidth()){
             gone();
         }
         

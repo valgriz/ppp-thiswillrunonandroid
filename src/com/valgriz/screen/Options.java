@@ -45,7 +45,7 @@ public class Options {
 	private Image vcFrameImage;
 	private ImageView vcFrameImageView;
 
-	private final static int TOTAL_NUMBER_OF_PENGUINS = 7;
+	private final static int TOTAL_NUMBER_OF_PENGUINS = 14;
 	private final static int PENGUIN_WIDTH = 66;
 	private final static int PENGUIN_HEIGHT = 40;
 
