@@ -21,7 +21,7 @@ public class UserInterfaceCreator {
 		group = new Group();
 		starText = new Text();
 		scoreText = new Text();
-		buttonArrayList = new ArrayList<>();
+		buttonArrayList = new ArrayList<Button>();
 
 	}
 

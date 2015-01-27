@@ -44,34 +44,34 @@ public class Screen {
 		stats = new Stats();
 
 		userInterface = new UI();
-
-		root.getChildren().add(stats.getGroup());
-		root.getChildren().add(help.getGroup());
-		root.getChildren().add(options.getGroup());
-		root.getChildren().add(highScores.getGroup());
+		//
+		// root.getChildren().add(stats.getGroup());
+		// root.getChildren().add(help.getGroup());
+		// root.getChildren().add(options.getGroup());
+		// root.getChildren().add(highScores.getGroup());
 		root.getChildren().add(playGame.getGroup());
-		root.getChildren().add(mainMenu.getGroup());
-
-		// Can use some optimization
+		//root.getChildren().add(mainMenu.getGroup());
+		//
+		// // Can use some optimization
 		root.getChildren().add(userInterface.getGroup());
-
-		Global.inMainMenu = true;
+		//
+		Global.inMainMenu = false;
 		Global.inGameOver = false;
 		Global.inHelp = false;
 		Global.inHighScores = false;
 		Global.inOptions = false;
 		Global.inPaused = false;
-		Global.inPlayGame = false;
+		Global.inPlayGame = true;
 		Global.inStats = false;
-
+		//
 		startTimeline();
 
-		// Checks if the game is running the latest version
-		if (DataManager.getStatValue("version") != version) {
-			// Code inside of here will only run on the first game launch, or
-			// game is updated;
-			DataManager.setStatValue("version", version);
-		}
+		// // Checks if the game is running the latest version
+		// if (DataManager.getStatValue("version") != version) {
+		// // Code inside of here will only run on the first game launch, or
+		// // game is updated;
+		// DataManager.setStatValue("version", version);
+		// }
 	}
 
 	public static void setVisibleGroup(String s) {
@@ -140,7 +140,7 @@ public class Screen {
 			// options.update();
 		}
 
-		userInterface.update();
+		// userInterface.update();
 
 	}
 

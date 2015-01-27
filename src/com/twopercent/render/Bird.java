@@ -38,7 +38,7 @@ public class Bird extends VisibleObject {
 		setWidth(57);
 		setHeight(40);
 		setX(200);
-		setY(-500);
+		setY(-50);
 
 		collisionObjectArrayList = new ArrayList<>();
 		hit = false;
@@ -71,7 +71,7 @@ public class Bird extends VisibleObject {
 		System.out.println("BIIW " + Global.penguinInUse);
 
 		setX(200);
-		setY(-200);
+		setY(-50);
 
 		scaleTransition.setToX(1);
 		scaleTransition.play();

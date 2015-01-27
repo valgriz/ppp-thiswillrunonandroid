@@ -36,7 +36,7 @@ public abstract class VisibleObject extends CollisionObject {
 		} else if (imageView != null) {
 			imageView.setImage(image);
 		}
-                
+
 	}
 
 	public void updateX() {

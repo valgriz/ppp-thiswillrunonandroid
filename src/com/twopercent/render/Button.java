@@ -20,7 +20,7 @@ import javafx.util.Duration;
 public class Button extends VisibleObject {
 	private String text, id;
 	private int buttonKey = 0, buttonHoverKey = 1, buttonSpriteKey;
-	private static int state, subState;
+	private int state, subState;
 	private Text textView;
 
 	public Button(int x, int y, int width, int height, String text, int buttonSpriteKey, String id) {
@@ -28,40 +28,46 @@ public class Button extends VisibleObject {
 		this.text = text;
 		this.buttonSpriteKey = buttonSpriteKey;
 		this.id = id;
+
 		setX(x);
 		setY(y);
 		setWidth(width);
 		setHeight(height);
+		//
 
-		state = 0;
-
-		setImageViewToImage(new Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
-		getImageView().setViewport(
-				new Rectangle2D(getWidth() * buttonKey, getHeight() * buttonSpriteKey, getWidth(), getHeight()));
-		getImageView().setX(getX());
-		getImageView().setY(getY());
-		getGroup().getChildren().add(getImageView());
-
-		textView = new Text();
-		textView.setFont(new Font("Arial", 42));
-		textView.setFill(new Color(1, 1, 1, 1));
-		DropShadow dropShadow = new DropShadow();
-		dropShadow.setRadius(5);
-		dropShadow.setOffsetX(2);
-		dropShadow.setOffsetY(2);
-		dropShadow.setColor(new Color(0, 0, 0, 1));
-		textView.setEffect(dropShadow);
-
-		textView.setText(text);
-
-		textView.setX(getX() + (getWidth() / 2) - (textView.getLayoutBounds().getWidth() / 2));
-		textView.setY(getY() + 47);
-
-		setType("button");
-
-		addActionListener();
-
-		getGroup().getChildren().add(textView);
+		//
+		// state = 0;
+		//
+		// setImageViewToImage(new
+		// Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
+		// getImageView().setViewport(
+		// new Rectangle2D(getWidth() * buttonKey, getHeight() *
+		// buttonSpriteKey, getWidth(), getHeight()));
+		// getImageView().setX(getX());
+		// getImageView().setY(getY());
+		// getGroup().getChildren().add(getImageView());
+		//
+		// textView = new Text();
+		// textView.setFont(new Font("Arial", 42));
+		// textView.setFill(new Color(1, 1, 1, 1));
+		// DropShadow dropShadow = new DropShadow();
+		// dropShadow.setRadius(5);
+		// dropShadow.setOffsetX(2);
+		// dropShadow.setOffsetY(2);
+		// dropShadow.setColor(new Color(0, 0, 0, 1));
+		// textView.setEffect(dropShadow);
+		//
+		// textView.setText(text);
+		//
+		// textView.setX(getX() + (getWidth() / 2) -
+		// (textView.getLayoutBounds().getWidth() / 2));
+		// textView.setY(getY() + 47);
+		//
+		// setType("button");
+		//
+		// addActionListener();
+		//
+		// getGroup().getChildren().add(textView);
 
 	}
 
@@ -71,39 +77,45 @@ public class Button extends VisibleObject {
 		this.text = text;
 		this.buttonSpriteKey = buttonSpriteKey;
 		this.id = id;
+
 		setX(x);
 		setY(y);
 		setWidth(width);
 		setHeight(height);
+		//
 
-		state = 0;
-
-		setImageViewToImage(new Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
-		getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
-		getImageView().setX(getX());
-		getImageView().setY(getY());
-		getGroup().getChildren().add(getImageView());
-
-		textView = new Text();
-		textView.setFont(new Font("Arial", textSize));
-		textView.setFill(new Color(1, 1, 1, 1));
-		DropShadow dropShadow = new DropShadow();
-		dropShadow.setRadius(5);
-		dropShadow.setOffsetX(2);
-		dropShadow.setOffsetY(2);
-		dropShadow.setColor(new Color(0, 0, 0, 1));
-		textView.setEffect(dropShadow);
-
-		textView.setText(text);
-
-		textView.setX(getX() + (getWidth() / 2) - (textView.getLayoutBounds().getWidth() / 2));
-		textView.setY(getY() + yOffset);
-
-		setType("button");
-
-		addActionListener();
-
-		getGroup().getChildren().add(textView);
+		//
+		// state = 0;
+		//
+		// setImageViewToImage(new
+		// Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
+		// getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey,
+		// buttonSpriteKey, getWidth(), getHeight()));
+		// getImageView().setX(getX());
+		// getImageView().setY(getY());
+		// getGroup().getChildren().add(getImageView());
+		//
+		// textView = new Text();
+		// textView.setFont(new Font("Arial", textSize));
+		// textView.setFill(new Color(1, 1, 1, 1));
+		// DropShadow dropShadow = new DropShadow();
+		// dropShadow.setRadius(5);
+		// dropShadow.setOffsetX(2);
+		// dropShadow.setOffsetY(2);
+		// dropShadow.setColor(new Color(0, 0, 0, 1));
+		// textView.setEffect(dropShadow);
+		//
+		// textView.setText(text);
+		//
+		// textView.setX(getX() + (getWidth() / 2) -
+		// (textView.getLayoutBounds().getWidth() / 2));
+		// textView.setY(getY() + yOffset);
+		//
+		// setType("button");
+		//
+		// addActionListener();
+		//
+		// getGroup().getChildren().add(textView);
 
 	}
 
@@ -111,43 +123,47 @@ public class Button extends VisibleObject {
 		// this button will NOT be viewable, however is only clickable when
 		// setVisible(true);
 		super(new Group());
+
 		setX(x);
 		setY(y);
 		setWidth(width);
 		setHeight(height);
-		this.id = id;
-		setType("nullButton");
 
-		state = 0;
-
-		addActionListener();
+		// this.id = id;
+		// setType("nullButton");
+		//
+		// state = 0;
+		//
+		// addActionListener();
 
 	}
 
 	public Button(int x, int y, int width, int height, int buttonSpriteKey, String sTypeA, String sTypeB, String id) {
 		super(new Group());
-		setX(x);
-		setY(y);
-		setWidth(width);
-		setHeight(height);
-		this.id = id;
-		this.buttonSpriteKey = buttonSpriteKey;
-		this.buttonHoverKey = 1;
-		this.buttonKey = 0;
-
-		setType("switch");
-
-		state = 0;
-		subState = 0;
-
-		setImageViewToImage(new Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
-		getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey, buttonSpriteKey, getWidth(), getHeight()));
-		getImageView().setX(getX());
-		getImageView().setY(getY());
-
-		addActionListener();
-
-		getGroup().getChildren().add(getImageView());
+		// setX(x);
+		// setY(y);
+		// setWidth(width);
+		// setHeight(height);
+		// this.id = id;
+		// this.buttonSpriteKey = buttonSpriteKey;
+		// this.buttonHoverKey = 1;
+		// this.buttonKey = 0;
+		//
+		// setType("switch");
+		//
+		// state = 0;
+		// subState = 0;
+		//
+		// setImageViewToImage(new
+		// Image(Button.class.getResource("/res/images/buttonA1.png").toString()));
+		// getImageView().setViewport(new Rectangle2D(getWidth() * buttonKey,
+		// buttonSpriteKey, getWidth(), getHeight()));
+		// getImageView().setX(getX());
+		// getImageView().setY(getY());
+		//
+		// addActionListener();
+		//
+		// getGroup().getChildren().add(getImageView());
 
 	}
 
@@ -328,12 +344,12 @@ public class Button extends VisibleObject {
 		this.buttonSpriteKey = buttonSpriteKey;
 	}
 
-	public static int getSubState() {
+	public int getSubState() {
 		return subState;
 	}
 
-	public static void setSubState(int subState) {
-		Button.subState = subState;
+	public void setSubState(int subState) {
+		this.subState = subState;
 	}
 
 }

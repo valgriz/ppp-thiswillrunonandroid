@@ -89,10 +89,10 @@ public class UI extends UserInterfaceCreator {
 
 		DataManager.initStat();
 
-		getButton("omSound").setSubState(DataManager.getStatValue("muted"));
-		SoundPlayer.volumeControl(DataManager.getStatValue("muted"));
+		// getButton("omSound").setSubState(DataManager.getStatValue("muted"));
+		// SoundPlayer.volumeControl(DataManager.getStatValue("muted"));
 
-		stateChanged();
+		// stateChanged();
 
 	}
 
@@ -301,17 +301,17 @@ public class UI extends UserInterfaceCreator {
 	public void update() {
 		super.update();
 
-		// showScreenStatus();
-
-		if (Global.gameStateChanged)
-			stateChanged();
-		// Add Highscore Message
-
-		getScoreText().setText("" + Global.score);
-
-		if (Global.inPlayGame) {
-			getStarText().setText("" + Global.stars);
-		}
+		// // showScreenStatus();
+		//
+		// if (Global.gameStateChanged)
+		// stateChanged();
+		// // Add Highscore Message
+		//
+		// getScoreText().setText("" + Global.score);
+		//
+		// if (Global.inPlayGame) {
+		// getStarText().setText("" + Global.stars);
+		// }
 	}
 
 	public static void changePenguinButtonExit() {
